@@ -34,6 +34,40 @@ function fill_song_modal(song)
     }
 }
 
+function start_search()
+{
+    var search_string = $("#textfield0").val();
+    console.log(search_string)
+
+    $.ajax({
+        type: "POST",
+        url: API_URL + "/api/v1/command/search/",
+        data: JSON.stringify({
+            str: search_string
+        }),
+        contentType: "application/json; charset=utf-8"
+
+    }).then(function(data) {
+        console.log(data.results);
+        clear();
+        append_table(data.results[0]);
+    })
+}
+
+function get_form0_object()
+{
+    var object = {}
+    object["search"] = $('#textfield0').val();
+
+    return object;
+}
+
+function clear()
+{
+    var body = $("#dyn_table0_body");
+    body.empty();
+}
+
 // helper function to display search results
 function append_table(data)
 {

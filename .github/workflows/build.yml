@@ -8,16 +8,24 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
+    - uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: '3.4'
+        bundler-cache: true # runs 'bundle install' and caches installed gems automatically
+    - run: bundle exec rake
     - uses: webfactory/ssh-agent@v0.9.0
       with:
           ssh-private-key: ${{ secrets.DEPLOYKEY }}
     - name: push master
+      env:
+        API_URL: api.alesap.astrobunny.net
       run: |-
         git config --global user.name "davidsiaw(ghactions)"
         git config --global user.email "874280+davidsiaw@users.noreply.github.com"
         git config --global gpg.format ssh
         git config --global commit.gpgsign true
         echo "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMvy8tiGuleRqem2Ssfk3UX1DhwZizanrfpP5cjTIHnz davidsiaw@debiddonoMacBook-Pro-2.local" > signingkey
+        chmod 600 signingkey
         git config --global user.signingkey $PWD/signingkey
         sh deploy.sh
 

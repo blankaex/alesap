@@ -50,7 +50,7 @@ GEM
     tzinfo (2.0.6)
       concurrent-ruby (~> 1.0)
     uri (1.1.1)
-    weaver (0.9.0)
+    weaver (0.9.1)
       activesupport
       optimist
       rackup
@@ -62,8 +62,8 @@ PLATFORMS
   x86_64-linux
 
 DEPENDENCIES
-  weaver
+  weaver (= 0.9.1)
   webrick
 
 BUNDLED WITH
-   2.7.2
+   2.6.2

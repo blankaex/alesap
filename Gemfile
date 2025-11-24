@@ -1,4 +1,4 @@
 source "https://rubygems.org"
 
-gem "weaver"
+gem "weaver", '0.9.1'
 gem "webrick"

@@ -24,20 +24,35 @@ function scan_qr()
     const qrCodeSuccessCallback = (decodedText, decodedResult) => {
         html5QrCode.stop().then((ignore) => {
             $('#scan_qr').modal('hide');
+            if(!/rdn_[A-Za-z0-9]+\.[A-Za-z0-9]+,[A-Za-z0-9]+,[0-9]+/.test(decodedText))
+                throw new Error("Invalid QR Code");
             [akey, skey, scd] = decodedText.split('/')[2].split(',');
             console.log("akey: " + akey + "\nskey: " + skey + "\nscd: " + scd);
         }).catch((err) => {
             console.log(err);
+            alert("Invalid QR Code");
         });
     };
     const config = { fps: 10, qrbox: { width: 250, height: 250 } };
     html5QrCode.start({ facingMode: { exact: "environment"} }, config, qrCodeSuccessCallback)
         .catch(err => {
+            $("#selector").css("display", "");
             Html5Qrcode.getCameras().then(devices => {
                 if (devices && devices.length) {
-                    //TODO: implement device selector
-                    var cameraId = devices[2].id;
-                    html5QrCode.start({ deviceId: { exact: cameraId} }, config, qrCodeSuccessCallback);
+                    for(var i = 0; i < devices.length; i++) {
+                        $("#select0").append(`<option>${devices[i].label}</option>`);
+                    }
+                    $("#select0").on("change", "", function() {
+                        for(var i = 0; i < devices.length; i++) {
+                            if(devices[i].label == $("#select0").val()) {
+                                // TODO: process changing selection
+                                // need to stop device before starting again
+                                // need to not re-create device list
+                                html5QrCode.start({ deviceId: { exact: devices[i].id } }, config, qrCodeSuccessCallback);
+                                break;
+                            }
+                        }
+                    });
                 }
             }).catch(err => {
                 console.log(err);
@@ -108,9 +123,7 @@ function append_table(data)
         for (var columnIndex = 0; columnIndex < Object.keys(columns).length; columnIndex++)
         {
             var cell_data = data_object[index][ Object.keys(columns)[columnIndex] ];
-
-
-            row.append($('<td>').text( cell_data ).data("object", data_object[index]) );
+            row.append( $('<td>').text( cell_data ).data("object", data_object[index]) );
         }
         console.log(row)
         body.append(row);

@@ -10,6 +10,11 @@ empty_page '', 'Pasela Search', theme: :dark do
             div class: "container", style: "width:100%;" do
                 div class: "section" do
                     div id: "reader" do end
+                    div id: "selector", style: "display:none;" do
+                        wform do
+                            dropdown "cameras", "Select Camera", []
+                        end
+                    end
                 end
             end
         }

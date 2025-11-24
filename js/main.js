@@ -1,6 +1,22 @@
-var akey
-var skey
-var scd
+// initialize globals
+var akey = '';
+var skey = '';
+var scd  = '';
+
+function startup()
+{
+    $(window).keydown(function(event){
+        if(event.keyCode == 13) {
+            start_search()
+            event.preventDefault();
+            return false;
+        }
+    });
+
+    $("#textfield0").on("change", "", function() {
+        start_search()
+    });
+}
 
 function scan_qr()
 {
@@ -16,17 +32,17 @@ function scan_qr()
     };
     const config = { fps: 10, qrbox: { width: 250, height: 250 } };
     html5QrCode.start({ facingMode: { exact: "environment"} }, config, qrCodeSuccessCallback)
-    .catch(err => {
-        Html5Qrcode.getCameras().then(devices => {
-            if (devices && devices.length) {
-                //TODO: implement device selector
-                var cameraId = devices[2].id;
-                html5QrCode.start({ deviceId: { exact: cameraId} }, config, qrCodeSuccessCallback);
-            }
-        }).catch(err => {
-            console.log(err);
+        .catch(err => {
+            Html5Qrcode.getCameras().then(devices => {
+                if (devices && devices.length) {
+                    //TODO: implement device selector
+                    var cameraId = devices[2].id;
+                    html5QrCode.start({ deviceId: { exact: cameraId} }, config, qrCodeSuccessCallback);
+                }
+            }).catch(err => {
+                console.log(err);
+            });
         });
-    });
 }
 
 function start_search()

@@ -2,6 +2,8 @@ empty_page '', 'Pasela Search', theme: :dark do
     request_js 'js/main.js'
     request_js 'js/html5-qrcode.min.js'
 
+    set_favicon_path 'images/favicon.ico'
+
     modal "scan_qr" do
         header { 
             h4 "Scan QR Code" 

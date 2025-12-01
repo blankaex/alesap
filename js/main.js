@@ -25,42 +25,35 @@ function startup()
 function scan_qr()
 {
     const html5QrCode = new Html5Qrcode("reader");
+    const config = { fps: 10, qrbox: { width: 250, height: 250 } };
     // define callback for successful scan
     const qrCodeSuccessCallback = async (decodedText, decodedResult) => {
         await html5QrCode.stop();
         $('#scan_qr').modal('hide');
         // rudimentary error checking
-        if(!/rdn_[A-Za-z0-9]+\.[A-Za-z0-9]+,[A-Za-z0-9]+,[0-9]+/.test(decodedText)) {
-            throw new Error("Invalid QR Code");
-        }
+        if(!/rdn_[A-Za-z0-9]+\.[A-Za-z0-9]+,[A-Za-z0-9]+,[0-9]+/.test(decodedText)) throw new Error("Invalid QR Code");
         [akey, skey, scd] = decodedText.split('/')[2].split(',');
         console.log("akey: " + akey + "\nskey: " + skey + "\nscd: " + scd);
     };
-    const config = { fps: 10, qrbox: { width: 250, height: 250 } };
-    // attempt to use phone back camera
-    html5QrCode.start({ facingMode: { exact: "environment"} }, config, qrCodeSuccessCallback)
+    html5QrCode
+        // attempt to use phone back camera
+        .start({ facingMode: { exact: "environment"} }, config, qrCodeSuccessCallback)
         // otherwise enumerate devices and prompt user to select
         .catch(async err => {
             // show list selection
             $("#selector").css("display", "");
             var devices = await Html5Qrcode.getCameras();
-            if (devices && devices.length && devices.length > $("#select0 option").length) {
-                for(var i = 0; i < devices.length; i++) {
-                    $("#select0").append(`<option>${devices[i].label}</option>`);
-                }
+            if (devices?.length > $("#select0 option").length) {
+                for (const { label } of devices) $("#select0").append(`<option>${label}</option>`);
             }
             // listen & execute selection changes on list of devices
             $("#select0").on("change", "", async function() {
-                if(html5QrCode.getState() == Html5QrcodeScannerState.SCANNING) {
-                    // stop any running scanners
-                    await html5QrCode.stop();
-                }
-                for(var i = 0; i < devices.length; i++) {
-                    if(devices[i].label == $("#select0").val()) {
-                        html5QrCode.start({ deviceId: { exact: devices[i].id } }, config, qrCodeSuccessCallback);
-                        break;
-                    }
-                }
+                // stop any running scanners
+                if(html5QrCode.getState() == Html5QrcodeScannerState.SCANNING) await html5QrCode.stop();
+                // find matching camera device
+                const dev = devices.find(x => x.label === $("#select0").val());
+                // run new scanner with selected camera device
+                if (dev) html5QrCode.start({ deviceId: { exact: dev.id } }, config, qrCodeSuccessCallback);
             });
         });
 }

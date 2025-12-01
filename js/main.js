@@ -17,6 +17,7 @@ function startup()
         start_search()
     });
 
+    // create test data
     clear();
     append_table([{song: "test_song", code: "test_code", artist: "test_artist"}]);
 }
@@ -24,41 +25,42 @@ function startup()
 function scan_qr()
 {
     const html5QrCode = new Html5Qrcode("reader");
-    const qrCodeSuccessCallback = (decodedText, decodedResult) => {
-        html5QrCode.stop().then((ignore) => {
-            $('#scan_qr').modal('hide');
-            if(!/rdn_[A-Za-z0-9]+\.[A-Za-z0-9]+,[A-Za-z0-9]+,[0-9]+/.test(decodedText))
-                throw new Error("Invalid QR Code");
-            [akey, skey, scd] = decodedText.split('/')[2].split(',');
-            console.log("akey: " + akey + "\nskey: " + skey + "\nscd: " + scd);
-        }).catch((err) => {
-            console.log(err);
-            alert("Invalid QR Code");
-        });
+    // define callback for successful scan
+    const qrCodeSuccessCallback = async (decodedText, decodedResult) => {
+        await html5QrCode.stop();
+        $('#scan_qr').modal('hide');
+        // rudimentary error checking
+        if(!/rdn_[A-Za-z0-9]+\.[A-Za-z0-9]+,[A-Za-z0-9]+,[0-9]+/.test(decodedText)) {
+            throw new Error("Invalid QR Code");
+        }
+        [akey, skey, scd] = decodedText.split('/')[2].split(',');
+        console.log("akey: " + akey + "\nskey: " + skey + "\nscd: " + scd);
     };
     const config = { fps: 10, qrbox: { width: 250, height: 250 } };
+    // attempt to use phone back camera
     html5QrCode.start({ facingMode: { exact: "environment"} }, config, qrCodeSuccessCallback)
-        .catch(err => {
+        // otherwise enumerate devices and prompt user to select
+        .catch(async err => {
+            // show list selection
             $("#selector").css("display", "");
-            Html5Qrcode.getCameras().then(devices => {
-                if (devices && devices.length) {
-                    for(var i = 0; i < devices.length; i++) {
-                        $("#select0").append(`<option>${devices[i].label}</option>`);
-                    }
-                    $("#select0").on("change", "", function() {
-                        for(var i = 0; i < devices.length; i++) {
-                            if(devices[i].label == $("#select0").val()) {
-                                // TODO: process changing selection
-                                // need to stop device before starting again
-                                // need to not re-create device list
-                                html5QrCode.start({ deviceId: { exact: devices[i].id } }, config, qrCodeSuccessCallback);
-                                break;
-                            }
-                        }
-                    });
+            var devices = await Html5Qrcode.getCameras();
+            if (devices && devices.length && devices.length > $("#select0 option").length) {
+                for(var i = 0; i < devices.length; i++) {
+                    $("#select0").append(`<option>${devices[i].label}</option>`);
                 }
-            }).catch(err => {
-                console.log(err);
+            }
+            // listen & execute selection changes on list of devices
+            $("#select0").on("change", "", async function() {
+                if(html5QrCode.getState() == Html5QrcodeScannerState.SCANNING) {
+                    // stop any running scanners
+                    await html5QrCode.stop();
+                }
+                for(var i = 0; i < devices.length; i++) {
+                    if(devices[i].label == $("#select0").val()) {
+                        html5QrCode.start({ deviceId: { exact: devices[i].id } }, config, qrCodeSuccessCallback);
+                        break;
+                    }
+                }
             });
         });
 }

@@ -1,7 +1,8 @@
 // initialize globals
-var akey = '';
-var skey = '';
-var scd  = '';
+let akey = '';
+let skey = '';
+let scd  = '';
+let html5QrCode = null;
 
 function startup()
 {
@@ -24,11 +25,11 @@ function startup()
 
 function scan_qr()
 {
-    const html5QrCode = new Html5Qrcode("reader");
+    if (!html5QrCode) html5QrCode = new Html5Qrcode("reader");
     const config = { fps: 10, qrbox: { width: 250, height: 250 } };
     // define callback for successful scan
     const qrCodeSuccessCallback = async (decodedText, decodedResult) => {
-        await html5QrCode.stop();
+        await stop_scanning();
         $('#scan_qr').modal('hide');
         // rudimentary error checking
         if(!/rdn_[A-Za-z0-9]+\.[A-Za-z0-9]+,[A-Za-z0-9]+,[0-9]+/.test(decodedText)) throw new Error("Invalid QR Code");
@@ -46,16 +47,29 @@ function scan_qr()
             if (devices?.length > $("#select0 option").length) {
                 for (const { label } of devices) $("#select0").append(`<option>${label}</option>`);
             }
-            // listen & execute selection changes on list of devices
+            // set active device, then listen for changes
+            await set_device(devices, config, qrCodeSuccessCallback);
             $("#select0").on("change", "", async function() {
-                // stop any running scanners
-                if(html5QrCode.getState() == Html5QrcodeScannerState.SCANNING) await html5QrCode.stop();
-                // find matching camera device
-                const dev = devices.find(x => x.label === $("#select0").val());
-                // run new scanner with selected camera device
-                if (dev) html5QrCode.start({ deviceId: { exact: dev.id } }, config, qrCodeSuccessCallback);
+                await set_device(devices, config, qrCodeSuccessCallback);
             });
         });
+}
+
+async function stop_scanning()
+{
+    if(html5QrCode && html5QrCode.getState() == Html5QrcodeScannerState.SCANNING) {
+        await html5QrCode.stop();
+    }
+}
+
+async function set_device(devices, config, qrCodeSuccessCallback)
+{
+    // stop any running scanners
+    await stop_scanning();
+    // find matching camera device
+    const dev = devices.find(x => x.label === $("#select0").val());
+    // run new scanner with selected camera device
+    if (dev) await html5QrCode.start({ deviceId: { exact: dev.id } }, config, qrCodeSuccessCallback);
 }
 
 function fill_song_modal(song)

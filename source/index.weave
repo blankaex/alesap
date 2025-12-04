@@ -22,7 +22,7 @@ empty_page '', 'Pasela Search', theme: :dark do
         }
         footer do
             normal_button "Close" do
-                script "$('#scan_qr').modal('hide');"
+                script "$('#scan_qr').modal('hide'); stop_scanning();"
             end
         end
     end

@@ -1,5 +1,6 @@
 empty_page '', 'Pasela Search', theme: :dark do
     request_js 'js/main.js'
+    request_js 'js/scan_qr.js'
     request_js 'js/html5-qrcode.min.js'
 
     set_favicon_path 'images/favicon.ico'
@@ -22,7 +23,7 @@ empty_page '', 'Pasela Search', theme: :dark do
         }
         footer do
             normal_button "Close" do
-                script "$('#scan_qr').modal('hide'); stop_scanning();"
+                script "$('#scan_qr').modal('hide');"
             end
         end
     end

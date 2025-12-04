@@ -28,7 +28,12 @@ empty_page '', 'Pasela Search', theme: :dark do
         end
     end
 
-    normal_button "Scan QR Code" do
+    widget color: :"red", id: "widget" do
+      h3 "Not Connected", id: "connected"
+      samp "", id: "keys"
+    end
+
+    block_button "Scan QR Code" do
         script "$('#scan_qr').modal('show'); scan_qr();"
     end
 

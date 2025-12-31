@@ -56,11 +56,15 @@ empty_page '', 'Pasela Search', theme: :dark do
 
     modal "song_modal" do
         header { 
-            h4 "", id: "song-modal"
+            h4 "", id: "song-modal", style: "font-weight: bold"
         }
         body { 
+            span "Artist: ", style: "font-weight: bold"
             p "", id: "artist-modal" 
+            span "Code: ", style: "font-weight: bold"
             p "", id: "code-modal"
+            span "Extra: ", style: "font-weight: bold"
+            p "None", id: "extra-modal"
         }
         footer do
             normal_button "Queue" do

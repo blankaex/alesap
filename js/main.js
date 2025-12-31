@@ -18,12 +18,13 @@ function fill_song_modal(song)
     $("#song_modal").modal("show");
     var song = $(song).children("td");
     for(var i = 0; i < song.length; i++) {
+        console.log(song[i]);
         var attribute = song[i].id.split('-')[0];
-        if (attribute == "song") {
-            console.log($(`${attribute}-modal`));
+        if (attribute != "extra") {
             $(`#${attribute}-modal`).text(song[i].innerText);
         } else {
-            $(`#${attribute}-modal`).text(`${attribute}: ${song[i].innerText}`);
+            // do any conditional text formatting here then just set the value below
+            $(`#extra-modal`).text("None");
         }
     }
 }

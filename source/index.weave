@@ -3,6 +3,9 @@ empty_page '', 'Pasela Search', theme: :dark do
     request_js 'js/scan_qr.js'
     request_js 'js/html5-qrcode.min.js'
 
+    request_js 'https://cdn.jsdelivr.net/npm/toastify-js'
+    request_css 'https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css'
+
     set_favicon_path 'images/favicon.ico'
 
     modal "scan_qr" do
@@ -29,7 +32,7 @@ empty_page '', 'Pasela Search', theme: :dark do
     end
 
     widget color: :"red", id: "widget" do
-      h3 "Not Connected", id: "connected"
+      h3 "Not Connected", id: "connected", style: "margin: 0px;"
       samp "", id: "keys"
     end
 
@@ -40,6 +43,9 @@ empty_page '', 'Pasela Search', theme: :dark do
     h1 "Pasela Search"
     wform do
         textfield "search"
+        submit "Search", block:true do
+            script "start_search();"
+        end
     end
 
     columns = {
@@ -58,12 +64,12 @@ empty_page '', 'Pasela Search', theme: :dark do
         }
         footer do
             normal_button "Queue" do
-                script "$('#song_modal').modal('hide');"
+                script "queue_song($('#song-modal').text(), $('#artist-modal').text(), $('#code-modal').text())"
             end
         end
     end
 
-    table_from_source "something.json" do
+    table_from_source "empty.json", style: "margin-top: 20px;" do
         columns.each do |name, title|
             column name.to_s, title: title
         end
@@ -87,111 +93,4 @@ end
 raw_page 'empty.json', 'empty.json' do
     h = []
     text h.to_json
-end
-
-raw_page 'something.json', 'something.json' do
-    text <<~JSON
-        [
-            {
-                "song": "archive",
-                "code": "2117B15",
-                "artist": "TOKIO"
-            },
-            {
-                "song": "a kind of love",
-                "code": "3970A14",
-                "artist": "超特急"
-            },
-            {
-                "song": "a kind of love",
-                "code": "3978B27",
-                "artist": "超特急"
-            },
-            {
-                "song": "a cup of day",
-                "code": "54A35",
-                "artist": "RAMJET PULLEY"
-            },
-            {
-                "song": "absorb",
-                "code": "3166A3",
-                "artist": "LUNA SEA"
-            },
-            {
-                "song": "a girl",
-                "code": "566B3",
-                "artist": "KOKIA"
-            },
-            {
-                "song": "a gap of heart",
-                "code": "463A21",
-                "artist": "小柳 ゆき"
-            },
-            {
-                "song": "aqua",
-                "code": "1106B30",
-                "artist": "ALL I NEED"
-            },
-            {
-                "song": "across the street、cross the waters",
-                "code": "197A32",
-                "artist": "globe"
-            },
-            {
-                "song": "again (YUI Acoustic Version)",
-                "code": "2150B26",
-                "artist": "YUI"
-            },
-            {
-                "song": "again (YUI Acoustic Version)",
-                "code": "2405A16",
-                "artist": "YUI"
-            },
-            {
-                "song": "again (YUI Acoustic Version)",
-                "code": "2440B31",
-                "artist": "YUI"
-            },
-            {
-                "song": "again",
-                "code": "2891A48",
-                "artist": "YUI"
-            },
-            {
-                "song": "again",
-                "code": "2642A32",
-                "artist": "MUNEHIRO"
-            },
-            {
-                "song": "again",
-                "code": "3983B2",
-                "artist": "YUI"
-            },
-            {
-                "song": "again",
-                "code": "2017B48",
-                "artist": "白石 乃梨(白石桔梗)"
-            },
-            {
-                "song": "again",
-                "code": "767B38",
-                "artist": "伴 都美子"
-            },
-            {
-                "song": "again",
-                "code": "554A36",
-                "artist": "保志 総一朗"
-            },
-            {
-                "song": "again",
-                "code": "577B32",
-                "artist": "知念 里奈"
-            },
-            {
-                "song": "again",
-                "code": "663B39",
-                "artist": "Kiroro"
-            }
-        ]
-    JSON
 end

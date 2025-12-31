@@ -19,6 +19,7 @@
 
     <link href="css/animate.css" rel="stylesheet">
 
+    <link href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css" rel="stylesheet">
 
 
 
@@ -36,7 +37,7 @@
         <div id="wrapper">
 	        <div class="wrapper-content">
 	            <div class="container">
-<div class="modal fade" id="scan_qr" tabindex="-1" role="dialog"><div class="modal-dialog" role="document"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-label="Close">&times;</button><h4>Scan QR Code</h4></div><div class="modal-body"><div class="container" style="width:100%;"><div class="section"><div id="reader"></div><div id="selector" style="display:none;"><form id="form0" role="form"><div class="form-group"><label class="control-label">Select Camera</label><div class="input-group" style="width: 100%"><select class="form-control" name="cameras" id="select0" placeholder=" "></select></div></div></form></div></div></div></div><div class="modal-footer"><button type="button" class="btn btn-primary    " id="" onclick="action0(this)">Close</button></div></div></div></div><div class="widget style1 red-bg"><h3 id="connected">Not Connected</h3><samp id="keys"></samp></div><button type="button" class="btn btn-primary  btn-block  " id="" onclick="action1(this)">Scan QR Code</button><h1>Pasela Search</h1><form id="form1" role="form"><div class="form-group " id="textfield0-group"><div class=" "><input type="text" placeholder="" id="textfield0" name="search" rows="" class="form-control" value="" style="" autocomplete="on" autocorrect="on" autocapitalize="off" /></div></div></form><div class="modal fade" id="song_modal" tabindex="-1" role="dialog"><div class="modal-dialog" role="document"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-label="Close">&times;</button><h4 id="song-modal"></h4></div><div class="modal-body"><p id="artist-modal"></p><p id="code-modal"></p></div><div class="modal-footer"><button type="button" class="btn btn-primary    " id="" onclick="action2(this)">Queue</button></div></div></div></div><table class="table" id="dyn_table0" style=""><thead id="dyn_table0_head"><th>Song Name</th><th>Artist</th><th>Code</th></thead><tbody id="dyn_table0_body"></tbody></table><ul class="pagination" /><script>function getcolumns() {
+<div class="modal fade" id="scan_qr" tabindex="-1" role="dialog"><div class="modal-dialog" role="document"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-label="Close">&times;</button><h4>Scan QR Code</h4></div><div class="modal-body"><div class="container" style="width:100%;"><div class="section"><div id="reader"></div><div id="selector" style="display:none;"><form id="form0" role="form"><div class="form-group"><label class="control-label">Select Camera</label><div class="input-group" style="width: 100%"><select class="form-control" name="cameras" id="select0" placeholder=" "></select></div></div></form></div></div></div></div><div class="modal-footer"><button type="button" class="btn btn-primary    " id="" onclick="action0(this)">Close</button></div></div></div></div><div class="widget style1 red-bg"><h3 id="connected" style="margin: 0px;">Not Connected</h3><samp id="keys"></samp></div><button type="button" class="btn btn-primary  btn-block  " id="" onclick="action1(this)">Scan QR Code</button><h1>Pasela Search</h1><form id="form1" role="form"><div class="form-group " id="textfield0-group"><div class=" "><input type="text" placeholder="" id="textfield0" name="search" rows="" class="form-control" value="" style="" autocomplete="on" autocorrect="on" autocapitalize="off" /></div></div><button type="submit" class="btn btn-primary  btn-block  " id="submit_button0" onclick="action2(this, get_form1_object()); return false;">Search</button></form><div class="modal fade" id="song_modal" tabindex="-1" role="dialog"><div class="modal-dialog" role="document"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-label="Close">&times;</button><h4 id="song-modal"></h4></div><div class="modal-body"><p id="artist-modal"></p><p id="code-modal"></p></div><div class="modal-footer"><button type="button" class="btn btn-primary    " id="" onclick="action3(this)">Queue</button></div></div></div></div><table class="table" id="dyn_table0" style="margin-top: 20px;"><thead id="dyn_table0_head"><th>Song Name</th><th>Artist</th><th>Code</th></thead><tbody id="dyn_table0_body"></tbody></table><ul class="pagination" /><script>function getcolumns() {
   return { song: 0, artist: 1, code: 2 };
 };
 </script>
@@ -67,6 +68,8 @@
 
     <script src="js/html5-qrcode.min.js"></script>
 
+    <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+
 
 
     <!-- Custom and plugin javascript -->
@@ -90,6 +93,10 @@ function action1(caller, data) {
 	$('#scan_qr').modal('show'); scan_qr();
 }
 
+function action2(caller, data) {
+	start_search();
+}
+
 function get_form1_object()
 {
 	var object = {}
@@ -98,8 +105,8 @@ function get_form1_object()
 	return object;
 }
 
-function action2(caller, data) {
-	$('#song_modal').modal('hide');
+function action3(caller, data) {
+	queue_song($('#song-modal').text(), $('#artist-modal').text(), $('#code-modal').text())
 }
 
 
@@ -107,7 +114,7 @@ function action2(caller, data) {
 	{
 		var query_object = {};
 
-		$.get( "something.json" , function( returned_data )
+		$.get( "empty.json" , function( returned_data )
 		{
 			var data = returned_data;
 			var data_object = {};

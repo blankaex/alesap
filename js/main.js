@@ -11,10 +11,6 @@ function startup()
     $("#textfield0").on("change", "", function() {
         start_search()
     });
-
-    // create test data
-    clear();
-    append_table([{song: "test_song", code: "test_code", artist: "test_artist"}]);
 }
 
 function fill_song_modal(song)
@@ -22,7 +18,13 @@ function fill_song_modal(song)
     $("#song_modal").modal("show");
     var song = $(song).children("td");
     for(var i = 0; i < song.length; i++) {
-        $(`#${song[i].id.split('-')[0]}-modal`).text(song[i].innerText);
+        var attribute = song[i].id.split('-')[0];
+        if (attribute == "song") {
+            console.log($(`${attribute}-modal`));
+            $(`#${attribute}-modal`).text(song[i].innerText);
+        } else {
+            $(`#${attribute}-modal`).text(`${attribute}: ${song[i].innerText}`);
+        }
     }
 }
 
@@ -33,7 +35,7 @@ function start_search()
 
     $.ajax({
         type: "POST",
-        url: "http://192.168.1.15:3000/api/v1/command/search/",
+        url: "https://api.alesap.astrobunny.net/api/v1/command/search/",
         data: JSON.stringify({
             str: search_string
         }),
@@ -83,4 +85,15 @@ function append_table(data)
         }
         body.append(row);
     }
+}
+
+function queue_song(song, artist, code)
+{
+    console.log(song, artist, code);
+    $('#song_modal').modal('hide');
+    Toastify({
+        text: `Queued ${artist}: ${song}`,
+        duration: 3000,
+        position: "center"
+    }).showToast();
 }

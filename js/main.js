@@ -11,6 +11,10 @@ function startup()
     $("#textfield0").on("change", "", function() {
         start_search()
     });
+
+    if (sessionStorage.getItem('akey')) {
+        update_status();
+    }
 }
 
 function fill_song_modal(song)
@@ -18,7 +22,6 @@ function fill_song_modal(song)
     $("#song_modal").modal("show");
     var song = $(song).children("td");
     for(var i = 0; i < song.length; i++) {
-        console.log(song[i]);
         var attribute = song[i].id.split('-')[0];
         if (attribute != "extra") {
             $(`#${attribute}-modal`).text(song[i].innerText);
@@ -90,11 +93,39 @@ function append_table(data)
 
 function queue_song(song, artist, code)
 {
-    console.log(song, artist, code);
+    let uri = "http://order.mashup.jp/bridge/post_request.php";
+    let body = { 
+        akey: sessionStorage.getItem('akey'),
+        skey: sessionStorage.getItem('skey'),
+        scd: sessionStorage.getItem('scd'),
+        ecd: code
+    };
+
+    const xhr = new XMLHttpRequest();
+    xhr.open("POST", uri, true);
+    xhr.setRequestHeader('Content-Type', 'application/json');
+    xhr.send(JSON.stringify(body));
+
     $('#song_modal').modal('hide');
     Toastify({
         text: `Queued ${artist}: ${song}`,
         duration: 3000,
         position: "center"
     }).showToast();
+}
+
+function stop_song()
+{
+    let uri = "http://order.mashup.jp/bridge/post_request.php";
+    let body = { 
+        akey: sessionStorage.getItem('akey'),
+        skey: sessionStorage.getItem('skey'),
+        scd: sessionStorage.getItem('scd'),
+        type: 2
+    };
+
+    const xhr = new XMLHttpRequest();
+    xhr.open("POST", uri, true);
+    xhr.setRequestHeader('Content-Type', 'application/json');
+    xhr.send(JSON.stringify(body));
 }

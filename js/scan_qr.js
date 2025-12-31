@@ -1,7 +1,4 @@
 // initialize globals
-let akey = '';
-let skey = '';
-let scd  = '';
 let reader = null;
 let connected = false;
 
@@ -55,9 +52,12 @@ async function scan_success(decodedText, decodedResult)
     $('#scan_qr').modal('hide');
     // rudimentary error checking
     if(!/rdn_[A-Za-z0-9]+\.[A-Za-z0-9]+,[A-Za-z0-9]+,[0-9]+/.test(decodedText)) throw new Error("Invalid QR Code");
-    [akey, skey, scd] = decodedText.split('/')[2].split(',');
+    // [akey, skey, scd] = decodedText.split('/')[2].split(',');
+    let keys = decodedText.split('/')[2].split(',');
+    sessionStorage.setItem('akey', keys[0]);
+    sessionStorage.setItem('skey', keys[1]);
+    sessionStorage.setItem('scd', keys[2]);
     update_status();
-    console.log("akey: " + akey + "\nskey: " + skey + "\nscd: " + scd);
 }
 
 function update_status()
@@ -65,5 +65,7 @@ function update_status()
     $('.widget').removeClass('red-bg');
     $('.widget').addClass('navy-bg');
     $('#connected').text("Connected");
-    $('#keys').html(`<br/>akey: ${akey}<br/>skey: ${skey}<br/>scd: ${scd}`, akey, skey, scd);
+    $('#keys').append(`<br/>akey: ${sessionStorage.getItem('akey')}`);
+    $('#keys').append(`<br/>skey: ${sessionStorage.getItem('skey')}`);
+    $('#keys').append(`<br/>scd: ${sessionStorage.getItem('scd')}`);
 }

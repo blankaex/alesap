@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html>
+<!-- Generated using weaver: https://github.com/davidsiaw/weaver -->
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Pasela Search</title>
+
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="font-awesome/css/font-awesome.css" rel="stylesheet">
+    <link href="css/plugins/iCheck/custom.css" rel="stylesheet">
+
+    <link rel="icon" href="images/favicon.ico" type="image/x-icon" />
+
+      <link href="css/style-dark.css" rel="stylesheet">
+
+
+    <link href="css/animate.css" rel="stylesheet">
+
+
+
+
+
+</head>
+
+<body class='gray-bg'>
+
+<div id="background" style="z-index: -999; position:absolute; left:0px; right:0px; width:100%; height:100%">
+
+</div>
+
+<div id="content" style="z-index: 0">
+
+        <div id="wrapper">
+	        <div class="wrapper-content">
+	            <div class="container">
+<div class="modal fade" id="scan_qr" tabindex="-1" role="dialog"><div class="modal-dialog" role="document"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-label="Close">&times;</button><h4>Scan QR Code</h4></div><div class="modal-body"><div class="container" style="width:100%;"><div class="section"><div id="reader"></div><div id="selector" style="display:none;"><form id="form0" role="form"><div class="form-group"><label class="control-label">Select Camera</label><div class="input-group" style="width: 100%"><select class="form-control" name="cameras" id="select0" placeholder=" "></select></div></div></form></div></div></div></div><div class="modal-footer"><button type="button" class="btn btn-primary    " id="" onclick="action0(this)">Close</button></div></div></div></div><div class="widget style1 red-bg"><h3 id="connected">Not Connected</h3><samp id="keys"></samp></div><button type="button" class="btn btn-primary  btn-block  " id="" onclick="action1(this)">Scan QR Code</button><h1>Pasela Search</h1><form id="form1" role="form"><div class="form-group " id="textfield0-group"><div class=" "><input type="text" placeholder="" id="textfield0" name="search" rows="" class="form-control" value="" style="" autocomplete="on" autocorrect="on" autocapitalize="off" /></div></div></form><div class="modal fade" id="song_modal" tabindex="-1" role="dialog"><div class="modal-dialog" role="document"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-label="Close">&times;</button><h4 id="song-modal"></h4></div><div class="modal-body"><p id="artist-modal"></p><p id="code-modal"></p></div><div class="modal-footer"><button type="button" class="btn btn-primary    " id="" onclick="action2(this)">Queue</button></div></div></div></div><table class="table" id="dyn_table0" style=""><thead id="dyn_table0_head"><th>Song Name</th><th>Artist</th><th>Code</th></thead><tbody id="dyn_table0_body"></tbody></table><ul class="pagination" /><script>function getcolumns() {
+  return { song: 0, artist: 1, code: 2 };
+};
+</script>
+	            </div>
+			</div>
+		</div>
+
+</div>
+
+    <!-- Mainly scripts -->
+    <script src="js/jquery-3.1.1.min.js"></script>
+    <script src="js/jquery-ui-1.10.4.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/plugins/metisMenu/jquery.metisMenu.js"></script>
+    <script src="js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+	<script type="text/x-mathjax-config">
+		MathJax.Hub.Config({
+			asciimath2jax: {
+				delimiters: [['$$$MATH$$$','$$$ENDMATH$$$']]
+			}
+		});
+	</script>
+    <script src="js/MathJax/MathJax.js?config=AM_HTMLorMML-full" async></script>
+
+    <script src="js/main.js"></script>
+
+    <script src="js/scan_qr.js"></script>
+
+    <script src="js/html5-qrcode.min.js"></script>
+
+
+
+    <!-- Custom and plugin javascript -->
+    <script src="js/weaver.js"></script>
+    
+
+    <script>
+function get_form0_object()
+{
+	var object = {}
+	object["cameras"] = $( "#select0 option:selected" ).text();
+
+	return object;
+}
+
+function action0(caller, data) {
+	$('#scan_qr').modal('hide');
+}
+
+function action1(caller, data) {
+	$('#scan_qr').modal('show'); scan_qr();
+}
+
+function get_form1_object()
+{
+	var object = {}
+	object["search"] = $('#textfield0').val();
+
+	return object;
+}
+
+function action2(caller, data) {
+	$('#song_modal').modal('hide');
+}
+
+
+	function refresh_table_dyn_table0()
+	{
+		var query_object = {};
+
+		$.get( "something.json" , function( returned_data )
+		{
+			var data = returned_data;
+			var data_object = {};
+			if (data !== null && typeof data === 'object')
+			{
+				data_object = data;
+			}
+			else
+			{
+				data_object = JSON.parse(data);
+			}
+
+			var head = $("#dyn_table0_head")
+			var body = $("#dyn_table0_body")
+
+			if($.isPlainObject(data_object))
+			{
+				for (var key in data_object)
+				{
+					var row = $('<tr>');
+					row.append($('<td>').text(key));
+					row.append($('<td>').text(data_object[key]));
+					body.append(row);
+				}
+			}
+
+			if ($.isArray(data_object))
+			{
+
+				var columnData = JSON.parse("[{\"name\":\"song\",\"title\":\"Song Name\",\"format\":null,\"transform\":null},{\"name\":\"artist\",\"title\":\"Artist\",\"format\":null,\"transform\":null},{\"name\":\"code\",\"title\":\"Code\",\"format\":null,\"transform\":null}]");
+				var columns = {};
+				var columnTitles = [];
+				head.empty();
+				if (false)
+				{
+					// Set up columns
+					for (var index in data_object)
+					{
+						for (var key in data_object[index])
+						{
+							columns[key] = Object.keys(columns).length;
+						}
+					}
+					for (var key in columns)
+					{
+						columnTitles.push(key);
+					}
+				}
+				else
+				{
+					for (var key in columnData)
+					{
+						columns[columnData[key]["name"]] = Object.keys(columns).length;
+						columnTitles.push(columnData[key]["title"]);
+					}
+				}
+
+				var row = $('<tr>');
+				for (var key in columnTitles)
+				{
+					var columnTitle = $('<th>').html(columnTitles[key]);
+					row.append(columnTitle);
+				}
+				head.append(row);
+
+				for (var index in data_object)
+				{
+					var row = $('<tr>');
+					for (var columnIndex = 0; columnIndex < Object.keys(columns).length; columnIndex++) {
+						var cell_data = data_object[index][ Object.keys(columns)[columnIndex] ];
+
+						if (columnData && columnData[columnIndex]["format"])
+						{
+							var format = columnData[columnIndex]["format"];
+							var matches = format.match(/###.+?###/g)
+
+							var result = format;
+							for (var matchIndex in matches)
+							{
+								var member_name = matches[matchIndex].match(/[^#]+/)[0];
+								result = result.replaceAll(matches[matchIndex], data_object[index][member_name]);
+							}
+
+							if (columnData && columnData[columnIndex]["transform"])
+							{
+								result = document["transform_" + columnData[columnIndex]["transform"]](result);
+							}
+							row.append($('<td>').html( result ).data("object", data_object[index]) );
+						}
+						else
+						{
+							if (columnData && columnData[columnIndex]["transform"])
+							{
+								cell_data = document["transform_" + columnData[columnIndex]["transform"]](cell_data);
+							}
+							row.append($('<td>').text( cell_data ).data("object", data_object[index]) );
+						}
+					}
+					body.append(row);
+				}
+			}
+
+		});
+	}
+
+	refresh_table_dyn_table0();
+
+
+
+
+$( document ).ready(function() {
+
+startup();
+
+
+
+});
+    </script>
+
+
+
+</body>
+
+</html>
+

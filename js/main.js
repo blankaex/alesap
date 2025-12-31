@@ -1,8 +1,3 @@
-// initialize globals
-var akey = '';
-var skey = '';
-var scd  = '';
-
 function startup()
 {
     $(window).keydown(function(event) {
@@ -17,50 +12,9 @@ function startup()
         start_search()
     });
 
+    // create test data
     clear();
     append_table([{song: "test_song", code: "test_code", artist: "test_artist"}]);
-}
-
-function scan_qr()
-{
-    const html5QrCode = new Html5Qrcode("reader");
-    const qrCodeSuccessCallback = (decodedText, decodedResult) => {
-        html5QrCode.stop().then((ignore) => {
-            $('#scan_qr').modal('hide');
-            if(!/rdn_[A-Za-z0-9]+\.[A-Za-z0-9]+,[A-Za-z0-9]+,[0-9]+/.test(decodedText))
-                throw new Error("Invalid QR Code");
-            [akey, skey, scd] = decodedText.split('/')[2].split(',');
-            console.log("akey: " + akey + "\nskey: " + skey + "\nscd: " + scd);
-        }).catch((err) => {
-            console.log(err);
-            alert("Invalid QR Code");
-        });
-    };
-    const config = { fps: 10, qrbox: { width: 250, height: 250 } };
-    html5QrCode.start({ facingMode: { exact: "environment"} }, config, qrCodeSuccessCallback)
-        .catch(err => {
-            $("#selector").css("display", "");
-            Html5Qrcode.getCameras().then(devices => {
-                if (devices && devices.length) {
-                    for(var i = 0; i < devices.length; i++) {
-                        $("#select0").append(`<option>${devices[i].label}</option>`);
-                    }
-                    $("#select0").on("change", "", function() {
-                        for(var i = 0; i < devices.length; i++) {
-                            if(devices[i].label == $("#select0").val()) {
-                                // TODO: process changing selection
-                                // need to stop device before starting again
-                                // need to not re-create device list
-                                html5QrCode.start({ deviceId: { exact: devices[i].id } }, config, qrCodeSuccessCallback);
-                                break;
-                            }
-                        }
-                    });
-                }
-            }).catch(err => {
-                console.log(err);
-            });
-        });
 }
 
 function fill_song_modal(song)

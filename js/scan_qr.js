@@ -52,8 +52,7 @@ async function scan_success(decodedText, decodedResult)
     $('#scan_qr').modal('hide');
     // rudimentary error checking
     if(!/rdn_[A-Za-z0-9]+\.[A-Za-z0-9]+,[A-Za-z0-9]+,[0-9]+/.test(decodedText)) throw new Error("Invalid QR Code");
-    // [akey, skey, scd] = decodedText.split('/')[2].split(',');
-    let keys = decodedText.split('/')[2].split(',');
+    let keys = decodedText.split(',');
     sessionStorage.setItem('akey', keys[0]);
     sessionStorage.setItem('skey', keys[1]);
     sessionStorage.setItem('scd', keys[2]);
@@ -62,6 +61,7 @@ async function scan_success(decodedText, decodedResult)
 
 function update_status()
 {
+    connected = true;
     $('.widget').removeClass('red-bg');
     $('.widget').addClass('navy-bg');
     $('#connected').text("Connected");

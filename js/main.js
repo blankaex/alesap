@@ -1,3 +1,4 @@
+// loads elements on page start
 function startup()
 {
     $(window).keydown(function(event) {
@@ -17,6 +18,7 @@ function startup()
     }
 }
 
+// handles clicking items in the search results
 function fill_song_modal(song)
 {
     $("#song_modal").modal("show");
@@ -32,40 +34,7 @@ function fill_song_modal(song)
     }
 }
 
-function start_search()
-{
-    var search_string = $("#textfield0").val();
-    console.log(search_string)
-
-    $.ajax({
-        type: "POST",
-        url: "https://api.alesap.astrobunny.net/api/v1/command/search/",
-        data: JSON.stringify({
-            str: search_string
-        }),
-        contentType: "application/json; charset=utf-8"
-
-    }).then(function(data) {
-        console.log(data.results);
-        clear();
-        append_table(data.results[0]);
-    })
-}
-
-function get_form0_object()
-{
-    var object = {}
-    object["search"] = $('#textfield0').val();
-
-    return object;
-}
-
-function clear()
-{
-    var body = $("#dyn_table0_body");
-    body.empty();
-}
-
+// helper function to display search results
 function append_table(data)
 {
     var query_object = {};
@@ -91,41 +60,71 @@ function append_table(data)
     }
 }
 
-function queue_song(song, artist, code)
+// handles search functionality and displaying results
+function start_search()
 {
-    let uri = "http://order.mashup.jp/bridge/post_request.php";
-    let body = { 
-        akey: sessionStorage.getItem('akey'),
-        skey: sessionStorage.getItem('skey'),
-        scd: sessionStorage.getItem('scd'),
-        ecd: code
-    };
+    var search_string = $("#textfield0").val();
 
-    const xhr = new XMLHttpRequest();
-    xhr.open("POST", uri, true);
-    xhr.setRequestHeader('Content-Type', 'application/json');
-    xhr.send(JSON.stringify(body));
-
-    $('#song_modal').modal('hide');
-    Toastify({
-        text: `Queued ${artist}: ${song}`,
-        duration: 3000,
-        position: "center"
-    }).showToast();
+    $.ajax({
+        type: "POST",
+        url: "https://api.alesap.astrobunny.net/api/v1/command/search/",
+        data: JSON.stringify({
+            str: search_string
+        }),
+        contentType: "application/json; charset=utf-8"
+    }).then(function(data) {
+        $("#dyn_table0_body").empty();
+        Toastify({
+            text: `Search complete`,
+            duration: 3000,
+            position: "center"
+        }).showToast();
+        append_table(data.results[0]);
+    })
 }
 
+// handles adding songs to the queue
+function queue_song(song, artist, code)
+{
+    $.ajax({
+        type: "POST",
+        // TODO: needs to be implemented in backend
+        url: "https://api.alesap.astrobunny.net/api/v1/command/queue/",
+        data: JSON.stringify({
+            akey: sessionStorage.getItem('akey'),
+            skey: sessionStorage.getItem('skey'),
+            scd: sessionStorage.getItem('scd'),
+            ecd: code
+        }),
+        contentType: "application/json; charset=utf-8"
+    }).then(function(data) {
+        $('#song_modal').modal('hide');
+        Toastify({
+            text: `Queued ${artist}: ${song}`,
+            duration: 3000,
+            position: "center"
+        }).showToast();
+    })
+}
+
+// handles stopping the current song in the queue
 function stop_song()
 {
-    let uri = "http://order.mashup.jp/bridge/post_request.php";
-    let body = { 
-        akey: sessionStorage.getItem('akey'),
-        skey: sessionStorage.getItem('skey'),
-        scd: sessionStorage.getItem('scd'),
-        type: 2
-    };
-
-    const xhr = new XMLHttpRequest();
-    xhr.open("POST", uri, true);
-    xhr.setRequestHeader('Content-Type', 'application/json');
-    xhr.send(JSON.stringify(body));
+    $.ajax({
+        type: "POST",
+        // TODO: needs to be implemented in backend
+        url: "https://api.alesap.astrobunny.net/api/v1/command/stop/",
+        data: JSON.stringify({
+            akey: sessionStorage.getItem('akey'),
+            skey: sessionStorage.getItem('skey'),
+            scd: sessionStorage.getItem('scd'),
+        }),
+        contentType: "application/json; charset=utf-8"
+    }).then(function(data) {
+        Toastify({
+            text: `Song stopped`,
+            duration: 3000,
+            position: "center"
+        }).showToast();
+    })
 }

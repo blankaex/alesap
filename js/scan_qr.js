@@ -65,6 +65,7 @@ function update_status()
     $('.widget').removeClass('red-bg');
     $('.widget').addClass('navy-bg');
     $('#connected').text("Connected");
+    $('#keys').empty();
     $('#keys').append(`<br/>akey: ${sessionStorage.getItem('akey')}`);
     $('#keys').append(`<br/>skey: ${sessionStorage.getItem('skey')}`);
     $('#keys').append(`<br/>scd: ${sessionStorage.getItem('scd')}`);

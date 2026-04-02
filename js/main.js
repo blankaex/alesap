@@ -74,11 +74,6 @@ function start_search()
         contentType: "application/json; charset=utf-8"
     }).then(function(data) {
         $("#dyn_table0_body").empty();
-        Toastify({
-            text: `Search complete`,
-            duration: 3000,
-            position: "center"
-        }).showToast();
         append_table(data.results[0]);
     })
 }

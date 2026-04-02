@@ -13,8 +13,8 @@ function startup()
         start_search()
     });
 
-    if (sessionStorage.getItem('akey')) {
-        update_status();
+    if (session_is_active()) {
+        update_status("connected");
     }
 }
 
@@ -122,7 +122,7 @@ function stop_song()
         contentType: "application/json; charset=utf-8"
     }).then(function(data) {
         Toastify({
-            text: `Song stopped`,
+            text: `Sent stop request`,
             duration: 3000,
             position: "center"
         }).showToast();

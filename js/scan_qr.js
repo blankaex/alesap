@@ -1,6 +1,6 @@
 // initialize globals
 let reader = null;
-let connected = false;
+let toast_id = null;
 
 function scan_qr()
 {
@@ -31,7 +31,7 @@ function scan_qr()
 
 async function stop_scanning()
 {
-    if(reader && reader.getState() == Html5QrcodeScannerState.SCANNING) {
+    if (reader && reader.getState() == Html5QrcodeScannerState.SCANNING) {
         await reader.stop();
     }
 }
@@ -48,25 +48,56 @@ async function set_device(devices, config, scan_success)
 
 async function scan_success(decodedText, decodedResult)
 {
-    await stop_scanning();
-    $('#scan_qr').modal('hide');
-    // rudimentary error checking
-    if(!/rdn_[A-Za-z0-9]+\.[A-Za-z0-9]+,[A-Za-z0-9]+,[0-9]+/.test(decodedText)) throw new Error("Invalid QR Code");
-    let keys = decodedText.split(',');
-    sessionStorage.setItem('akey', keys[0]);
-    sessionStorage.setItem('skey', keys[1]);
-    sessionStorage.setItem('scd', keys[2]);
-    update_status();
+    try {
+        // rudimentary error checking
+        if (/rdn_[A-Za-z0-9]+\.[A-Za-z0-9]+,[A-Za-z0-9]+,[0-9]+/.test(decodedText)) {
+            await stop_scanning();
+            $('#scan_qr').modal('hide');
+            let keys = decodedText.split(',');
+            sessionStorage.setItem('akey', keys[0]);
+            sessionStorage.setItem('skey', keys[1]);
+            sessionStorage.setItem('scd', keys[2]);
+            update_status("connected");
+        } else {
+            throw new Error("Invalid QR Code");
+        }
+    } catch (error) {
+        if (toast_id) return;
+        Toastify({
+            text: `Invalid QR Code`,
+            duration: 3000,
+            position: "center",
+            style: {
+                background: "red",
+            }
+        }).showToast();
+        toast_id = setTimeout(() => { toast_id = null; }, 3000);
+    }
 }
 
-function update_status()
+function update_status(status)
 {
-    connected = true;
-    $('.widget').removeClass('red-bg');
-    $('.widget').addClass('navy-bg');
-    $('#connected').text("Connected");
-    $('#keys').empty();
-    $('#keys').append(`<br/>akey: ${sessionStorage.getItem('akey')}`);
-    $('#keys').append(`<br/>skey: ${sessionStorage.getItem('skey')}`);
-    $('#keys').append(`<br/>scd: ${sessionStorage.getItem('scd')}`);
+    if (status == "connected" && session_is_active()) {
+        $('.widget').removeClass('red-bg');
+        $('.widget').addClass('navy-bg');
+        $('#connected').text("Connected at " + new Date().toLocaleString('ja-JP'));
+        $('#keys').empty();
+        $('#keys').append(`<br/>akey: ${sessionStorage.getItem('akey')}`);
+        $('#keys').append(`<br/>skey: ${sessionStorage.getItem('skey')}`);
+        $('#keys').append(`<br/>scd: ${sessionStorage.getItem('scd')}`);
+    } else if (status == "disconnected" && session_is_active()) {
+        sessionStorage.clear();
+        $('.widget').removeClass('navy-bg');
+        $('.widget').addClass('red-bg');
+        $('#connected').text("Not Connected");
+        $('#keys').empty();
+    }
+}
+
+function session_is_active()
+{
+    const a_key_set = sessionStorage.getItem('akey') !== null;
+    const s_key_set = sessionStorage.getItem('skey') !== null;
+    const scd_set = sessionStorage.getItem('scd') !== null;
+    return a_key_set && s_key_set && scd_set;
 }

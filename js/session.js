@@ -65,6 +65,7 @@ async function scan_success(decodedText, decodedResult)
             sessionStorage.setItem('akey', keys[0]);
             sessionStorage.setItem('skey', keys[1]);
             sessionStorage.setItem('scd', keys[2]);
+            sessionStorage.setItem('connected_at', new Date().toLocaleString('ja-JP'));
             update_status("connected");
         } else {
             throw new Error("Invalid QR Code");
@@ -88,7 +89,7 @@ function update_status(status)
     if (status == "connected" && session_is_active()) {
         $('.widget').removeClass('red-bg');
         $('.widget').addClass('navy-bg');
-        $('#connected').text("Connected at " + new Date().toLocaleString('ja-JP'));
+        $('#connected').text("Connected at " + sessionStorage.getItem('connected_at'));
         $('#keys').empty();
         if(sessionStorage.getItem('debug_mode')) {
             $('#keys').append(`<br/>akey: ${sessionStorage.getItem('akey')}`);

@@ -24,13 +24,13 @@ jobs:
         FRONTEND_ROOT: ${{ secrets.FRONTEND_ROOT }}
         FRONTEND_URL: ${{ secrets.FRONTEND_URL }}
       run: |-
-        git config --global user.name $GIT_USER_NAME
-        git config --global user.email $GIT_EMAIL
+        git config --global user.name "$GIT_USER_NAME"
+        git config --global user.email "$GIT_EMAIL"
         git config --global gpg.format ssh
         git config --global commit.gpgsign true
         echo "$SIGNINGKEY" > signingkey
         chmod 600 signingkey
-        git config --global user.signingkey $PWD/signingkey
+        git config --global user.signingkey "$PWD/signingkey"
         sh deploy.sh
 
 'on':

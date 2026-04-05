@@ -1,3 +1,7 @@
+// just a cache of songs keyed by their song code (1234A56)
+// with all the relevant info
+var song_cache = {}
+
 // loads elements on page start
 function startup()
 {
@@ -23,15 +27,21 @@ function fill_song_modal(song)
 {
     $("#song_modal").modal("show");
     var song = $(song).children("td");
+
+    var song_code = '';
     for(var i = 0; i < song.length; i++) {
         var attribute = song[i].id.split('-')[0];
+        if (attribute === "code") {
+            song_code = song[i].innerText;
+        }
+        
         if (attribute != "extra") {
             $(`#${attribute}-modal`).text(song[i].innerText);
-        } else {
-            // do any conditional text formatting here then just set the value below
-            $(`#extra-modal`).text("None");
         }
     }
+
+    $(`#extra-modal`).text(JSON.stringify(song_cache[song_code]));
+
 }
 
 function start_search()
@@ -84,6 +94,10 @@ function append_table(data)
     var columns = getcolumns();
 
     for (var index in data_object) {
+        // Add the song to the song cache
+        var song_data = data_object[index];
+        song_cache[song_data['code']] = song_data;
+
         var row = $('<tr onclick="fill_song_modal(this)">');
         for (var columnIndex = 0; columnIndex < Object.keys(columns).length; columnIndex++)
         {
@@ -101,7 +115,7 @@ function start_search()
 
     $.ajax({
         type: "POST",
-        url: "https://api.alesap.astrobunny.net/api/v1/command/search/",
+        url: API_URL + "/api/v1/command/search/",
         data: JSON.stringify({
             str: search_string
         }),
@@ -118,7 +132,7 @@ function queue_song(song, artist, code)
     if (session_is_active()) {
         $.ajax({
             type: "POST",
-            url: "https://api.alesap.astrobunny.net/api/v1/command/queue/",
+            url: API_URL + "/api/v1/command/queue/",
             data: JSON.stringify({
                 akey: sessionStorage.getItem('akey'),
                 skey: sessionStorage.getItem('skey'),
@@ -153,7 +167,7 @@ function stop_song()
     if (session_is_active()) {
         $.ajax({
             type: "POST",
-            url: "https://api.alesap.astrobunny.net/api/v1/command/stop/",
+            url: API_URL + "/api/v1/command/stop/",
             data: JSON.stringify({
                 akey: sessionStorage.getItem('akey'),
                 skey: sessionStorage.getItem('skey'),

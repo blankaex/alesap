@@ -2,9 +2,8 @@ empty_page '', 'Pasela Search', theme: :dark do
     request_js 'js/main.js'
     request_js 'js/session.js'
     request_js 'js/controls.js'
-
-    request_js 'js/html5-qrcode.min.js'
-    request_js 'js/toastify.js'
+    request_js 'js/libs/html5-qrcode.min.js'
+    request_js 'js/libs/toastify.js'
     
     request_css 'css/overrides.css'
     request_css 'css/toastify.min.css'

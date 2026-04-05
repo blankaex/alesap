@@ -17,13 +17,31 @@ jobs:
           ssh-private-key: ${{ secrets.DEPLOYKEY }}
     - name: push master
       env:
-        API_URL: https://api.alesap.astrobunny.net
+        API_URL: ${{ secrets.GIT_USER_NAME }}
+        GIT_USER_NAME: ${{ secrets.GIT_USER_NAME }}
+        GIT_EMAIL: ${{ secrets.GIT_EMAIL }}
+        SIGNINGKEY: ${{ secrets.SIGNINGKEY }}
+        FRONTEND_ROOT: ${{ secrets.FRONTEND_ROOT }}
+        FRONTEND_URL: ${{ secrets.FRONTEND_URL }}
       run: |-
-        git config --global user.name "blankaex(ghactions)"
-        git config --global user.email "5815849+blankaex@users.noreply.github.com"
+        git config --global user.name "$GIT_USER_NAME"
+        git config --global user.email "$GIT_EMAIL"
+        git config --global gpg.format ssh
+        git config --global commit.gpgsign true
+        echo "$SIGNINGKEY" > signingkey
+        chmod 600 signingkey
+        git config --global user.signingkey "$PWD/signingkey"
         sh deploy.sh
 
 'on':
   push:
     branches:
     - '*'
+
+# these are my constants
+# API_URL https://api.alesap.astrobunny.net
+# GIT_USER_NAME davidsiaw(ghactions)
+# GIT_EMAIL 874280+davidsiaw@users.noreply.github.com
+# SIGNINGKEY ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGU2vXshVRTQ+P51dWFQTCjib4pmAXRwMD/DQ6deMcf8 david@crosshour-2
+# FRONTEND_ROOT alesap.astrobunny.net
+# FRONTEND_URL git@github.com:davidsiaw/alesap

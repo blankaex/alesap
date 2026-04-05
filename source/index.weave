@@ -95,13 +95,14 @@ empty_page '', 'Pasela Search', theme: :dark do
     end.join(", ")
 
     script <<~SCRIPT
-        function getcolumns() {
-          return { #{column_hash} };
-        };
+      var API_URL = "#{ ENV['API_URL'] || 'http://localhost:3000' }";
+      function getcolumns() {
+        return { #{column_hash} };
+      };
     SCRIPT
 
     on_page_load <<~SCRIPT
-        startup();
+      startup();
     SCRIPT
 end
 

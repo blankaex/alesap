@@ -1,3 +1,5 @@
 .cmdsh
 .bundle
 .bundler
+deploykey
+deploykey.pub

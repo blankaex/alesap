@@ -21,7 +21,7 @@ function startup()
         }
     });
 
-    $("#textfield0").on("change", "", function() {
+    $("#search-field").on("change", "", function() {
         start_search()
     });
 
@@ -38,7 +38,7 @@ function startup()
 // handles search functionality and displaying results
 function start_search()
 {
-    var search_string = $("#textfield0").val();
+    var search_string = $("#search-field").val();
 
     $.ajax({
         type: "POST",

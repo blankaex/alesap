@@ -44,7 +44,7 @@ empty_page '', 'Pasela Search', theme: :dark do
         tab "Search" do
             h2 "Song Search", style: "margin-top: 0px;"
             wform do
-                textfield "search"
+                textfield "search", id: "search-field"
                 submit "Search", block:true do
                     script "start_search();"
                 end
@@ -91,6 +91,16 @@ empty_page '', 'Pasela Search', theme: :dark do
         end
 
         tab "Advanced" do
+            wform do
+                h3 "Queue song by ID:"
+                textfield "ecd", id: "ecd-field"
+                submit "Add to queue", block:true do
+                    script "queue_song($('#ecd-field').val());"
+                end
+            end
+
+            hr
+
             block_button nil, "Debug Mode", style: "warning" do
                 script "toggle_debug();"
             end

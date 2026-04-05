@@ -49,22 +49,28 @@ function append_table(data)
         song_cache[data[index]['code']] = data[index];
 
         var song_code = data[index]['code'];
-        var song = song_cache[song_code]['song'];
-        if (song_cache[song_code]['extra']['content_type'] != null) {
-            if(!song.toLowerCase().includes(song_cache[song_code]['extra']['content_type'].toLowerCase())) {
-                song += "【"
-                song += song_cache[song_code]['extra']['content_type'];
-                song += "】"
-            }
-        }
+        var song = normalize_song(song_code);
         var artist = song_cache[song_code]['artist'];
 
         var row = $('<tr onclick="fill_song_modal(this)">');
-        row.append( $(`<td id=song-${index}>`).text(song).data("object", data[index]) );
-        row.append( $(`<td id=artist-${index}>`).text(artist).data("object", data[index]) );
-        row.append( $(`<td id=code-${index}>`).text(song_code).data("object", data[index]) );
+        row.append( $(`<td>`).text(song).data("object", data[index]) );
+        row.append( $(`<td>`).text(artist).data("object", data[index]) );
+        row.append( $(`<td>`).text(song_code).data("object", data[index]) );
         $("#dyn_table0_body").append(row);
     }
+}
+
+// helper function to add additional song info to title
+function normalize_song(song_code) {
+    var song = song_cache[song_code]['song'];
+    if (song_cache[song_code]['extra']['content_type'] != null) {
+        if(!song.toLowerCase().includes(song_cache[song_code]['extra']['content_type'].toLowerCase())) {
+            song += "【"
+            song += song_cache[song_code]['extra']['content_type'];
+            song += "】"
+        }
+    }
+    return song;
 }
 
 // handles clicking items in the search results
@@ -74,10 +80,22 @@ function fill_song_modal(song)
     // extract song code from DOM based on selection
     var song_code = $(song).children("td")[2].innerText;
 
-    $('#song-modal').text(song_cache[song_code]['song']);
-    $('#artist-modal').text(song_cache[song_code]['artist']);
-    $('#code-modal').text(song_cache[song_code]['code']);
-    $('#extra-modal').text(JSON.stringify(song_cache[song_code]));
+    $('#song-modal-title').text(song_cache[song_code]['song']);
+
+    let song_modal_content = "";
+    song_modal_content += "<p><b>Title:</b></br>" + normalize_song(song_code) + "</p>";
+    song_modal_content += "<p><b>Artist:</b></br>" + song_cache[song_code]['artist'] + "</p>";
+    if (song_cache[song_code]['extra']['tie_up'] != null) {
+        song_modal_content += "<p><b>Franchise:</b></br>" + song_cache[song_code]['extra']['tie_up'] + "</p>";
+    }
+    song_modal_content += "<p><b>Code:</b></br>" + song_code + "</p>";
+
+    if(sessionStorage.getItem('debug_mode')) {
+        song_modal_content += "<hr><h3>Debugging info</h3>"
+        song_modal_content += "<pre>" + JSON.stringify(song_cache[song_code], null, 2) + "</pre>"
+    }
+
+    $('#song-modal-body').html(song_modal_content);
 }
 
 // handles adding songs to the queue

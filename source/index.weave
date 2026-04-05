@@ -52,22 +52,18 @@ empty_page '', 'Pasela Search', theme: :dark do
     end
 
     columns = {
-        song: "Song Name",
+        song: "Title",
         artist: "Artist",
         code: "Code"
     }
 
     modal "song_modal" do
         header { 
-            h4 "", id: "song-modal", style: "font-weight: bold"
+            h4 "", id: "song-modal-title", style: "font-weight: bold"
         }
         body { 
-            span "Artist: ", style: "font-weight: bold"
-            p "", id: "artist-modal" 
-            span "Code: ", style: "font-weight: bold"
-            p "", id: "code-modal"
-            span "Extra: ", style: "font-weight: bold"
-            p "None", id: "extra-modal"
+            div id: "song-modal-body" do
+            end
         }
         footer do
             normal_button "Queue" do

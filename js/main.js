@@ -83,7 +83,6 @@ function queue_song(song, artist, code)
 {
     $.ajax({
         type: "POST",
-        // TODO: needs to be implemented in backend
         url: "https://api.alesap.astrobunny.net/api/v1/command/queue/",
         data: JSON.stringify({
             akey: sessionStorage.getItem('akey'),
@@ -107,7 +106,6 @@ function stop_song()
 {
     $.ajax({
         type: "POST",
-        // TODO: needs to be implemented in backend
         url: "https://api.alesap.astrobunny.net/api/v1/command/stop/",
         data: JSON.stringify({
             akey: sessionStorage.getItem('akey'),

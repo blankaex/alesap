@@ -69,7 +69,7 @@ empty_page '', 'Pasela Search', theme: :dark do
         }
         footer do
             normal_button "Queue" do
-                script "queue_song($('#song-modal').text(), $('#artist-modal').text(), $('#code-modal').text())"
+                script "queue_song($('#current-song-code').text())"
             end
         end
     end

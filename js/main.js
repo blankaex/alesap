@@ -93,7 +93,7 @@ function fill_song_modal(song)
     if (song_cache[song_code]['extra']['tie_up'] != null) {
         song_modal_content += "<p><b>Franchise:</b></br>" + song_cache[song_code]['extra']['tie_up'] + "</p>";
     }
-    song_modal_content += "<p><b>Code:</b></br>" + song_code + "</p>";
+    song_modal_content += "<p><b>Code:</b></br>" + `<span id='current-song-code'>${song_code}</span>` + "</p>";
 
     if(sessionStorage.getItem('debug_mode')) {
         song_modal_content += "<hr><h3>Debugging info</h3>"

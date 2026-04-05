@@ -7,7 +7,7 @@
  */
 
 // handles adding songs to the queue
-function queue_song(song, artist, code)
+function queue_song(song_code)
 {
     if (session_is_active()) {
         $.ajax({
@@ -17,13 +17,13 @@ function queue_song(song, artist, code)
                 akey: sessionStorage.getItem('akey'),
                 skey: sessionStorage.getItem('skey'),
                 scd: sessionStorage.getItem('scd'),
-                ecd: code
+                ecd: song_code 
             }),
             contentType: "application/json; charset=utf-8"
         }).then(function(data) {
             $('#song_modal').modal('hide');
             Toastify({
-                text: `Queued ${artist}: ${song}`,
+                text: "Sent to queue",
                 duration: 3000,
                 position: "center"
             }).showToast();
@@ -56,7 +56,7 @@ function stop_song()
             contentType: "application/json; charset=utf-8"
         }).then(function(data) {
             Toastify({
-                text: `Sent stop request`,
+                text: "Sent stop request",
                 duration: 3000,
                 position: "center"
             }).showToast();
@@ -64,7 +64,7 @@ function stop_song()
     } else {
         $('#song_modal').modal('hide');
         Toastify({
-            text: `Not connected`,
+            text: "Not connected",
             duration: 3000,
             position: "center",
             style: {

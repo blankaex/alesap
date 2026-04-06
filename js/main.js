@@ -121,21 +121,28 @@ function fill_song_modal(song)
     $("#song_modal").modal("show");
     var song_code = $(song).attr('id');
     const song_cache = JSON.parse(localStorage.getItem('song_cache')) ?? {};
-
     $('#song-modal-title').text(normalize_song(song_code));
 
-    var song_modal_content = "";
-    song_modal_content += `<p><b>Title:</b></br>${$('#song-modal-title').text()}</p>`;
-    song_modal_content += `<p><b>Artist:</b></br>${song_cache[song_code]['artist']}</p>`;
+    // construct and append song modal body data
+    var song_modal_data = [];
+    song_modal_data.push(
+        $('<p>').append( $('<b>').text('Title:'), $('<br>'), $('#song-modal-title').text())
+    );
+    song_modal_data.push(
+        $('<p>').append( $('<b>').text('Artist:'), $('<br>'), song_cache[song_code]['artist'])
+    );
     if (song_cache[song_code]['extra']['tie_up'] != null) {
-        song_modal_content += `<p><b>Franchise:</b></br>${song_cache[song_code]['extra']['tie_up']}</p>`;
+        song_modal_data.push(
+            $('<p>').append( $('<b>').text('Franchise:'), $('<br>'), song_cache[song_code]['extra']['tie_up'])
+        );
     }
-    song_modal_content += `<p><b>Code:</b></br><span id='current-song-code'>${song_code}</span></p>`;
-
-    if(sessionStorage.getItem('debug_mode')) {
-        song_modal_content += "<hr><p><b>Debugging info:</b></p>";
-        song_modal_content += `<pre>${JSON.stringify(song_cache[song_code], null, 2)}</pre>`;
+    song_modal_data.push(
+        $('<p>').append( $('<b>').text('Code:'), $('<br>'), $('<span>').attr('id', 'current-song-code').text(song_code))
+    );
+    if (sessionStorage.getItem('debug_mode')) {
+        song_modal_data.push($('<hr>'));
+        song_modal_data.push($('<p>').append($('<b>').text('Debugging info:')));
+        song_modal_data.push($('<pre>').text(JSON.stringify(song_cache[song_code], null, 2)));
     }
-
-    $('#song-modal-body').html(song_modal_content);
+    $('#song-modal-body').empty().append(song_modal_data);
 }

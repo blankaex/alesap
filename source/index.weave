@@ -33,7 +33,7 @@ empty_page '', 'alesap.blankaex.reisen', theme: :dark do
                 end
             end
 
-            table striped: true, id: "song_table", style: "display:none; margin-top: 20px;" do
+            table striped: true, id: "song_table", style: "display:none; margin-top: 10px;" do
                 thead id: "song_table_head" do
                     th { text "Title" }
                     th { text "Artist" }
@@ -57,13 +57,18 @@ empty_page '', 'alesap.blankaex.reisen', theme: :dark do
                     h4 "Queue a song to get started"
                 end
             end
-            table striped: true, id: "history_table", style: "display: none;" do
-                thead id: "history_table_head" do
-                    th { text "Title" }
-                    th { text "Artist" }
-                    th { text "Code" }
+            div id: "history", style: "display: none;" do
+                block_button nil, "Queue random song" do
+                    script "queue_random();"
                 end
-                tbody id: "history_table_body" do
+                table striped: true, id: "history_table", style: "margin-top: 10px;" do
+                    thead id: "history_table_head" do
+                        th { text "Title" }
+                        th { text "Artist" }
+                        th { text "Code" }
+                    end
+                    tbody id: "history_table_body" do
+                    end
                 end
             end
         end

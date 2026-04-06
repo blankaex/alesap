@@ -41,6 +41,11 @@ function queue_song(song_code)
     }
 }
 
+function queue_random() {
+    const song_history = JSON.parse(localStorage.getItem('song_history'));
+    queue_song(song_history[Math.floor(Math.random() * song_history.length)]['code']);
+}
+
 // handles stopping the current song in the queue
 function stop_song()
 {

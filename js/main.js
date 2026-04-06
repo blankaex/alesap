@@ -9,6 +9,7 @@
 // just a cache of songs keyed by their song code (1234A56)
 // with all the relevant info
 var song_cache = {};
+const HISTORY_MAX_LENGTH = 20;
 
 // loads elements on page start
 function startup()

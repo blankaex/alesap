@@ -80,7 +80,7 @@ function normalize_song(song_code) {
     var song = song_cache[song_code]['song'];
     if (song_cache[song_code]['extra']['content_type'] != null) {
         if(!song.toLowerCase().includes(song_cache[song_code]['extra']['content_type'].toLowerCase())) {
-            song += "【" + song_cache[song_code]['extra']['content_type'] + "】"
+            song += `【${song_cache[song_code]['extra']['content_type']}】`;
         }
     }
     return song;
@@ -95,16 +95,16 @@ function fill_song_modal(song)
     $('#song-modal-title').text(normalize_song(song_code));
 
     let song_modal_content = "";
-    song_modal_content += "<p><b>Title:</b></br>" + $('#song-modal-title').text() + "</p>";
-    song_modal_content += "<p><b>Artist:</b></br>" + song_cache[song_code]['artist'] + "</p>";
+    song_modal_content += `<p><b>Title:</b></br>${$('#song-modal-title').text()}</p>`;
+    song_modal_content += `<p><b>Artist:</b></br>${song_cache[song_code]['artist']}</p>`;
     if (song_cache[song_code]['extra']['tie_up'] != null) {
-        song_modal_content += "<p><b>Franchise:</b></br>" + song_cache[song_code]['extra']['tie_up'] + "</p>";
+        song_modal_content += `<p><b>Franchise:</b></br>${song_cache[song_code]['extra']['tie_up']}</p>`;
     }
-    song_modal_content += "<p><b>Code:</b></br>" + `<span id='current-song-code'>${song_code}</span>` + "</p>";
+    song_modal_content += `<p><b>Code:</b></br><span id='current-song-code'>${song_code}</span></p>`;
 
     if(sessionStorage.getItem('debug_mode')) {
-        song_modal_content += "<hr><h3>Debugging info</h3>"
-        song_modal_content += "<pre>" + JSON.stringify(song_cache[song_code], null, 2) + "</pre>"
+        song_modal_content += "<hr><p><b>Debugging info:</b></p>";
+        song_modal_content += `<pre>${JSON.stringify(song_cache[song_code], null, 2)}</pre>`;
     }
 
     $('#song-modal-body').html(song_modal_content);

@@ -55,32 +55,29 @@ function start_search()
             str: search_string
         }),
         contentType: "application/json; charset=utf-8"
-
     }).then(function(data) {
         $("#song_table_body").empty();
-        append_table(data.results[0]);
+        const results = data.results[0];
+        for (var index in results) {
+            // add song to cache
+            song_cache[results[index]['code']] = results[index];
+            // append song to song table
+            append_table("#song_table_body", results[index]['code']);
+        }
     })
 
+    //unhide song table
     $("#song_table").css("display", "");
 }
 
 // helper function to display search results
-function append_table(data)
+function append_table(table_body, song_code)
 {
-    for (var index in data) {
-        // add song to cache
-        song_cache[data[index]['code']] = data[index];
-
-        var song_code = data[index]['code'];
-        var song = normalize_song(song_code);
-        var artist = song_cache[song_code]['artist'];
-
-        var row = $(`<tr id=${song_code} onclick="fill_song_modal(this)">`);
-        row.append( $(`<td>`).text(song).data("object", data[index]) );
-        row.append( $(`<td>`).text(artist).data("object", data[index]) );
-        row.append( $(`<td>`).text(song_code).data("object", data[index]) );
-        $("#song_table_body").append(row);
-    }
+    var row = $(`<tr id=${isong_code} onclick="fill_song_modal(this)">`);
+    row.append($(`<td>`).text(normalize_song(song_code)));
+    row.append($(`<td>`).text(song_cache[song_code]['artist']));
+    row.append($(`<td>`).text(song_code));
+    $(table_body).append(row);
 }
 
 // helper function to add additional song info to title

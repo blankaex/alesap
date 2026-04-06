@@ -33,15 +33,13 @@ empty_page '', 'alesap.blankaex.reisen', theme: :dark do
                 end
             end
 
-            columns = {
-                song: "Title",
-                artist: "Artist",
-                code: "Code"
-            }
-
-            table_from_source "empty.json", id: "song_table", style: "display:none; margin-top: 20px;" do
-                columns.each do |name, title|
-                    column name.to_s, title: title
+            table striped: true, id: "song_table", style: "display:none; margin-top: 20px;" do
+                thead id: "song_table_head" do
+                    th { text "Title" }
+                    th { text "Artist" }
+                    th { text "Code" }
+                end
+                tbody id: "song_table_body" do
                 end
             end
 
@@ -53,7 +51,15 @@ empty_page '', 'alesap.blankaex.reisen', theme: :dark do
         end
 
         tab "History" do
-            p "👷 under construction"
+            table striped: true, id: "history_table" do
+                thead id: "history_table_head" do
+                    th { text "Title" }
+                    th { text "Artist" }
+                    th { text "Code" }
+                end
+                tbody id: "history_table_body" do
+                end
+            end
         end
 
         tab "Advanced" do

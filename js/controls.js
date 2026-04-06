@@ -79,8 +79,25 @@ function toggle_debug()
     if (sessionStorage.getItem('debug_mode') == null) {
         sessionStorage.setItem('debug_mode', true);
         $('#debug-div').css("display", "block");
-        $('#debugging-info').append("Session Storage:</br>");
-        $('#debugging-info').append(JSON.stringify(sessionStorage, null, 2));
+        $('#debugging-info').append(`<p><b>Session Storage:</b></p>`);
+        $('#debugging-info').append(`<pre>${JSON.stringify(sessionStorage, null, 2)}</pre>`);
+        $('#debugging-info').append(`<p><b>Local Storage:</b></p>`);
+        $('#debugging-info').append(`<pre>${JSON.stringify(localStorage, null, 2)}</pre>`);
+        const nav_data = {
+            userAgent: navigator.userAgent,
+            language: navigator.language,
+            languages: navigator.languages,
+            screenWidth: window.screen.width,
+            screenHeight: window.screen.height,
+            pixelRatio: window.devicePixelRatio,
+            platform: navigator.platform,
+            onLine: navigator.onLine,
+            cookieEnabled: navigator.cookieEnabled,
+            hardwareConcurrency: navigator.hardwareConcurrency,
+            deviceMemory: navigator.deviceMemory
+        };
+        $('#debugging-info').append(`<p><b>Device Info:</b></p>`);
+        $('#debugging-info').append(`<pre>${JSON.stringify(nav_data, null, 2)}</pre>`);
     } else {
         sessionStorage.removeItem('debug_mode');
         $('#debug-div').css("display", "none");

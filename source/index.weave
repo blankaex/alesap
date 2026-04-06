@@ -108,8 +108,8 @@ empty_page '', 'Pasela Search', theme: :dark do
                 widget color: :"red" do
                   h3 "Debugging Enabled", style: "margin: 0px;"
                 end
-                h2 "Debugging info"
-                pre id: "debugging-info" 
+                div id: "debugging-info" do
+                end
             end
         end
 

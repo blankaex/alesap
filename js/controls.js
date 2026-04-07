@@ -36,9 +36,14 @@ function queue_song(song_code) {
 }
 
 // queues a random song selected from the song history
-function queue_random() {
-    const song_history = JSON.parse(localStorage.getItem('song_history'));
-    queue_song(song_history[Math.floor(Math.random() * song_history.length)]['song_code']);
+function queue_random(table) {
+    if (table == "history") {
+        const song_history = JSON.parse(localStorage.getItem('song_history'));
+        queue_song(song_history[Math.floor(Math.random() * song_history.length)]['song_code']);
+    } else if (table == "favourites") {
+        const favourites = JSON.parse(localStorage.getItem('favourites'));
+        queue_song(favourites[Math.floor(Math.random() * favourites.length)]['song_code']);
+    }
 }
 
 // sends a stop request to the API to halt the current song
@@ -63,6 +68,21 @@ function stop_song() {
     } else {
         err_not_connected();
     }
+}
+
+function add_favourite(song_code) {
+    let favourites = JSON.parse(localStorage.getItem('favourites')) || [];
+    // add to favourites
+    if (!favourites.includes(song_code)) {
+        $('#favourite-button').addClass('btn-danger');
+        favourites.push(song_code);
+    // remove from favourites
+    } else {
+        $('#favourite-button').removeClass('btn-danger');
+        favourites.splice(favourites.indexOf(song_code), 1);
+    }
+    localStorage.setItem('favourites', JSON.stringify(favourites));
+    fill_favourites();
 }
 
 // toggles debugging mode on/off and updates the debug widget visibility

@@ -26,9 +26,12 @@ function startup() {
         update_status("connected");
     }
 
-    // add listener to populate song history
+    // add listeners to populate tabs
     $('li a:contains("History")').on('click', function() {
         fill_song_history();
+    });
+    $('li a:contains("Favourites")').on('click', function() {
+        fill_favourites();
     });
 
     // clears forms on reload

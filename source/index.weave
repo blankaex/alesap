@@ -58,6 +58,29 @@ empty_page '', 'alesap.blankaex.reisen', theme: :dark do
             end
         end
 
+        tab "Favourites" do
+            div id: "empty-favourites", style: "text-align: center" do
+                jumbotron do
+                    p "No songs in favourites 🥺"
+                    span  "Favourite a song to get started"
+                end
+            end
+            div id: "favourites", style: "display: none;" do
+                block_button nil, "I'm feeling lucky 🍀" do
+                    script "queue_random('favourites');"
+                end
+                table striped: true, id: "favourites-table", style: "margin-top: 10px;" do
+                    thead id: "favourites-table-head" do
+                        th { text "Title" }
+                        th { text "Artist" }
+                        th { text "Code" }
+                    end
+                    tbody id: "favourites-table-body" do
+                    end
+                end
+            end
+        end
+
         tab "History" do
             div id: "empty-history", style: "text-align: center" do
                 jumbotron do
@@ -67,7 +90,7 @@ empty_page '', 'alesap.blankaex.reisen', theme: :dark do
             end
             div id: "history", style: "display: none;" do
                 block_button nil, "I'm feeling lucky 🍀" do
-                    script "queue_random();"
+                    script "queue_random('history');"
                 end
                 table striped: true, id: "history-table", style: "margin-top: 10px;" do
                     thead id: "history-table-head" do
@@ -125,15 +148,6 @@ empty_page '', 'alesap.blankaex.reisen', theme: :dark do
                 end
             end
         end
-
-        tab "Info" do
-            div do
-                small "Created by <a href='https://github.com/davidsiaw/alesap-server'>astrobunny</a> and <a href='https://github.com/blankaex/alesap'>Blankaex</a>"
-            end
-            div style: "margin-top: 10px;" do
-                small "Official search: <a href='https://karaoke.mashup.jp/search.php'>karaoke.mashup.jp</a>"
-            end
-        end
     end
 
     outline_button "Scan QR Code", id: "scan-qr", css_style: 'display:block; width: 100%; margin: 6px 0px 6px 0px;' do
@@ -142,6 +156,10 @@ empty_page '', 'alesap.blankaex.reisen', theme: :dark do
 
     outline_button "Leave Room", id: "leave-room", css_style: 'display: none; width: 100%;' do
         script "update_status('disconnected');"
+    end
+
+    div id: "footer" do
+        small "Created by <a href='https://github.com/davidsiaw/alesap-server'>astrobunny</a> and <a href='https://github.com/blankaex/alesap'>Blankaex</a>"
     end
 
     #
@@ -182,6 +200,9 @@ empty_page '', 'alesap.blankaex.reisen', theme: :dark do
         footer do
             block_button "Add to queue" do
                 script "queue_song($('#current-song-code').text())"
+            end
+            normal_button :heart, "", style: "alert", id: "favourite-button" do
+                script "add_favourite($('#current-song-code').text());"
             end
         end
     end

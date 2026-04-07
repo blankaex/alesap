@@ -50,6 +50,32 @@ function fill_song_history() {
     }
 }
 
+function fill_favourites() {
+    if (localStorage.getItem("favourites") != null) {
+        const favourites = JSON.parse(localStorage.getItem("favourites"));
+        $("#empty-favourites").css("display", "none");
+        $("#favourites").css("display", "");
+        $("#favourites-table-body").empty();
+        favourites.forEach(function(song) {
+            append_table("#favourites-table-body", song);
+        });
+    }
+    // sort table by artist, then title
+    const rows = $('#favourites-table-body tr').get();
+    rows.sort(function(a, b) {
+        const valA2 = $(a).children('td').eq(1).text().trim().toLowerCase();
+        const valB2 = $(b).children('td').eq(1).text().trim().toLowerCase();
+        if (valA2 < valB2) { return -1; }
+        if (valA2 > valB2) { return 1; }
+        const valA1 = $(a).children('td').eq(0).text().trim().toLowerCase();
+        const valB1 = $(b).children('td').eq(0).text().trim().toLowerCase();
+        if (valA1 < valB1) { return -1; }
+        if (valA1 > valB1) { return 1; }
+        return 0;
+    });
+    $(rows).appendTo($("#favourites-table-body"));
+}
+
 // append queued songs to the song history
 function append_history(song_code) {
     let song_history = JSON.parse(localStorage.getItem('song_history')) ?? [];
@@ -72,18 +98,29 @@ function append_table(table_body, song_code, last_played = null) {
     const row = $(`<tr id=${song_code} onclick="fill_song_modal(this)">`);
     row.append($(`<td>`).text(normalize_song(song_code)));
     row.append($(`<td>`).text(song_cache[song_code]['artist']));
-    if (table_body == "#song-table-body") {
-        row.append($(`<td>`).text(song_code));
-    } else if (table_body == "#history-table-body") {
+    if (table_body == "#history-table-body") {
         row.append($(`<td>`).text(last_played));
+    } else {
+        row.append($(`<td>`).text(song_code));
     }
     $(table_body).append(row);
 }
 
 // shows the song detail modal and populates it with data for the selected song
 function fill_song_modal(song) {
+    // show song modal
     $("#song-modal").modal("show");
+    // get song code of active selection
     const song_code = $(song).attr('id');
+    // set modal title
     $('#song-modal-title').text(normalize_song(song_code));
+    // set modal body
     $('#song-modal-body').empty().append(build_song_modal_data(song_code));
+    // update ui based on favourite status
+    const favourites = localStorage.getItem('favourites') || [];
+    if (favourites.includes(song_code)) {
+        $('#favourite-button').addClass('btn-danger');
+    } else {
+        $('#favourite-button').removeClass('btn-danger');
+    }
 }

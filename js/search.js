@@ -82,8 +82,19 @@ function append_table(table_body, song_code, last_played = null) {
 
 // shows the song detail modal and populates it with data for the selected song
 function fill_song_modal(song) {
+    // show song modal
     $("#song-modal").modal("show");
+    // get song code of active selection
     const song_code = $(song).attr('id');
+    // set modal title
     $('#song-modal-title').text(normalize_song(song_code));
+    // set modal body
     $('#song-modal-body').empty().append(build_song_modal_data(song_code));
+    // update ui based on favourite status
+    const favourites = localStorage.getItem('favourites') || [];
+    if (favourites.includes(song_code)) {
+        $('#favourite-button').addClass('btn-danger');
+    } else {
+        $('#favourite-button').removeClass('btn-danger');
+    }
 }

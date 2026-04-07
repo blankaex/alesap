@@ -65,6 +65,21 @@ function stop_song() {
     }
 }
 
+function add_favourite(song_code) {
+    let favourites = JSON.parse(localStorage.getItem('favourites')) || [];
+    // add to favourites
+    if (!favourites.includes(song_code)) {
+        $('#favourite-button').addClass('btn-danger');
+        favourites.push(song_code);
+    // remove from favourites
+    } else {
+        $('#favourite-button').removeClass('btn-danger');
+        favourites.splice(favourites.indexOf(song_code), 1);
+    }
+    console.log(favourites);
+    localStorage.setItem('favourites', JSON.stringify(favourites));
+}
+
 // toggles debugging mode on/off and updates the debug widget visibility
 function toggle_debug() {
     // turn on debug mode

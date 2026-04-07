@@ -27,21 +27,22 @@ function startup() {
     }
 
     // add listeners to populate tabs
-    $('li a:contains("History")').on('click', function() {
+    $("li a:contains('History')").on("click", function() {
         fill_song_history();
     });
-    $('li a:contains("Favourites")').on('click', function() {
+    $("li a:contains('Favourites')").on("click", function() {
         fill_favourites();
     });
 
     // clears forms on reload
     $(document).ready(function() {
-        $('#form0')[0].reset(); // TODO: manually set this wform's ID in weaver
-        $('#form1')[0].reset(); // TODO: manually set this wform's ID in weaver
+        // TODO: update these if IDs can be set in weaver
+        $("#form0")[0].reset();
+        $("#form1")[0].reset();
     });
 
     // disables debug mode on reload
-    window.addEventListener('beforeunload', () => {
-        sessionStorage.removeItem('debug_mode');
+    window.addEventListener("beforeunload", () => {
+        sessionStorage.removeItem("debug_mode");
     });
 }

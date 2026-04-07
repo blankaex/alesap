@@ -60,12 +60,12 @@ async function scan_success(decoded_text, decoded_result) {
         // rudimentary error checking
         if (/rdn_[A-Za-z0-9]+\.[A-Za-z0-9]+,[A-Za-z0-9]+,[0-9]+/.test(decoded_text)) {
             await stop_scanning();
-            $('#scan-modal').modal('hide');
-            const keys = decoded_text.split(',');
-            sessionStorage.setItem('akey', keys[0]);
-            sessionStorage.setItem('skey', keys[1]);
-            sessionStorage.setItem('scd', keys[2]);
-            sessionStorage.setItem('connected_at', new Date().toLocaleDateString('ja-JP'));
+            $("#scan-modal").modal("hide");
+            const keys = decoded_text.split(",");
+            sessionStorage.setItem("akey", keys[0]);
+            sessionStorage.setItem("skey", keys[1]);
+            sessionStorage.setItem("scd", keys[2]);
+            sessionStorage.setItem("connected_at", new Date().toLocaleDateString("ja-JP"));
             update_status("connected");
         } else {
             throw new Error("Invalid QR Code");
@@ -73,7 +73,7 @@ async function scan_success(decoded_text, decoded_result) {
     } catch (error) {
         if (toast_id) return;
         Toastify({
-            text: `Invalid QR Code`,
+            text: "Invalid QR Code",
             duration: 3000,
             position: "center",
             style: {
@@ -87,23 +87,23 @@ async function scan_success(decoded_text, decoded_result) {
 // helper function to change & display connection status to user
 function update_status(status) {
     if (status == "connected" && session_is_active()) {
-        $($('#info-widget').children()[0]).removeClass('red-bg');
-        $($('#info-widget').children()[0]).addClass('navy-bg');
-        $('#connected').text("Connected on " + sessionStorage.getItem('connected_at'));
-        $('#leave-room').css("display", "block");
+        $($("#info-widget").children()[0]).removeClass("red-bg");
+        $($("#info-widget").children()[0]).addClass("navy-bg");
+        $("#connected").text("Connected on " + sessionStorage.getItem("connected_at"));
+        $("#leave-room").css("display", "block");
     } else if (status == "disconnected" && session_is_active()) {
         sessionStorage.clear();
-        $($('#info-widget').children()[0]).removeClass('navy-bg');
-        $($('#info-widget').children()[0]).addClass('red-bg');
-        $('#connected').text("Not Connected");
-        $('#leave-room').css("display", "none");
+        $($("#info-widget").children()[0]).removeClass("navy-bg");
+        $($("#info-widget").children()[0]).addClass("red-bg");
+        $("#connected").text("Not Connected");
+        $("#leave-room").css("display", "none");
     }
 }
 
 // helper function to check if session exists
 function session_is_active() {
-    const a_key_set = sessionStorage.getItem('akey') !== null;
-    const s_key_set = sessionStorage.getItem('skey') !== null;
-    const scd_set = sessionStorage.getItem('scd') !== null;
+    const a_key_set = sessionStorage.getItem("akey") !== null;
+    const s_key_set = sessionStorage.getItem("skey") !== null;
+    const scd_set = sessionStorage.getItem("scd") !== null;
     return a_key_set && s_key_set && scd_set;
 }

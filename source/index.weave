@@ -1,21 +1,21 @@
 # vim:ft=ruby
-empty_page '', 'alesap.blankaex.reisen', theme: :dark do
+empty_page "", "alesap.blankaex.reisen", theme: :dark do
     #
     # Imports
     #
-    request_js 'js/utils.js'
-    request_js 'js/song.js'
-    request_js 'js/search.js'
-    request_js 'js/main.js'
-    request_js 'js/session.js'
-    request_js 'js/controls.js'
-    request_css 'css/overrides.css'
+    request_js "js/utils.js"
+    request_js "js/song.js"
+    request_js "js/search.js"
+    request_js "js/main.js"
+    request_js "js/session.js"
+    request_js "js/controls.js"
+    request_css "css/overrides.css"
 
-    request_js 'js/libs/html5-qrcode.min.js'
-    request_js 'js/libs/toastify.js'
-    request_css 'css/libs/toastify.min.css'
+    request_js "js/libs/html5-qrcode.min.js"
+    request_js "js/libs/toastify.js"
+    request_css "css/libs/toastify.min.css"
 
-    set_favicon_path 'images/favicon.ico'
+    set_favicon_path "images/favicon.ico"
 
     #
     # Content

@@ -19,10 +19,10 @@ function start_search() {
     }).then(function(data) {
         $("#song-table-body").empty();
         data.results[0].forEach(song => {
-            let song_cache = JSON.parse(localStorage.getItem('song_cache')) ?? {};
-            song_cache[song['code']] = song;
-            localStorage.setItem('song_cache', JSON.stringify(song_cache));
-            append_table("#song-table-body", song['code']);
+            let song_cache = JSON.parse(localStorage.getItem("song_cache")) ?? {};
+            song_cache[song["code"]] = song;
+            localStorage.setItem("song_cache", JSON.stringify(song_cache));
+            append_table("#song-table-body", song["code"]);
         });
         // unhide song table
         $("#song-table").css("display", "");
@@ -36,20 +36,21 @@ function fill_song_history() {
         $("#empty-history").css("display", "none");
         $("#history").css("display", "");
         $("#history-table-body").empty();
-        const today = new Date().toLocaleDateString('ja-JP');
+        const today = new Date().toLocaleDateString("ja-JP");
         song_history.forEach(function(song) {
-            if (song['last_played_date'] == today) {
-                append_table("#history-table-body", song['song_code'], song['last_played_time']);
+            if (song["last_played_date"] == today) {
+                append_table("#history-table-body", song["song_code"], song["last_played_time"]);
             } else {
-                append_table("#history-table-body", song['song_code'], song['last_played_date']);
+                append_table("#history-table-body", song["song_code"], song["last_played_date"]);
             }
         });
         // sort table in reverse chronological
-        const rows = $('#history-table-body tr').get().reverse();
-        $(rows).appendTo('#history-table-body');
+        const rows = $("#history-table-body tr").get().reverse();
+        $(rows).appendTo("#history-table-body");
     }
 }
 
+// reads favourites from localStorage and renders it into the favourites table
 function fill_favourites() {
     if (localStorage.getItem("favourites") != null) {
         const favourites = JSON.parse(localStorage.getItem("favourites"));
@@ -61,14 +62,14 @@ function fill_favourites() {
         });
     }
     // sort table by artist, then title
-    const rows = $('#favourites-table-body tr').get();
+    const rows = $("#favourites-table-body tr").get();
     rows.sort(function(a, b) {
-        const valA2 = $(a).children('td').eq(1).text().trim().toLowerCase();
-        const valB2 = $(b).children('td').eq(1).text().trim().toLowerCase();
+        const valA2 = $(a).children("td").eq(1).text().trim().toLowerCase();
+        const valB2 = $(b).children("td").eq(1).text().trim().toLowerCase();
         if (valA2 < valB2) { return -1; }
         if (valA2 > valB2) { return 1; }
-        const valA1 = $(a).children('td').eq(0).text().trim().toLowerCase();
-        const valB1 = $(b).children('td').eq(0).text().trim().toLowerCase();
+        const valA1 = $(a).children("td").eq(0).text().trim().toLowerCase();
+        const valB1 = $(b).children("td").eq(0).text().trim().toLowerCase();
         if (valA1 < valB1) { return -1; }
         if (valA1 > valB1) { return 1; }
         return 0;
@@ -78,30 +79,30 @@ function fill_favourites() {
 
 // append queued songs to the song history
 function append_history(song_code) {
-    let song_history = JSON.parse(localStorage.getItem('song_history')) ?? [];
+    let song_history = JSON.parse(localStorage.getItem("song_history")) ?? [];
     const today = new Date();
     song_history.push({
         song_code: song_code,
-        last_played_date: today.toLocaleDateString('ja-JP'),
-        last_played_time: today.toLocaleTimeString('ja-JP')
+        last_played_date: today.toLocaleDateString("ja-JP"),
+        last_played_time: today.toLocaleTimeString("ja-JP")
     });
     if (song_history.length > HISTORY_MAX_LENGTH) {
         song_history.shift();
     }
-    localStorage.setItem('song_history', JSON.stringify(song_history));
+    localStorage.setItem("song_history", JSON.stringify(song_history));
     fill_song_history();
 }
 
 // appends a single song row to a given table body element
 function append_table(table_body, song_code, last_played = null) {
-    const song_cache = JSON.parse(localStorage.getItem('song_cache'));
+    const song_cache = JSON.parse(localStorage.getItem("song_cache"));
     const row = $(`<tr id=${song_code} onclick="fill_song_modal(this)">`);
-    row.append($(`<td>`).text(normalize_song(song_code)));
-    row.append($(`<td>`).text(song_cache[song_code]['artist']));
+    row.append($("<td>").text(normalize_song(song_code)));
+    row.append($("<td>").text(song_cache[song_code]["artist"]));
     if (table_body == "#history-table-body") {
-        row.append($(`<td>`).text(last_played));
+        row.append($("<td>").text(last_played));
     } else {
-        row.append($(`<td>`).text(song_code));
+        row.append($("<td>").text(song_code));
     }
     $(table_body).append(row);
 }
@@ -111,16 +112,16 @@ function fill_song_modal(song) {
     // show song modal
     $("#song-modal").modal("show");
     // get song code of active selection
-    const song_code = $(song).attr('id');
+    const song_code = $(song).attr("id");
     // set modal title
-    $('#song-modal-title').text(normalize_song(song_code));
+    $("#song-modal-title").text(normalize_song(song_code));
     // set modal body
-    $('#song-modal-body').empty().append(build_song_modal_data(song_code));
+    $("#song-modal-body").empty().append(build_song_modal_data(song_code));
     // update ui based on favourite status
-    const favourites = localStorage.getItem('favourites') || [];
+    const favourites = localStorage.getItem("favourites") || [];
     if (favourites.includes(song_code)) {
-        $('#favourite-button').addClass('btn-danger');
+        $("#favourite-button").addClass("btn-danger");
     } else {
-        $('#favourite-button').removeClass('btn-danger');
+        $("#favourite-button").removeClass("btn-danger");
     }
 }

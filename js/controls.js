@@ -2,13 +2,13 @@
  * +------------------------------------------------------------
  * | controls.js
  * +------------------------------------------------------------
- * | functions that run when user interacts with the UI
+ * | user-initiated actions that send commands to the API,
+ * | such as queuing and stopping songs
  * +------------------------------------------------------------
  */
 
-// handles adding songs to the queue
-function queue_song(song_code)
-{
+// sends a queue request to the API for the given song code
+function queue_song(song_code) {
     if (session_is_active()) {
         $.ajax({
             type: "POST",
@@ -17,40 +17,39 @@ function queue_song(song_code)
                 akey: sessionStorage.getItem('akey'),
                 skey: sessionStorage.getItem('skey'),
                 scd: sessionStorage.getItem('scd'),
-                ecd: song_code 
+                ecd: song_code
             }),
             contentType: "application/json; charset=utf-8"
         }).then(function(data) {
-            $('#song_modal').modal('hide');
+            $('#song-modal').modal('hide');
             Toastify({
                 text: "Sent to queue",
                 duration: 3000,
                 position: "center"
             }).showToast();
             // add successfully queued song to song history
-            var song_cache = JSON.parse(localStorage.getItem('song_cache'));
-            var song_history = JSON.parse(localStorage.getItem('song_history')) ?? [];
+            const song_cache = JSON.parse(localStorage.getItem('song_cache'));
+            const song_history = JSON.parse(localStorage.getItem('song_history')) ?? [];
             song_history.push(song_cache[song_code]);
             if (song_history.length > HISTORY_MAX_LENGTH) {
                 song_history.shift();
             }
             localStorage.setItem('song_history', JSON.stringify(song_history));
-        })
+        });
     } else {
-        $('#song_modal').modal('hide');
+        $('#song-modal').modal('hide');
         err_not_connected();
     }
 }
 
-// queues a random song from the song history
+// queues a random song selected from the song history
 function queue_random() {
     const song_history = JSON.parse(localStorage.getItem('song_history'));
     queue_song(song_history[Math.floor(Math.random() * song_history.length)]['code']);
 }
 
-// handles stopping the current song in the queue
-function stop_song()
-{
+// sends a stop request to the API to halt the current song
+function stop_song() {
     if (session_is_active()) {
         $.ajax({
             type: "POST",
@@ -67,71 +66,27 @@ function stop_song()
                 duration: 3000,
                 position: "center"
             }).showToast();
-        })
+        });
     } else {
         err_not_connected();
     }
 }
 
-// enable/disable debugging mode
-function toggle_debug()
-{
+// toggles debugging mode on/off and updates the debug widget visibility
+function toggle_debug() {
+    // turn on debug mode
     if (sessionStorage.getItem('debug_mode') == null) {
         sessionStorage.setItem('debug_mode', true);
         $('#debug-widget').css("display", "block");
         $('#debug-div').css("display", "block");
-        $('#debug-widget').css("display", "block");
         $('#session-storage').text(JSON.stringify(sessionStorage, null, 2));
         $('#local-storage').text(parse_local_storage());
         $('#device-info').text(parse_device_info());
+    // turn off debug mode
     } else {
         sessionStorage.removeItem('debug_mode');
         $('#debug-widget').css("display", "none");
         $('#debug-div').css("display", "none");
+        // no need to empty debug info as it's overwritten on next run
     }
-}
-
-// formats localStorage data
-function parse_local_storage() {
-    var local_storage = {};
-    Object.keys(localStorage).forEach(key => {
-        const value = localStorage.getItem(key);
-        try {
-            local_storage[key] = JSON.parse(value);
-        } catch (e) {
-            local_storage[key] = value;
-        }
-    });
-    return JSON.stringify(local_storage, null, 2);
-}
-
-// formats device info
-function parse_device_info() {
-    const device_info = {
-        userAgent: navigator.userAgent,
-        language: navigator.language,
-        languages: navigator.languages,
-        screenWidth: window.screen.width,
-        screenHeight: window.screen.height,
-        pixelRatio: window.devicePixelRatio,
-        platform: navigator.platform,
-        onLine: navigator.onLine,
-        cookieEnabled: navigator.cookieEnabled,
-        hardwareConcurrency: navigator.hardwareConcurrency,
-        deviceMemory: navigator.deviceMemory
-    };
-    return JSON.stringify(device_info, null, 2);
-}
-
-// error function when session not active
-// pulled out for extensibility
-function err_not_connected() {
-    Toastify({
-        text: "Not connected",
-        duration: 3000,
-        position: "center",
-        style: {
-            background: "#ed5565",
-        }
-    }).showToast();
 }

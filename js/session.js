@@ -11,8 +11,7 @@ let reader = null;
 let toast_id = null;
 
 // enable camera and scan qr code
-function scan_qr()
-{
+function scan_qr() {
     if (!reader) reader = new Html5Qrcode("reader");
     const config = { fps: 10, qrbox: { width: 250, height: 250 } };
     reader
@@ -22,50 +21,47 @@ function scan_qr()
         .catch(async err => {
             // show list selection
             $("#selector").css("display", "");
-            var devices = await Html5Qrcode.getCameras();
-            if (devices?.length > $("#select0 option").length) {
+            const devices = await Html5Qrcode.getCameras();
+            if (devices?.length > $("#select0 option").length) { // TODO: manually set this dropdown's ID in weaver
                 for (const { label } of devices) $("#select0").append(`<option>${label}</option>`);
             }
             // set active device, then listen for changes
             await set_device(devices, config, scan_success);
-            $("#select0").on("change", "", async function() {
+            $("#select0").on("change", "", async function() { // TODO: manually set this dropdown's ID in weaver
                 await set_device(devices, config, scan_success);
             });
         });
     // stop scanners if modal is closed
-    $("#scan_qr").on("hidden.bs.modal", async function() {
+    $("#scan-qr").on("hidden.bs.modal", async function() {
         await stop_scanning();
     });
 }
 
 // disable cameras and stop qr code reader
-async function stop_scanning()
-{
+async function stop_scanning() {
     if (reader && reader.getState() == Html5QrcodeScannerState.SCANNING) {
         await reader.stop();
     }
 }
 
 // set which camera device should be used for scanning
-async function set_device(devices, config, scan_success)
-{
+async function set_device(devices, config, scan_success) {
     // stop any running scanners
     await stop_scanning();
     // find matching camera device
-    const dev = devices.find(x => x.label === $("#select0").val());
+    const dev = devices.find(x => x.label === $("#select0").val()); // TODO: manually set this dropdown's ID in weaver
     // run new scanner with selected camera device
     if (dev) await reader.start({ deviceId: { exact: dev.id } }, config, scan_success);
 }
 
 // callback that runs when qr code successfully scanned
-async function scan_success(decodedText, decodedResult)
-{
+async function scan_success(decoded_text, decoded_result) {
     try {
         // rudimentary error checking
-        if (/rdn_[A-Za-z0-9]+\.[A-Za-z0-9]+,[A-Za-z0-9]+,[0-9]+/.test(decodedText)) {
+        if (/rdn_[A-Za-z0-9]+\.[A-Za-z0-9]+,[A-Za-z0-9]+,[0-9]+/.test(decoded_text)) {
             await stop_scanning();
-            $('#scan_qr').modal('hide');
-            let keys = decodedText.split(',');
+            $('#scan-qr').modal('hide');
+            const keys = decoded_text.split(',');
             sessionStorage.setItem('akey', keys[0]);
             sessionStorage.setItem('skey', keys[1]);
             sessionStorage.setItem('scd', keys[2]);
@@ -89,8 +85,7 @@ async function scan_success(decodedText, decodedResult)
 }
 
 // helper function to change & display connection status to user
-function update_status(status)
-{
+function update_status(status) {
     if (status == "connected" && session_is_active()) {
         $($('#info-widget').children()[0]).removeClass('red-bg');
         $($('#info-widget').children()[0]).addClass('navy-bg');
@@ -106,8 +101,7 @@ function update_status(status)
 }
 
 // helper function to check if session exists
-function session_is_active()
-{
+function session_is_active() {
     const a_key_set = sessionStorage.getItem('akey') !== null;
     const s_key_set = sessionStorage.getItem('skey') !== null;
     const scd_set = sessionStorage.getItem('scd') !== null;

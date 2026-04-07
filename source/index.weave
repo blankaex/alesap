@@ -3,14 +3,17 @@ empty_page '', 'alesap.blankaex.reisen', theme: :dark do
     #
     # Imports
     #
+    request_js 'js/utils.js'
+    request_js 'js/song.js'
+    request_js 'js/search.js'
     request_js 'js/main.js'
     request_js 'js/session.js'
     request_js 'js/controls.js'
-    request_js 'js/html5-qrcode.min.js'
-    request_js 'js/toastify.js'
-
     request_css 'css/overrides.css'
-    request_css 'css/toastify.min.css'
+
+    request_js 'js/libs/html5-qrcode.min.js'
+    request_js 'js/libs/toastify.js'
+    request_css 'css/libs/toastify.min.css'
 
     set_favicon_path 'images/favicon.ico'
 
@@ -38,13 +41,13 @@ empty_page '', 'alesap.blankaex.reisen', theme: :dark do
                 end
             end
 
-            table striped: true, id: "song_table", style: "display:none; margin-top: 10px;" do
-                thead id: "song_table_head" do
+            table striped: true, id: "song-table", style: "display:none; margin-top: 10px;" do
+                thead id: "song-table-head" do
                     th { text "Title" }
                     th { text "Artist" }
                     th { text "Code" }
                 end
-                tbody id: "song_table_body" do
+                tbody id: "song-table-body" do
                 end
             end
 
@@ -66,13 +69,13 @@ empty_page '', 'alesap.blankaex.reisen', theme: :dark do
                 block_button nil, "Queue random song" do
                     script "queue_random();"
                 end
-                table striped: true, id: "history_table", style: "margin-top: 10px;" do
-                    thead id: "history_table_head" do
+                table striped: true, id: "history-table", style: "margin-top: 10px;" do
+                    thead id: "history-table-head" do
                         th { text "Title" }
                         th { text "Artist" }
                         th { text "Code" }
                     end
-                    tbody id: "history_table_body" do
+                    tbody id: "history-table-body" do
                     end
                 end
             end
@@ -134,7 +137,7 @@ empty_page '', 'alesap.blankaex.reisen', theme: :dark do
     end
 
     outline_button "Scan QR Code", id: "scan-qr", css_style: 'display:block; width: 100%; margin: 6px 0px 6px 0px;' do
-        script "$('#scan_qr').modal('show'); scan_qr();"
+        script "$('#scan-qr').modal('show'); scan_qr();"
     end
 
     outline_button "Leave Room", id: "leave-room", css_style: 'display: none; width: 100%;' do
@@ -144,9 +147,9 @@ empty_page '', 'alesap.blankaex.reisen', theme: :dark do
     #
     # Modals
     #
-    modal "scan_qr" do
-        header { 
-            h4 "Scan QR Code" 
+    modal "scan-qr" do
+        header {
+            h4 "Scan QR Code"
         }
         body {
             div class: "container", style: "width:100%;" do
@@ -162,16 +165,16 @@ empty_page '', 'alesap.blankaex.reisen', theme: :dark do
         }
         footer do
             block_button "Close" do
-                script "$('#scan_qr').modal('hide');"
+                script "$('#scan-qr').modal('hide');"
             end
         end
     end
 
-    modal "song_modal" do
-        header { 
+    modal "song-modal" do
+        header {
             h4 "", id: "song-modal-title", style: "font-weight: bold;"
         }
-        body { 
+        body {
             div id: "song-modal-body" do
             end
         }

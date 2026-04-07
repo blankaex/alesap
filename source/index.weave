@@ -110,16 +110,16 @@ empty_page '', 'alesap.blankaex.reisen', theme: :dark do
                     script "toggle_debug();"
                 end
                 div id:"debug-div", style: "display: none; margin-top: 10px;" do
-                    tabs do
-                        orientation :left
+                    # TODO: feature request to weaver to enable click on .panel-heading
+                    accordion do
+                        tab "Device Info" do
+                            pre id: "device-info"
+                        end
                         tab "sessionStorage" do
                             pre id: "session-storage"
                         end
                         tab "localStorage" do
                             pre id: "local-storage"
-                        end
-                        tab "Device Info" do
-                            pre id: "device-info"
                         end
                     end
                 end

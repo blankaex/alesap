@@ -20,14 +20,14 @@ function scan_qr() {
         // otherwise enumerate devices and prompt user to select
         .catch(async err => {
             // show list selection
-            $("#selector").css("display", "");
+            $("#selector-container").css("display", "");
             const devices = await Html5Qrcode.getCameras();
-            if (devices?.length > $("#select0 option").length) { // TODO: manually set this dropdown's ID in weaver
-                for (const { label } of devices) $("#select0").append(`<option>${label}</option>`);
+            if (devices?.length > $("#camera-selector option").length) {
+                for (const { label } of devices) $("#camera-selector").append(`<option>${label}</option>`);
             }
             // set active device, then listen for changes
             await set_device(devices, config, scan_success);
-            $("#select0").on("change", "", async function() { // TODO: manually set this dropdown's ID in weaver
+            $("#camera-selector").on("change", "", async function() {
                 await set_device(devices, config, scan_success);
             });
         });
@@ -49,7 +49,7 @@ async function set_device(devices, config, scan_success) {
     // stop any running scanners
     await stop_scanning();
     // find matching camera device
-    const dev = devices.find(x => x.label === $("#select0").val()); // TODO: manually set this dropdown's ID in weaver
+    const dev = devices.find(x => x.label === $("#camera-selector").val());
     // run new scanner with selected camera device
     if (dev) await reader.start({ deviceId: { exact: dev.id } }, config, scan_success);
 }

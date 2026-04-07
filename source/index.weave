@@ -154,10 +154,11 @@ empty_page '', 'alesap.blankaex.reisen', theme: :dark do
         body {
             div class: "container", style: "width:100%;" do
                 div class: "section" do
-                    div id: "reader" do end
-                    div id: "selector", style: "display: none;" do
+                    div id: "reader" do
+                    end
+                    div id: "selector-container", style: "display: none;" do
                         wform do
-                            dropdown "cameras", "Select Camera", []
+                            dropdown "cameras", "Select Camera", [], id: "camera-selector"
                         end
                     end
                 end

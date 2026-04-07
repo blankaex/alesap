@@ -66,7 +66,7 @@ empty_page '', 'alesap.blankaex.reisen', theme: :dark do
                 end
             end
             div id: "history", style: "display: none;" do
-                block_button nil, "Queue random song" do
+                block_button nil, "I'm feeling lucky 🍀" do
                     script "queue_random();"
                 end
                 table striped: true, id: "history-table", style: "margin-top: 10px;" do

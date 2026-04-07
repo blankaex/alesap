@@ -35,6 +35,7 @@ function queue_song(song_code) {
                 song_history.shift();
             }
             localStorage.setItem('song_history', JSON.stringify(song_history));
+            fill_song_history();
         });
     } else {
         $('#song-modal').modal('hide');

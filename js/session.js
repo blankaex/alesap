@@ -32,7 +32,7 @@ function scan_qr() {
             });
         });
     // stop scanners if modal is closed
-    $("#scan-qr").on("hidden.bs.modal", async function() {
+    $("#scan-modal").on("hidden.bs.modal", async function() {
         await stop_scanning();
     });
 }
@@ -60,7 +60,7 @@ async function scan_success(decoded_text, decoded_result) {
         // rudimentary error checking
         if (/rdn_[A-Za-z0-9]+\.[A-Za-z0-9]+,[A-Za-z0-9]+,[0-9]+/.test(decoded_text)) {
             await stop_scanning();
-            $('#scan-qr').modal('hide');
+            $('#scan-modal').modal('hide');
             const keys = decoded_text.split(',');
             sessionStorage.setItem('akey', keys[0]);
             sessionStorage.setItem('skey', keys[1]);

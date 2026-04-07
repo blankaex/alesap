@@ -18,15 +18,12 @@ function start_search() {
         contentType: "application/json; charset=utf-8"
     }).then(function(data) {
         $("#song-table-body").empty();
-        const results = data.results[0];
-        for (const index in results) {
-            // add song to cache
-            const song_cache = JSON.parse(localStorage.getItem('song_cache')) ?? {};
-            song_cache[results[index]['code']] = results[index];
+        data.results[0].forEach(song => {
+            let song_cache = JSON.parse(localStorage.getItem('song_cache')) ?? {};
+            song_cache[song['code']] = song;
             localStorage.setItem('song_cache', JSON.stringify(song_cache));
-            // append song to song table
-            append_table("#song-table-body", results[index]['code']);
-        }
+            append_table("#song-table-body", song['code']);
+        });
         // unhide song table
         $("#song-table").css("display", "");
     });

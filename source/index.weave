@@ -137,7 +137,7 @@ empty_page '', 'alesap.blankaex.reisen', theme: :dark do
     end
 
     outline_button "Scan QR Code", id: "scan-qr", css_style: 'display:block; width: 100%; margin: 6px 0px 6px 0px;' do
-        script "$('#scan-qr').modal('show'); scan_qr();"
+        script "$('#scan-modal').modal('show'); scan_qr();"
     end
 
     outline_button "Leave Room", id: "leave-room", css_style: 'display: none; width: 100%;' do
@@ -147,7 +147,7 @@ empty_page '', 'alesap.blankaex.reisen', theme: :dark do
     #
     # Modals
     #
-    modal "scan-qr" do
+    modal "scan-modal" do
         header {
             h4 "Scan QR Code"
         }
@@ -165,7 +165,7 @@ empty_page '', 'alesap.blankaex.reisen', theme: :dark do
         }
         footer do
             block_button "Close" do
-                script "$('#scan-qr').modal('hide');"
+                script "$('#scan-modal').modal('hide');"
             end
         end
     end

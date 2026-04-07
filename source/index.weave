@@ -190,7 +190,7 @@ empty_page '', 'alesap.blankaex.reisen', theme: :dark do
     # Javascript
     #
     script <<~SCRIPT
-      var API_URL = "#{ ENV['API_URL'] || 'http://localhost:3000' }";
+      let API_URL = "#{ ENV['API_URL'].chomp('/') || 'http://localhost:3000' }";
     SCRIPT
 
     on_page_load <<~SCRIPT

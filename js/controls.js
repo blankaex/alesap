@@ -38,7 +38,11 @@ function queue_song(song_code) {
 function append_history(song_code) {
     let song_history = JSON.parse(localStorage.getItem('song_history')) ?? [];
     const today = new Date;
-    song_history.push([song_code, today.toLocaleDateString('ja-JP'), today.toLocaleTimeString('ja-JP')]);
+    song_history.push({
+        song_code: song_code,
+        last_played_date: today.toLocaleDateString('ja-JP'),
+        last_played_time: today.toLocaleTimeString('ja-JP')
+    });
     if (song_history.length > HISTORY_MAX_LENGTH) {
         song_history.shift();
     }
@@ -49,7 +53,7 @@ function append_history(song_code) {
 // queues a random song selected from the song history
 function queue_random() {
     const song_history = JSON.parse(localStorage.getItem('song_history'));
-    queue_song(song_history[Math.floor(Math.random() * song_history.length)]['code']);
+    queue_song(song_history[Math.floor(Math.random() * song_history.length)]['song_code']);
 }
 
 // sends a stop request to the API to halt the current song

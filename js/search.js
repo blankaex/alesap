@@ -38,10 +38,10 @@ function fill_song_history() {
         $("#history-table-body").empty();
         const today = new Date().toLocaleDateString('ja-JP');
         song_history.forEach(function(song) {
-            if (song[1] != today) {
-                append_table("#history-table-body", song[0], song[1]);
+            if (song['last_played_date'] == today) {
+                append_table("#history-table-body", song['song_code'], song['last_played_time']);
             } else {
-                append_table("#history-table-body", song[0], song[2]);
+                append_table("#history-table-body", song['song_code'], song['last_played_date']);
             }
         });
         // sort table in reverse chronological

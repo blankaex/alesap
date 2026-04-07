@@ -27,20 +27,23 @@ function queue_song(song_code) {
                 duration: 3000,
                 position: "center"
             }).showToast();
-            // add successfully queued song to song history
-            const song_cache = JSON.parse(localStorage.getItem('song_cache'));
-            const song_history = JSON.parse(localStorage.getItem('song_history')) ?? [];
-            song_history.push(song_cache[song_code]);
-            if (song_history.length > HISTORY_MAX_LENGTH) {
-                song_history.shift();
-            }
-            localStorage.setItem('song_history', JSON.stringify(song_history));
-            fill_song_history();
+            append_history(song_code);
         });
     } else {
         $('#song-modal').modal('hide');
         err_not_connected();
     }
+}
+
+function append_history(song_code) {
+    let song_history = JSON.parse(localStorage.getItem('song_history')) ?? [];
+    const today = new Date;
+    song_history.push([song_code, today.toLocaleDateString('ja-JP'), today.toLocaleTimeString('ja-JP')]);
+    if (song_history.length > HISTORY_MAX_LENGTH) {
+        song_history.shift();
+    }
+    localStorage.setItem('song_history', JSON.stringify(song_history));
+    fill_song_history();
 }
 
 // queues a random song selected from the song history

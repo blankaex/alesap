@@ -36,8 +36,13 @@ function fill_song_history() {
         $("#empty-history").css("display", "none");
         $("#history").css("display", "");
         $("#history-table-body").empty();
+        const today = new Date().toLocaleDateString('ja-JP');
         song_history.forEach(function(song) {
-            append_table("#history-table-body", song['code']);
+            if (song[1] != today) {
+                append_table("#history-table-body", song[0], song[1]);
+            } else {
+                append_table("#history-table-body", song[0], song[2]);
+            }
         });
         // sort table in reverse chronological
         const rows = $('#history-table-body tr').get().reverse();
@@ -46,12 +51,16 @@ function fill_song_history() {
 }
 
 // appends a single song row to a given table body element
-function append_table(table_body, song_code) {
+function append_table(table_body, song_code, last_played = null) {
     const song_cache = JSON.parse(localStorage.getItem('song_cache'));
     const row = $(`<tr id=${song_code} onclick="fill_song_modal(this)">`);
     row.append($(`<td>`).text(normalize_song(song_code)));
     row.append($(`<td>`).text(song_cache[song_code]['artist']));
-    row.append($(`<td>`).text(song_code));
+    if (table_body == "#song-table-body") {
+        row.append($(`<td>`).text(song_code));
+    } else if (table_body == "#history-table-body") {
+        row.append($(`<td>`).text(last_played));
+    }
     $(table_body).append(row);
 }
 

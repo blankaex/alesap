@@ -65,7 +65,7 @@ async function scan_success(decoded_text, decoded_result) {
             sessionStorage.setItem('akey', keys[0]);
             sessionStorage.setItem('skey', keys[1]);
             sessionStorage.setItem('scd', keys[2]);
-            sessionStorage.setItem('connected_at', new Date().toLocaleString('ja-JP'));
+            sessionStorage.setItem('connected_at', new Date().toLocaleDateString('ja-JP'));
             update_status("connected");
         } else {
             throw new Error("Invalid QR Code");
@@ -89,7 +89,7 @@ function update_status(status) {
     if (status == "connected" && session_is_active()) {
         $($('#info-widget').children()[0]).removeClass('red-bg');
         $($('#info-widget').children()[0]).addClass('navy-bg');
-        $('#connected').text("Connected at " + sessionStorage.getItem('connected_at'));
+        $('#connected').text("Connected on " + sessionStorage.getItem('connected_at'));
         $('#leave-room').css("display", "block");
     } else if (status == "disconnected" && session_is_active()) {
         sessionStorage.clear();

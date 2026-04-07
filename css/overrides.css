@@ -1,3 +1,16 @@
+@media (max-width: 767px) {
+    .tabs-container .nav-tabs > li {
+        float: left !important;
+    }
+    .tabs-container .nav-tabs > li.active > a {
+        border-bottom: none !important;
+    }
+}
+
+input::placeholder {
+    opacity: 50% !important;
+}
+
 .nav-tabs > li.active > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus {
     color: white !important;
 }
@@ -25,19 +38,6 @@
 
 #selector-container {
     margin-top: 10px !important;
-}
-
-@media (max-width: 767px) {
-    .tabs-container .nav-tabs > li {
-        float: left !important;
-    }
-    .tabs-container .nav-tabs > li.active > a {
-        border-bottom: none !important;
-    }
-}
-
-input::placeholder {
-    opacity: 50% !important;
 }
 
 #song-modal-body h4 {

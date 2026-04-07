@@ -73,7 +73,7 @@ empty_page '', 'alesap.blankaex.reisen', theme: :dark do
                     thead id: "history-table-head" do
                         th { text "Title" }
                         th { text "Artist" }
-                        th { text "Code" }
+                        th { text "Last Played" }
                     end
                     tbody id: "history-table-body" do
                     end

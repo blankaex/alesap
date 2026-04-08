@@ -160,7 +160,7 @@ form input, form select {
 
 #button-container {
     display: flex !important;
-    margin-top: 5px !important;
+    margin-top: 6px !important;
     gap: 6px !important;
 }
 

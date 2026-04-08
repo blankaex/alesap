@@ -56,30 +56,6 @@ empty_page "", "alesap.blankaex.reisen", theme: :dark do
             # end
         end
 
-        tab "Favourites" do
-            # TODO: weaver can't add ids on jumbotron divs either
-            div id: "empty-favourites" do
-                jumbotron do
-                    p "No songs in favourites 🥺"
-                    span  "Favourite a song to get started"
-                end
-            end
-            div id: "favourites", style: "display: none;" do
-                block_button :refresh, "I'm feeling lucky" do
-                    script "queue_random('favourites');"
-                end
-                table striped: true, id: "favourites-table" do
-                    thead id: "favourites-table-head" do
-                        th { text "Title" }
-                        th { text "Artist" }
-                        th { text "Code" }
-                    end
-                    tbody id: "favourites-table-body" do
-                    end
-                end
-            end
-        end
-
         tab "History" do
             # TODO: weaver can't add ids on jumbotron divs either
             div id: "empty-history" do
@@ -99,6 +75,30 @@ empty_page "", "alesap.blankaex.reisen", theme: :dark do
                         th { text "Last Played" }
                     end
                     tbody id: "history-table-body" do
+                    end
+                end
+            end
+        end
+
+        tab "Favourites" do
+            # TODO: weaver can't add ids on jumbotron divs either
+            div id: "empty-favourites" do
+                jumbotron do
+                    p "No songs in favourites 🥺"
+                    span  "Favourite a song to get started"
+                end
+            end
+            div id: "favourites", style: "display: none;" do
+                block_button :refresh, "I'm feeling lucky" do
+                    script "queue_random('favourites');"
+                end
+                table striped: true, id: "favourites-table" do
+                    thead id: "favourites-table-head" do
+                        th { text "Title" }
+                        th { text "Artist" }
+                        th { text "Code" }
+                    end
+                    tbody id: "favourites-table-body" do
                     end
                 end
             end

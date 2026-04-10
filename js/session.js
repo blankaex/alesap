@@ -76,9 +76,7 @@ async function scan_success(decoded_text, decoded_result) {
             text: "Invalid QR Code",
             duration: 3000,
             position: "center",
-            style: {
-                background: "#ed5565",
-            }
+            className: "toast-red",
         }).showToast();
         toast_id = setTimeout(() => { toast_id = null; }, 3000);
     }

@@ -136,6 +136,19 @@ form input, form select {
     color: #FFF !important;
 }
 
+.toast-green {
+    background: "#18a689" !important;
+}
+
+.toast-red {
+    background: "#ed5565" !important;
+}
+
+.toast-yellow {
+    color: "#1e1e1e" !important;
+    background: "#f8ac59" !important;
+}
+
 #debug-widget {
     margin-bottom: 6px !important;
 }

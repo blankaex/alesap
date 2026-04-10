@@ -95,9 +95,7 @@ function show_connection_toast() {
         duration: -1,
         position: "center",
         gravity: "bottom",
-        style: {
-            background: "#ed5565",
-        },
+        className: "toast-green",
         onClick: () => CONNECTION_TOAST.hideToast()
     }).showToast();
 }
@@ -107,10 +105,7 @@ function show_debug_toast() {
         text: "🐞 Debugging Enabled",
         duration: -1,
         position: "center",
-        style: {
-            color: "#1e1e1e",
-            background: "#f8ac59",
-        },
+        className: "toast-yellow",
         onClick: () => DEBUG_TOAST.hideToast()
     }).showToast();
 }

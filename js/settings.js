@@ -17,9 +17,7 @@ function set_nickname() {
         text: "Nickname saved",
         duration: 3000,
         position: "center",
-        style: {
-            background: "#18a689",
-        }
+        className: "toast-green",
     }).showToast();
 }
 

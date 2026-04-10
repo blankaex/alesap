@@ -27,9 +27,7 @@ function queue_song(song_code) {
                 text: "Sent to queue",
                 duration: 3000,
                 position: "center",
-                style: {
-                    background: "#18a689",
-                }
+                className: "toast-green",
             }).showToast();
             append_history(song_code);
         });
@@ -39,9 +37,7 @@ function queue_song(song_code) {
             text: "Not connected",
             duration: 3000,
             position: "center",
-            style: {
-                background: "#ed5565",
-            }
+            className: "toast-red",
         }).showToast();
     }
 }
@@ -74,9 +70,7 @@ function stop_song() {
             text: "Sent stop request",
             duration: 3000,
             position: "center",
-            style: {
-                background: "#ed5565",
-            }
+            className: "toast-green",
         }).showToast();
     });
 }

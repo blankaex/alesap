@@ -7,10 +7,18 @@
  */
 
 // set user nickname
-function set_nickname() {
+async function set_nickname() {
     if (!$("#nickname-field").val()) {
-        // TODO: set a random nickname
-        $("#nickname-field").val("Default");
+        // TODO: remove network call
+        const [adjRes, nounRes] = await Promise.all([
+            fetch('https://api.datamuse.com/words?rel_jjb=thing&max=1000'),
+            fetch('https://api.datamuse.com/words?rel_jja=blue&max=1000')
+        ]);
+        const adjs = await adjRes.json();
+        const nouns = await nounRes.json();
+        const a = adjs[Math.floor(Math.random() * adjs.length)].word;
+        const n = nouns[Math.floor(Math.random() * nouns.length)].word;
+        $("#nickname-field").val(`${a}${n}`);
     }
     localStorage.setItem("nickname", $("#nickname-field").val());
     Toastify({

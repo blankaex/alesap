@@ -52,7 +52,7 @@ function queue_random(table) {
         queue_song(song_history[Math.floor(Math.random() * song_history.length)]["song_code"]);
     } else if (table == "favourites") {
         const favourites = JSON.parse(localStorage.getItem("favourites"));
-        queue_song(favourites[Math.floor(Math.random() * favourites.length)]["song_code"]);
+        queue_song(favourites[Math.floor(Math.random() * favourites.length)]);
     }
 }
 

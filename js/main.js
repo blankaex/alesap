@@ -40,6 +40,10 @@ function startup() {
     $('input[name="developer-mode"]').on('ifChecked ifUnchecked', function () {
         $("#developer-tools").toggle($('input[name="developer-mode"]').prop('checked'));
     });
+    $('input[name="developer-mode"]').on('ifUnchecked', function () {
+        if (DEBUG_TOAST) { DEBUG_TOAST.hideToast(); }
+        sessionStorage.removeItem("debug_mode");
+    });
 
     // checks if session is already active
     if (session_is_active()) {

@@ -45,8 +45,8 @@ function startup() {
     // clears forms on reload
     $(document).ready(function() {
         // TODO: update these if IDs can be set in weaver
-        $("#form0")[0].reset();
-        $("#form1")[0].reset();
+        $("#song_search_form")[0].reset();
+        $("#queue_id_form")[0].reset();
     });
 
     // disables debug mode on reload

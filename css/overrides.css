@@ -189,12 +189,12 @@ form input, form select {
 }
 
 /* fix when wform supports ids with - */
-#song_search_form, #queue_id_form {
+form {
     display: flex !important;
     gap: 5px !important;
 }
 
-#song_search_form button, #queue_id_form button {
+form button {
     display: inline-block;
     height: 34px !important;
     box-sizing: border-box;

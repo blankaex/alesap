@@ -103,8 +103,12 @@ empty_page "", "alesap.blankaex.reisen", theme: :dark do
                         "Not connected"
                     end
                     hr
+                    h4 "Nickname"
                     wform id: "nickname_form" do
-                        textfield "nickname", "Nickname:"
+                        textfield "nickname", nil
+                        submit "Set nickname", :check do
+                            script "set_nickname();"
+                        end
                     end
                     wform id: "developer_mode_form" do
                         checkbox "developer-mode", "Enable Developer Tools"

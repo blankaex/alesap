@@ -21,11 +21,6 @@ function startup() {
         start_search();
     });
 
-    // checks if session is already active
-    if (session_is_active()) {
-        update_status("connected");
-    }
-
     // add listeners to populate tabs
     $("li a:contains('History')").on("click", function() {
         fill_song_history();
@@ -33,6 +28,13 @@ function startup() {
     $("li a:contains('Favourites')").on("click", function() {
         fill_favourites();
     });
+
+    // checks if session is already active
+    if (session_is_active()) {
+        update_status("connected");
+    } else {
+        show_connection_toast();
+    }
 
     // clears forms on reload
     $(document).ready(function() {

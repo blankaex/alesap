@@ -20,13 +20,6 @@ empty_page "", "alesap.blankaex.reisen", theme: :dark do
     #
     # Content
     #
-    # TODO: weaver doesn't let you set ids/classes on widgets
-    div id: "debug-widget", style: "display: none;" do
-        widget color: :yellow do
-            h3 "🐞 Debugging Enabled"
-        end
-    end
-
     tabs do
         tab "Search" do
             h4 "Song search:"
@@ -101,10 +94,15 @@ empty_page "", "alesap.blankaex.reisen", theme: :dark do
         end
 
         tab "Advanced" do
-            ibox do
-                type :panel
-                title "Settings"
-                p "👷 under construction"
+            div id: "settings" do
+                ibox do
+                    type :panel
+                    title "Settings"
+                    h4 "Connected:"
+                    p id: "connected" do
+                        "Not connected"
+                    end
+                end
             end
             ibox do
                 type :panel
@@ -148,12 +146,6 @@ empty_page "", "alesap.blankaex.reisen", theme: :dark do
     end
 
     div id: "footer" do
-        div id: "info-widget" do
-            widget color: :red do
-                h3 "Not Connected", id: "connected"
-            end
-        end
-
         div id: "button-container" do
             block_button :qrcode, "Scan QR Code", id: "scan-qr" do
                 script "$('#scan-modal').modal('show'); scan_qr();"

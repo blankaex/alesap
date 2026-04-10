@@ -9,6 +9,8 @@
 
 // initialize globals
 const HISTORY_MAX_LENGTH = 20;
+let CONNECTION_TOAST;
+let DEBUG_TOAST;
 
 // appends extra content type info to a song title if not already present
 function normalize_song(song_code) {
@@ -85,4 +87,30 @@ function parse_device_info() {
         deviceMemory: navigator.deviceMemory
     };
     return JSON.stringify(device_info, null, 2);
+}
+
+function show_connection_toast() {
+    CONNECTION_TOAST = Toastify({
+        text: "Not connected—scan QR code to get started",
+        duration: -1,
+        position: "center",
+        gravity: "bottom",
+        style: {
+            background: "#ed5565",
+        },
+        onClick: () => CONNECTION_TOAST.hideToast()
+    }).showToast();
+}
+
+function show_debug_toast() {
+    DEBUG_TOAST = Toastify({
+        text: "🐞 Debugging Enabled",
+        duration: -1,
+        position: "center",
+        style: {
+            color: "#1e1e1e",
+            background: "#f8ac59",
+        },
+        onClick: () => DEBUG_TOAST.hideToast()
+    }).showToast();
 }

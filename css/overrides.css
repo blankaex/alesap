@@ -184,13 +184,13 @@ form input, form select {
     margin: 0px !important;
 }
 
-#song-modal-body h4 {
+#song-modal-body h4, #settings h4 {
     font-size: 13px !important;
     font-weight: bold !important;
     margin-bottom: 5px !important;
 }
 
-#song-modal-body p {
+#song-modal-body p, #settings p {
     margin-left: 20px !important;
 }
 

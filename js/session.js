@@ -39,7 +39,7 @@ function scan_qr() {
 
 // disable cameras and stop qr code reader
 async function stop_scanning() {
-    if (reader && reader.getState() == Html5QrcodeScannerState.SCANNING) {
+    if (reader && reader.getState() === Html5QrcodeScannerState.SCANNING) {
         await reader.stop();
     }
 }

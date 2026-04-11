@@ -47,10 +47,10 @@ function queue_song(song_code) {
 
 // queues a random song selected from the song history
 function queue_random(table) {
-    if (table == "history") {
+    if (table === "history") {
         const song_history = JSON.parse(localStorage.getItem("song_history"));
         queue_song(song_history[Math.floor(Math.random() * song_history.length)]["song_code"]);
-    } else if (table == "favourites") {
+    } else if (table === "favourites") {
         const favourites = JSON.parse(localStorage.getItem("favourites"));
         const songs = Object.keys(favourites).filter(key => favourites[key]);
         queue_song(songs[Math.floor(Math.random() * songs.length)]);

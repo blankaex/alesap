@@ -19,7 +19,7 @@ function start_search(page) {
         contentType: "application/json; charset=utf-8"
     }).then(function(data) {
         // clear song table entries & unhide table if starting a new search
-        if (page == 0) {
+        if (page === 0) {
             $("#song-table-body").empty();
             $("#song-table").show();
         }
@@ -47,7 +47,7 @@ function fill_song_history() {
         $("#history").show();
         $("#history-table-body").empty();
         const today = new Date().toLocaleDateString("ja-JP");
-        song_history.forEach(function(entry) {
+        song_history.forEach(entry => {
             const date_time = entry.last_played_date == today ?
                 entry.last_played_time :
                 entry.last_played_date;
@@ -70,7 +70,7 @@ function fill_favourites() {
         $("#empty-favourites").hide();
         $("#favourites").show();
         $("#favourites-table-body").empty();
-        Object.keys(favourites).forEach(function(song_code) {
+        Object.keys(favourites).forEach(song_code => {
             if (favourites[song_code]) {
                 append_table("#favourites-table-body", song_code);
             }
@@ -78,7 +78,7 @@ function fill_favourites() {
     }
     // sort table by artist, then title
     const rows = $("#favourites-table-body tr").get();
-    rows.sort(function(a, b) {
+    rows.sort((a, b) => {
         const valA2 = $(a).children("td").eq(1).text().trim().toLowerCase();
         const valB2 = $(b).children("td").eq(1).text().trim().toLowerCase();
         if (valA2 < valB2) { return -1; }

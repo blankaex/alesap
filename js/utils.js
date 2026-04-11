@@ -27,11 +27,11 @@ function normalize_song(song_code) {
         song_cache_get(song_code, "tag_bv") ??
         song_cache_get(song_code, "content_type");
 
-    if (!extra_content) {
-        return normalized;
-    }
+    const should_append = 
+        extra_content &&
+        !normalized.toLowerCase().includes(extra_content.toLowerCase());
 
-    if (!normalized.toLowerCase().includes(extra_content.toLowerCase())) {
+    if (should_append) {
         normalized += `【${extra_content}】`;
     }
 

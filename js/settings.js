@@ -26,7 +26,7 @@ async function set_nickname(startup = false) {
     if (!startup) {
         Toastify({
             text: "Nickname saved",
-            duration: 3000,
+            duration: TOAST_DURATION,
             position: "center",
             className: "toast-green",
         }).showToast();
@@ -39,7 +39,7 @@ function toggle_debug() {
     if (sessionStorage.getItem("debug_mode") == null) {
         sessionStorage.setItem("debug_mode", true);
         show_debug_toast();
-        $("#debug-div").css("display", "block");
+        $("#debug-div").show();
         $("#session-storage").text(JSON.stringify(sessionStorage, null, 2));
         $("#local-storage").text(parse_local_storage());
         $("#device-info").text(parse_device_info());
@@ -49,8 +49,7 @@ function toggle_debug() {
             DEBUG_TOAST.hideToast();
         }
         sessionStorage.removeItem("debug_mode");
-        $("#debug-widget").css("display", "none");
-        $("#debug-div").css("display", "none");
+        $("#debug-div").hide();
         // no need to empty debug info as it's overwritten on next run
     }
 }

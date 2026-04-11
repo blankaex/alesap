@@ -25,7 +25,7 @@ function queue_song(song_code) {
             $("#song-modal").modal("hide");
             Toastify({
                 text: "Sent to queue",
-                duration: 3000,
+                duration: TOAST_DURATION,
                 position: "center",
                 className: "toast-green",
             }).showToast();
@@ -35,7 +35,7 @@ function queue_song(song_code) {
         $("#song-modal").modal("hide");
         Toastify({
             text: "Not connected",
-            duration: 3000,
+            duration: TOAST_DURATION,
             position: "center",
             className: "toast-red",
         }).showToast();
@@ -68,7 +68,7 @@ function stop_song() {
     }).then(function(data) {
         Toastify({
             text: "Sent stop request",
-            duration: 3000,
+            duration: TOAST_DURATION,
             position: "center",
             className: "toast-green",
         }).showToast();

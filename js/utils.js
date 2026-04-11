@@ -9,21 +9,22 @@
 
 // initialize globals
 const HISTORY_MAX_LENGTH = 20;
+let TOAST_DURATION = 2000;
 let CONNECTION_TOAST;
 let DEBUG_TOAST;
 
 // appends extra content type info to a song title if not already present
 function normalize_song(song_code) {
     const song_cache = JSON.parse(localStorage.getItem("song_cache"));
-    let song = song_cache[song_code]["song"];
+    let song = song_cache[song_code].song;
     if (
         // check for extra info
-        song_cache[song_code]["extra"]["content_type"] != null &&
+        song_cache[song_code].extra.content_type != null &&
         // ignore if extra info already included in title
-        !song.toLowerCase().includes(song_cache[song_code]["extra"]["content_type"].toLowerCase())
+        !song.toLowerCase().includes(song_cache[song_code].extra.content_type.toLowerCase())
     ) {
         // append extra info to title
-        song += `【${song_cache[song_code]["extra"]["content_type"]}】`;
+        song += `【${song_cache[song_code].extra.content_type}】`;
     }
     return song;
 }
@@ -95,7 +96,7 @@ function show_connection_toast() {
         duration: -1,
         position: "center",
         gravity: "bottom",
-        className: "toast-green",
+        className: "toast-red",
         onClick: () => CONNECTION_TOAST.hideToast()
     }).showToast();
 }

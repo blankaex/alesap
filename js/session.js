@@ -20,7 +20,7 @@ function scan_qr() {
         // otherwise enumerate devices and prompt user to select
         .catch(async err => {
             // show list selection
-            $("#selector-container").css("display", "");
+            $("#selector-container").show();
             const devices = await Html5Qrcode.getCameras();
             if (devices?.length > $("#camera-selector option").length) {
                 for (const { label } of devices) $("#camera-selector").append(`<option>${label}</option>`);
@@ -67,6 +67,12 @@ async function scan_success(decoded_text, decoded_result) {
             sessionStorage.setItem("scd", keys[2]);
             sessionStorage.setItem("connected_at", new Date().toLocaleDateString("ja-JP"));
             update_status("connected");
+            Toastify({
+                text: "Connected",
+                duration: TOAST_DURATION,
+                position: "center",
+                className: "toast-green",
+            }).showToast();
         } else {
             throw new Error("Invalid QR Code");
         }
@@ -74,41 +80,33 @@ async function scan_success(decoded_text, decoded_result) {
         if (toast_id) return;
         Toastify({
             text: "Invalid QR Code",
-            duration: 3000,
+            duration: TOAST_DURATION,
             position: "center",
             className: "toast-red",
         }).showToast();
-        toast_id = setTimeout(() => { toast_id = null; }, 3000);
+        toast_id = setTimeout(() => { toast_id = null; }, TOAST_DURATION);
     }
 }
 
 // helper function to change & display connection status to user
 function update_status(status) {
-    if (status == "connected" && session_is_active()) {
-        // update connection info
-        $("#connected").text(`Connected on ${sessionStorage.getItem("connected_at")}`);
-        // update various buttons
-        $("#random-history").addClass("btn-primary");
-        $("#random-favourite").addClass("btn-primary");
-        $("#add-to-queue").addClass("btn-primary");
-        $("#stop-playback").css("display", "block");
-        $("#leave-room").css("display", "block");
-        // hide connection toast
-        if (CONNECTION_TOAST) {
-            CONNECTION_TOAST.hideToast();
-        }
-    } else if (status == "disconnected" && session_is_active()) {
-        // delete session info
+    const active = status === "connected" && session_is_active();
+
+    $("#connected").text(active
+        ? `Connected on ${sessionStorage.getItem("connected_at")}`
+        : "Not Connected"
+    );
+
+    $("#random-history, #random-favourite, #add-to-queue")
+        .toggleClass("btn-primary", active);
+
+    $("#stop-playback, #leave-room")
+        .toggle(active);
+
+    if (active) {
+        CONNECTION_TOAST?.hideToast();
+    } else if (status === "disconnected" && session_is_active()) {
         sessionStorage.clear();
-        // update connection info
-        $("#connected").text("Not Connected");
-        // update various buttons
-        $("#random-history").removeClass("btn-primary");
-        $("#random-favourite").removeClass("btn-primary");
-        $("#add-to-queue").removeClass("btn-primary");
-        $("#stop-playback").css("display", "none");
-        $("#leave-room").css("display", "none");
-        // display connection toast
         show_connection_toast();
     }
 }

@@ -25,7 +25,7 @@ function start_search() {
             append_table("#song-table-body", song["code"]);
         });
         // unhide song table
-        $("#song-table").css("display", "");
+        $("#song-table").show();
     });
 }
 
@@ -33,8 +33,8 @@ function start_search() {
 function fill_song_history() {
     if (localStorage.getItem("song_history") != null) {
         const song_history = JSON.parse(localStorage.getItem("song_history"));
-        $("#empty-history").css("display", "none");
-        $("#history").css("display", "");
+        $("#empty-history").hide();
+        $("#history").show();
         $("#history-table-body").empty();
         const today = new Date().toLocaleDateString("ja-JP");
         song_history.forEach(function(song) {
@@ -54,8 +54,8 @@ function fill_song_history() {
 function fill_favourites() {
     if (localStorage.getItem("favourites") != null) {
         const favourites = JSON.parse(localStorage.getItem("favourites"));
-        $("#empty-favourites").css("display", "none");
-        $("#favourites").css("display", "");
+        $("#empty-favourites").hide();
+        $("#favourites").show();
         $("#favourites-table-body").empty();
         favourites.forEach(function(song) {
             append_table("#favourites-table-body", song);
@@ -98,7 +98,7 @@ function append_table(table_body, song_code, last_played = null) {
     const song_cache = JSON.parse(localStorage.getItem("song_cache"));
     const row = $(`<tr id=${song_code} onclick="fill_song_modal(this)">`);
     row.append($("<td>").text(normalize_song(song_code)));
-    row.append($("<td>").text(song_cache[song_code]["artist"]));
+    row.append($("<td>").text(song_cache[song_code].artist));
     if (table_body == "#history-table-body") {
         row.append($("<td>").text(last_played));
     } else {

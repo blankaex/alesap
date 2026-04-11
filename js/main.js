@@ -42,7 +42,7 @@ function startup() {
 
     // checks if session is already active
     if (session_is_active()) {
-        update_status("connected");
+        update_status(true);
     } else {
         show_connection_toast();
     }

@@ -34,23 +34,22 @@ async function set_nickname(startup = false) {
 }
 
 function show_info() {
-    const song_cache = JSON.parse(localStorage.getItem("song_cache"));
-    if (song_cache) {
-        const most_played = Object.values(song_cache)
-            .filter(obj => obj.count != null)
-            .map(obj => [obj.count, obj.song])
-            .sort((a, b) => b[0] - a[0]);
-        if (most_played) {
-            let most_played_table = $("<table>").addClass("table");
-            $.each(most_played.slice(0, 10), function (_, [count, song]) {
+    const song_count = JSON.parse(localStorage.getItem("song_count"));
+    if (song_count) {
+        let most_played_table = $("<table>").addClass("table");
+        $.each(
+            Object.entries(song_count)
+                .sort((a, b) => b[1] - a[1]) // sort by most played
+                .slice(0, 10), // limit to top 10 results
+            function (_, [code, count]) {
                 const $row = $("<tr>")
                     .append($("<td>").text(count))
-                    .append($("<td>").text(song));
+                    .append($("<td>").text(song_cache_get(code, "song")));
                 most_played_table.append($row);
-            });
-            $("#most-played").html($("<h4>").text("Most Played:"));
-            $("#most-played").append(most_played_table);
-        }
+            }
+        );
+        $("#most-played").html($("<h4>").text("Most Played:"));
+        $("#most-played").append(most_played_table);
     }
     $("#info-modal").modal("show");
 }

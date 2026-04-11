@@ -10,6 +10,7 @@ empty_page "", "alesap.blankaex.reisen", theme: :dark do
     request_js "js/settings.js"
     request_js "js/controls.js"
     request_css "css/overrides.css"
+    request_css "css/progress_bar.css"
 
     request_js "js/libs/html5-qrcode.min.js"
     request_js "js/libs/toastify.js"
@@ -32,6 +33,9 @@ empty_page "", "alesap.blankaex.reisen", theme: :dark do
                 normal_button :stop, nil, id: "stop-playback", style: "danger", css_style: "display: none;" do
                     script "stop_song();"
                 end
+            end
+            div id: 'progress_bar' do;
+                div id: 'progress_bar_inside' do; end
             end
             small id: "search-help" do
                 a "Search help", href: "javascript:$('#search-help-modal').modal('show');;"

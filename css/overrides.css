@@ -10,7 +10,19 @@ input::placeholder {
 table {
     margin-top: 10px !important;
     margin-bottom: 0px !important;
+    table-layout: fixed !important;
+    width: 100% !important;
 }
+
+td, th {
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    white-space: nowrap !important;
+}
+
+th:nth-child(1)  { width: 50% !important; }
+th:nth-child(2)  { width: 30% !important; }
+th:nth-child(3)  { width: 20% !important; }
 
 thead {
     border-top: 1px solid rgba(136, 142, 168, 0.5) !important;

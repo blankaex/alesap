@@ -166,7 +166,7 @@ empty_page "", "alesap.blankaex.reisen", theme: :dark do
                 script "$('#scan-modal').modal('show'); scan_qr();"
             end
             normal_button :unlink, nil, id: "leave-room", style: "danger", css_style: "display: none" do
-                script "update_status('disconnected');"
+                script "update_status(false);"
             end
         end
     end
@@ -224,7 +224,6 @@ empty_page "", "alesap.blankaex.reisen", theme: :dark do
             div id: "info-modal-body" do
                 h4 "Session Status:"
                 p id: "connected" do
-                    "Not connected"
                 end
                 div id: "most-played" do
                 end

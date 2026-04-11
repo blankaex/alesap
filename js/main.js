@@ -41,9 +41,8 @@ function startup() {
     });
 
     // checks if session is already active
-    if (session_is_active()) {
-        update_status(true);
-    } else {
+    update_status(session_is_active());
+    if (!session_is_active()) {
         show_connection_toast();
     }
 

@@ -92,9 +92,9 @@ async function scan_success(decoded_text, decoded_result) {
 function update_status(status) {
     const active = status && session_is_active();
 
-    $("#connected").text(active
-        ? `Connected on ${sessionStorage.getItem("connected_at")}`
-        : "Not Connected"
+    $("#connected").text(active ?
+        `Connected on ${sessionStorage.getItem("connected_at")}` :
+        "Not Connected"
     );
 
     $("#random-history, #random-favourite, #add-to-queue")

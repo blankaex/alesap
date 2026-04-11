@@ -101,15 +101,6 @@ form input, form select {
     margin-bottom: 0px !important;
 }
 
-.widget {
-    text-align: center !important;
-    margin: 0px !important;
-}
-
-.widget h3 {
-    margin: 0px !important;
-}
-
 .jumbotron {
     text-align: center !important;
 }
@@ -187,18 +178,22 @@ form input, form select {
     margin: 0px !important;
 }
 
-#song-modal-body h4, #settings h4 {
+#song-modal-body h4, #settings h4, #info-modal-body h4 {
     font-size: 13px !important;
     font-weight: bold !important;
     margin-bottom: 5px !important;
 }
 
-#song-modal-body p, #settings p {
-    margin-left: 20px !important;
+#song-modal-body p, #settings p, #info-modal-body p, #info-modal-body table {
+    margin: 0px 20px 10px 20px !important;
 }
 
 #song-modal-body pre {
     margin-top: 10px !important;
+}
+
+#settings > :not(h4) {
+    margin: 10px 20px 0px 20px !important;
 }
 
 /* fix when wform supports ids with - */
@@ -219,5 +214,5 @@ form button {
 }
 
 #developer_mode_form label div {
-    margin-right: 4px !important;
+    margin: 0px 4px 4px 0px !important;
 }

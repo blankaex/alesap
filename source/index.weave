@@ -94,15 +94,10 @@ empty_page "", "alesap.blankaex.reisen", theme: :dark do
         end
 
         tab "Advanced" do
-            div id: "settings" do
-                ibox do
-                    type :panel
-                    title "Settings"
-                    h4 "Connected:"
-                    p id: "connected" do
-                        "Not connected"
-                    end
-                    hr
+            ibox do
+                type :panel
+                title "Settings"
+                div id: "settings" do
                     h4 "Nickname:"
                     wform id: "nickname_form" do
                         textfield "nickname", nil, id: "nickname-field"
@@ -110,8 +105,15 @@ empty_page "", "alesap.blankaex.reisen", theme: :dark do
                             script "set_nickname(false);"
                         end
                     end
+                    h4 "Options:"
                     wform id: "developer_mode_form" do
                         checkbox "developer-mode", "Enable Developer Tools"
+                    end
+                    h4 "Info:"
+                    div do
+                        block_button nil, "Show Info", id: "show-info" do
+                            script "show_info();"
+                        end
                     end
                 end
             end
@@ -210,6 +212,27 @@ empty_page "", "alesap.blankaex.reisen", theme: :dark do
             end
             normal_button :heart, nil, style: "default", id: "favourite-button" do
                 script "add_favourite($('#current-song-code').text());"
+            end
+        end
+    end
+
+    modal "info-modal" do
+        header {
+            h4 "Info", id: "info-modal-title"
+        }
+        body {
+            div id: "info-modal-body" do
+                h4 "Connected:"
+                p id: "connected" do
+                    "Not connected"
+                end
+                div id: "most-played" do
+                end
+            end
+        }
+        footer do
+            block_button "Close" do
+                script "$('#info-modal').modal('hide');"
             end
         end
     end

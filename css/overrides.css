@@ -9,6 +9,7 @@ input::placeholder {
 
 table {
     margin-top: 10px !important;
+    margin-bottom: 0px !important;
 }
 
 thead {
@@ -18,7 +19,6 @@ thead {
 form input, form select {
     border-radius: 4px !important;
 }
-
 
 .form-group {
     width: 100% !important;
@@ -140,10 +140,6 @@ form input, form select {
     background: #f8ac59 !important;
 }
 
-#debug-widget {
-    margin-bottom: 6px !important;
-}
-
 #footer {
     background: #1b1e35 !important;
     margin-top: 6px !important;
@@ -154,12 +150,15 @@ form input, form select {
 
 #button-container {
     display: flex !important;
-    margin-top: 6px !important;
     gap: 6px !important;
 }
 
 #scan-qr, #leave-room {
     margin: 0px !important;
+}
+
+#random-history i, #random-favourite i, #scan-qr i {
+    margin-right: 4px !important;
 }
 
 #reader {
@@ -181,7 +180,7 @@ form input, form select {
 #song-modal-body h4, #settings h4, #info-modal-body h4 {
     font-size: 13px !important;
     font-weight: bold !important;
-    margin-bottom: 5px !important;
+    margin: 6px 0px !important;
 }
 
 #song-modal-body p, #settings p, #info-modal-body p, #info-modal-body table {
@@ -194,6 +193,14 @@ form input, form select {
 
 #settings > :not(h4) {
     margin: 10px 20px 0px 20px !important;
+}
+
+#nickname-field-group {
+    margin-bottom: 6px !important;
+}
+
+#ecd-field-group {
+    margin-bottom: 0px !important;
 }
 
 /* fix when wform supports ids with - */
@@ -211,6 +218,7 @@ form button {
 #developer_mode_form .i-checks label {
     font-size: 13px !important;
     font-weight: normal !important;
+    margin-bottom: 4px;
 }
 
 #developer_mode_form label div {

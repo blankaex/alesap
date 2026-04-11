@@ -54,7 +54,7 @@ empty_page "", "alesap.blankaex.reisen", theme: :dark do
                 end
             end
             div id: "history", style: "display: none;" do
-                block_button :refresh, "I'm feeling lucky", id: "random-history", style: "none" do
+                block_button :magic, "I'm feeling lucky", id: "random-history", style: "none" do
                     script "queue_random('history');"
                 end
                 table striped: true, id: "history-table" do
@@ -78,7 +78,7 @@ empty_page "", "alesap.blankaex.reisen", theme: :dark do
                 end
             end
             div id: "favourites", style: "display: none;" do
-                block_button :refresh, "I'm feeling lucky", id: "random-favourite", style: "none" do
+                block_button :magic, "I'm feeling lucky", id: "random-favourite", style: "none" do
                     script "queue_random('favourites');"
                 end
                 table striped: true, id: "favourites-table" do
@@ -222,7 +222,7 @@ empty_page "", "alesap.blankaex.reisen", theme: :dark do
         }
         body {
             div id: "info-modal-body" do
-                h4 "Connected:"
+                h4 "Session Status:"
                 p id: "connected" do
                     "Not connected"
                 end

@@ -23,12 +23,7 @@ function queue_song(song_code) {
             contentType: "application/json; charset=utf-8"
         }).then(function(data) {
             $("#song-modal").modal("hide");
-            Toastify({
-                text: "Sent to queue",
-                duration: TOAST_DURATION,
-                position: "center",
-                className: "toast-green",
-            }).showToast();
+            toast("Sent to queue", "toast-green");
             append_history(song_code);
         });
     } else {
@@ -36,12 +31,7 @@ function queue_song(song_code) {
             "Not connected" :
             "Invalid song code";
         $("#song-modal").modal("hide");
-        Toastify({
-            text: toast_text,
-            duration: TOAST_DURATION,
-            position: "center",
-            className: "toast-red",
-        }).showToast();
+        toast(toast_text, "toast-red");
     }
 }
 
@@ -70,12 +60,7 @@ function stop_song() {
         }),
         contentType: "application/json; charset=utf-8"
     }).then(function(data) {
-        Toastify({
-            text: "Sent stop request",
-            duration: TOAST_DURATION,
-            position: "center",
-            className: "toast-green",
-        }).showToast();
+        toast("Sent stop request", "toast-green");
     });
 }
 

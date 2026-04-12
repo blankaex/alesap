@@ -104,6 +104,15 @@ function parse_device_info() {
     return JSON.stringify(device_info, null, 2);
 }
 
+function toast(message, class_name) {
+    return Toastify({
+        text: message,
+        duration: 2000,
+        position: "center",
+        className: class_name,
+    }).showToast();
+}
+
 function show_connection_toast() {
     CONNECTION_TOAST = Toastify({
         text: "Not connected—scan QR code to get started",

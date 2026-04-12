@@ -67,23 +67,13 @@ async function scan_success(decoded_text, decoded_result) {
             sessionStorage.setItem("scd", keys[2]);
             sessionStorage.setItem("connected_at", new Date().toLocaleDateString("ja-JP"));
             update_status(true);
-            Toastify({
-                text: "Connected",
-                duration: TOAST_DURATION,
-                position: "center",
-                className: "toast-green",
-            }).showToast();
+            toast("Connected", "toast-green");
         } else {
             throw new Error("Invalid QR Code");
         }
     } catch (error) {
         if (toast_id) return;
-        Toastify({
-            text: "Invalid QR Code",
-            duration: TOAST_DURATION,
-            position: "center",
-            className: "toast-red",
-        }).showToast();
+        toast("Invalid QR Code", "toast-red");
         toast_id = setTimeout(() => { toast_id = null; }, TOAST_DURATION);
     }
 }

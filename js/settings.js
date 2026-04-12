@@ -24,12 +24,7 @@ async function set_nickname(startup = false) {
     $("#nickname-field").val(nickname);
     localStorage.setItem("nickname", nickname);
     if (!startup) {
-        Toastify({
-            text: "Nickname saved",
-            duration: TOAST_DURATION,
-            position: "center",
-            className: "toast-green",
-        }).showToast();
+        toast("Nickname saved", "toast-green");
     }
 }
 

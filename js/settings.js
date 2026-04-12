@@ -43,7 +43,7 @@ function show_info() {
                 .slice(0, 10), // limit to top 10 results
             function (_, [code, count]) {
                 const $row = $("<tr>")
-                    .append($("<td>").text(count))
+                    .append($("<td>").text(`〈${count}〉`))
                     .append($("<td>").text(song_cache_get(code, "song")));
                 most_played_table.append($row);
             }

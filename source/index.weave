@@ -42,7 +42,6 @@ empty_page "", "alesap.blankaex.reisen", theme: :dark do
                     thead id: "song-table-head" do
                         th { text "Title" }
                         th { text "Artist" }
-                        th { text "Code" }
                     end
                     tbody id: "song-table-body" do
                     end
@@ -99,7 +98,6 @@ empty_page "", "alesap.blankaex.reisen", theme: :dark do
                     thead id: "favourites-table-head" do
                         th { text "Title" }
                         th { text "Artist" }
-                        th { text "Code" }
                     end
                     tbody id: "favourites-table-body" do
                     end

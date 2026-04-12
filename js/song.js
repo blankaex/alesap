@@ -134,8 +134,6 @@ function append_table(table_body, song_code, last_played = null) {
     row.append($("<td>").text(song_cache[song_code].artist));
     if (table_body == "#history-table-body") {
         row.append($("<td>").text(last_played));
-    } else {
-        row.append($("<td>").text(song_code));
     }
     $(table_body).append(row);
 }

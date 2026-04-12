@@ -13,6 +13,7 @@ empty_page "", "alesap.blankaex.reisen", theme: :dark do
 
     request_js "js/libs/html5-qrcode.min.js"
     request_js "js/libs/toastify.js"
+    request_css "css/libs/loader.css"
     request_css "css/libs/toastify.min.css"
 
     set_favicon_path "images/favicon.ico"
@@ -35,13 +36,25 @@ empty_page "", "alesap.blankaex.reisen", theme: :dark do
             small id: "search-help" do
                 a "Search help", href: "javascript:$('#search-help-modal').modal('show');;"
             end
-            table striped: true, id: "song-table", style: "display: none;" do
-                thead id: "song-table-head" do
-                    th { text "Title" }
-                    th { text "Artist" }
-                    th { text "Code" }
+            # wrap table in div to avoid conflicts with pagination element
+            div do
+                table striped: true, id: "song-table", style: "display: none;" do
+                    thead id: "song-table-head" do
+                        th { text "Title" }
+                        th { text "Artist" }
+                        th { text "Code" }
+                    end
+                    tbody id: "song-table-body" do
+                    end
                 end
-                tbody id: "song-table-body" do
+            end
+            div id: "empty-search", style: "display: none;" do
+                jumbotron do
+                  span "Nothing to see here 😗"
+                end
+            end
+            div id: "loader-div" do
+                span class: "loader" do
                 end
             end
         end

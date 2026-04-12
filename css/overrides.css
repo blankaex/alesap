@@ -156,6 +156,10 @@ form input, form select {
     margin-left: 6px !important;
 }
 
+#empty-search .jumbotron {
+    margin: 10px 0px 0px 0px !important;
+}
+
 #footer {
     background: #1b1e35 !important;
     margin-top: 6px !important;

@@ -9,6 +9,8 @@
 
 // sends a search query to the API and renders results into the song table
 function start_search(page) {
+    $("#empty-search").hide();
+    $("#loader-div").css("display", "flex");
     $.ajax({
         type: "POST",
         url: API_URL + "/api/v1/command/search/",
@@ -18,6 +20,13 @@ function start_search(page) {
         }),
         contentType: "application/json; charset=utf-8"
     }).then(function(data) {
+        console.log(data);
+        if (!data.results?.length || !data.total) {
+            $("#empty-search").show();
+            $("#song-table").hide();
+            $("#loader-div").hide();
+            return;
+        }
         // clear song table entries & unhide table if starting a new search
         if (page === 0) {
             $("#song-table-body").empty();
@@ -29,13 +38,17 @@ function start_search(page) {
             localStorage.setItem("song_cache", JSON.stringify(song_cache));
             append_table("#song-table-body", song["code"]);
         });
-        // unhide song table
         if (page >= SEARCH_PAGE_LIMIT || data.results[0].length === 0) {
+            $("#loader-div").hide();
             return;
         }
-        setTimeout(() => {
-            start_search(page + 1);
-        }, SEARCH_INTERVAL);
+        if (data.total > SEARCH_RESULTS_LIMIT) {
+            setTimeout(() => {
+                start_search(page + 1);
+            }, SEARCH_INTERVAL);
+        } else {
+            $("#loader-div").hide();
+        }
     });
 }
 

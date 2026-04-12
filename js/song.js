@@ -147,14 +147,10 @@ function fill_song_modal(song) {
     // set modal title
     $("#song-modal-title").text(normalize_song(song_code));
     // set modal body
-    $("#song-modal-body").empty().append(build_song_modal_data(song_code));
+    $("#song-modal-body").html(build_song_modal_data(song_code));
     // update ui based on favourite status
-    const favourites = localStorage.getItem("favourites") || [];
-    if (favourites.includes(song_code)) {
-        $("#favourite-button").removeClass("btn-default");
-        $("#favourite-button").addClass("btn-danger");
-    } else {
-        $("#favourite-button").removeClass("btn-danger");
-        $("#favourite-button").addClass("btn-default");
-    }
+    const favourites = JSON.parse(localStorage.getItem("favourites")) || {};
+    $("#favourite-button")
+        .toggleClass("btn-danger", favourites[song_code])
+        .toggleClass("btn-default", !favourites[song_code]);
 }

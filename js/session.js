@@ -67,13 +67,13 @@ async function scan_success(decoded_text, decoded_result) {
             sessionStorage.setItem("scd", keys[2]);
             sessionStorage.setItem("connected_at", new Date().toLocaleDateString("ja-JP"));
             update_status(true);
-            toast("Connected", "toast-green");
+            toast(i18n("toast_connected"), "toast-green");
         } else {
             throw new Error("Invalid QR Code");
         }
     } catch (error) {
         if (toast_id) return;
-        toast("Invalid QR Code", "toast-red");
+        toast(i18n("toast_invalid_qr"), "toast-red");
         toast_id = setTimeout(() => { toast_id = null; }, TOAST_DURATION);
     }
 }
@@ -83,8 +83,8 @@ function update_status(status) {
     const active = status && session_is_active();
 
     $("#connected").text(active ?
-        `Connected on ${sessionStorage.getItem("connected_at")}` :
-        "Not Connected"
+        i18n("status_connected_on", { date: sessionStorage.getItem("connected_at") }) :
+        i18n("status_not_connected")
     );
 
     $("#random-history, #random-favourite, #add-to-queue")

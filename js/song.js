@@ -8,13 +8,16 @@
  */
 
 // sends a search query to the API and renders results into the song table
-function start_search(page = 0) {
+function start_search(page = 0, push = true) {
     // update ui to give feedback that search is starting
     if (page === 0) {
         $("#empty-search").hide();
         $("#song-table-body").empty();
         $("#song-table").show();
         $("#loader-div").css("display", "flex");
+        if (push) {
+            search_history_push($("#search-field").val());
+        }
     }
     // call search api
     $.ajax({

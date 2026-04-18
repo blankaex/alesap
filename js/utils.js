@@ -104,6 +104,25 @@ function parse_device_info() {
     return JSON.stringify(device_info, null, 2);
 }
 
+// helper functions to manage search query history stack
+function search_history_push(query) {
+    let search_history = JSON.parse(sessionStorage.getItem("search_history")) ?? [];
+    search_history.push(query);
+    sessionStorage.setItem("search_history", JSON.stringify(search_history));
+}
+
+function search_history_pop() {
+    let search_history = JSON.parse(sessionStorage.getItem("search_history")) ?? [];
+    let query = search_history.pop();
+    // pop another one if query is the one we just added
+    if (query == $("#search-field").val()) {
+        query = search_history.pop();
+    }
+    sessionStorage.setItem("search_history", JSON.stringify(search_history));
+    return query;
+}
+
+// helper functions to display standard toasts
 function toast(message, class_name) {
     return Toastify({
         text: message,

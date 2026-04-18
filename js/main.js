@@ -18,6 +18,11 @@ function startup() {
         }
     });
 
+    // handle mobile back button
+    history.back = () => {
+        back_handler();
+    };
+
     // add listeners to tabs
     $("li.active a:contains('Search')").on("click", function() {
         $("#song_search_form")[0].reset();

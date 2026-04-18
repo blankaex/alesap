@@ -73,3 +73,47 @@ function add_favourite(song_code) {
     localStorage.setItem("favourites", JSON.stringify(favourites));
     fill_favourites();
 }
+
+function back_handler() {
+    // check if any active modals
+    // -> close modal
+    const $active_modal = $(".modal.in");
+    if ($active_modal.length) {
+        $active_modal.modal("hide");
+        return;
+    }
+
+    // no modals active
+    // check if active tab is not search tab
+    // -> back to search tab
+    const $active_tab = $("li.active");
+    if (!$active_tab.find("a:contains('Search')").length) {
+        $("li a:contains('Search')").trigger("click");
+        return;
+    }
+
+    // search tab is active
+    // check if any items in search history
+    // -> return the last search string instead
+    const last_search = search_history_pop();
+    if (last_search) {
+        $("#search-field").val(last_search);
+        start_search(0, false);
+        return;
+    }
+
+    // no items in search history
+    // check if search results are being displayed
+    // -> clear search table
+    if ($("#search-field").val()) {
+        $("#song_search_form")[0].reset();
+        $("#empty-search").hide();
+        $("#song-table").hide();
+        $("#song-table-body").empty();
+        return;
+    }
+
+    // no search results displayed
+    // -> toast user
+    toast("Search history empty", "toast-red");
+}

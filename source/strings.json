@@ -1,0 +1,82 @@
+{
+  "_comment": "Static, user-facing UI strings for the alesap frontend. Each key has en (English) and ja (Japanese) entries. Active language is controlled by localStorage key 'language' and resolved by i18n() in js/i18n.js.",
+
+  "tab_search":              { "en": "Search",      "ja": "検索" },
+  "tab_history":             { "en": "History",     "ja": "履歴" },
+  "tab_favourites":          { "en": "Favourites",  "ja": "お気に入り" },
+  "tab_advanced":            { "en": "Advanced",    "ja": "詳細設定" },
+
+  "song_search_heading":     { "en": "Song search:",            "ja": "曲を検索:" },
+  "search_placeholder":      { "en": "Type to start searching", "ja": "検索するには入力してください" },
+  "search_button":           { "en": "Search",                  "ja": "検索" },
+  "search_help_link":        { "en": "Search help",             "ja": "検索ヘルプ" },
+  "column_title":            { "en": "Title",                   "ja": "タイトル" },
+  "column_artist":           { "en": "Artist",                  "ja": "アーティスト" },
+  "column_last_played":      { "en": "Last Played",             "ja": "最終再生" },
+  "empty_search":            { "en": "Nothing to see here 😗",  "ja": "ここには何もありません 😗" },
+
+  "empty_history_title":     { "en": "No songs in history 🥺",       "ja": "履歴に曲がありません 🥺" },
+  "empty_history_subtitle":  { "en": "Queue a song to get started",  "ja": "曲をキューに追加して始めましょう" },
+  "feeling_lucky":           { "en": "I'm feeling lucky",            "ja": "おまかせ" },
+
+  "empty_favourites_title":    { "en": "No songs in favourites 🥺",      "ja": "お気に入りに曲がありません 🥺" },
+  "empty_favourites_subtitle": { "en": "Favourite a song to get started", "ja": "曲をお気に入りに追加して始めましょう" },
+
+  "settings_title":          { "en": "Settings",                "ja": "設定" },
+  "nickname_heading":        { "en": "Nickname:",               "ja": "ニックネーム:" },
+  "set_nickname_button":     { "en": "Set nickname",            "ja": "ニックネームを設定" },
+  "options_heading":         { "en": "Options:",                "ja": "オプション:" },
+  "enable_developer_tools":  { "en": "Enable Developer Tools",  "ja": "開発者ツールを有効にする" },
+  "enable_japanese":         { "en": "Use Japanese",            "ja": "日本語を使用" },
+  "info_heading":            { "en": "Info:",                   "ja": "情報:" },
+  "show_info_button":        { "en": "Show Info",               "ja": "情報を表示" },
+  "queue_song_by_code":      { "en": "Queue song by code",      "ja": "コードで曲をキューに追加" },
+  "song_code_placeholder":   { "en": "Song code",               "ja": "曲コード" },
+  "add_to_queue_button":     { "en": "Add to queue",            "ja": "キューに追加" },
+  "developer_tools_title":   { "en": "Developer Tools",         "ja": "開発者ツール" },
+  "clear_local_storage":     { "en": "Clear localStorage",      "ja": "localStorage をクリア" },
+  "clear_session_storage":   { "en": "Clear sessionStorage",    "ja": "sessionStorage をクリア" },
+  "toggle_debug_mode":       { "en": "Toggle Debug Mode",       "ja": "デバッグモードを切り替え" },
+  "device_info_tab":         { "en": "Device Info",             "ja": "デバイス情報" },
+  "session_storage_tab":     { "en": "sessionStorage",          "ja": "sessionStorage" },
+  "local_storage_tab":       { "en": "localStorage",            "ja": "localStorage" },
+
+  "scan_qr_code":            { "en": "Scan QR Code",            "ja": "QRコードをスキャン" },
+  "created_by":              {
+    "en": "Created by <a href='https://github.com/davidsiaw/alesap-server'>astrobunny</a> and <a href='https://github.com/blankaex/alesap'>Blankaex</a>",
+    "ja": "作成者: <a href='https://github.com/davidsiaw/alesap-server'>astrobunny</a> と <a href='https://github.com/blankaex/alesap'>Blankaex</a>"
+  },
+
+  "close_button":            { "en": "Close",                       "ja": "閉じる" },
+  "search_help_title":       { "en": "Search Help",                 "ja": "検索ヘルプ" },
+  "search_help_artist":      { "en": "Filter by artist, e.g. ",     "ja": "アーティストで絞り込み、例: " },
+  "search_help_genre":       { "en": "Filter by genre, e.g. ",      "ja": "ジャンルで絞り込み、例: " },
+  "search_help_type":        { "en": "Filter by content type, e.g. ", "ja": "コンテンツタイプで絞り込み、例: " },
+  "info_modal_title":        { "en": "Info",                        "ja": "情報" },
+  "session_status_heading":  { "en": "Session Status:",             "ja": "セッション状態:" },
+  "most_played_heading":     { "en": "Most Played:",                "ja": "最も再生された曲:" },
+
+  "field_title":             { "en": "Title",       "ja": "タイトル" },
+  "field_artist":            { "en": "Artist",      "ja": "アーティスト" },
+  "field_genre":             { "en": "Genre",       "ja": "ジャンル" },
+  "field_info":              { "en": "Info",        "ja": "情報" },
+  "field_lyrics":            { "en": "Lyrics",      "ja": "歌詞" },
+  "field_play_count":        { "en": "Play Count",  "ja": "再生回数" },
+  "field_code":              { "en": "Code",        "ja": "コード" },
+  "debugging_info_heading":  { "en": "Debugging info:", "ja": "デバッグ情報:" },
+
+  "select_camera":           { "en": "Select Camera", "ja": "カメラを選択" },
+
+  "toast_sent_to_queue":     { "en": "Sent to queue",       "ja": "キューに送信しました" },
+  "toast_not_connected":     { "en": "Not connected",       "ja": "接続されていません" },
+  "toast_invalid_song_code": { "en": "Invalid song code",   "ja": "無効な曲コードです" },
+  "toast_sent_stop_request": { "en": "Sent stop request",   "ja": "停止リクエストを送信しました" },
+  "toast_connected":         { "en": "Connected",           "ja": "接続しました" },
+  "toast_invalid_qr":        { "en": "Invalid QR Code",     "ja": "無効なQRコードです" },
+  "toast_nickname_saved":    { "en": "Nickname saved",      "ja": "ニックネームを保存しました" },
+  "toast_debug_enabled":     { "en": "🐞 Debugging Enabled", "ja": "🐞 デバッグ有効" },
+  "toast_not_connected_long":{ "en": "Not connected—scan QR code to get started", "ja": "未接続—QRコードをスキャンして開始してください" },
+
+  "status_connected_on":     { "en": "Connected on {date}", "ja": "{date} に接続" },
+  "status_not_connected":    { "en": "Not Connected",       "ja": "未接続" }
+}

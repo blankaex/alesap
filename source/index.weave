@@ -1,8 +1,28 @@
 # vim:ft=ruby
+require 'json'
+
+# Load all UI strings from the project root
+_strings = JSON.parse(File.read(File.join(__dir__, 'strings.json')))
+
+# Helper: returns the English text for a key (used as weaver string arguments)
+# and renders a <span data-i18n="key"> so JS can swap to Japanese at runtime.
+def s(strings, key)
+  en = strings.dig(key, 'en') || key
+  "<span data-i18n=\"#{key}\">#{en}</span>"
+end
+
+# Plain English text for arguments that weaver renders as HTML attributes
+# (e.g. tab names, button labels) — weaver wraps these itself so we use spans.
+# For truly plain-text-only contexts we fall back to the English string directly.
+def t(strings, key)
+  strings.dig(key, 'en') || key
+end
+
 empty_page "", "alesap.blankaex.reisen", theme: :dark do
     #
     # Imports
     #
+    request_js "js/i18n.js"
     request_js "js/utils.js"
     request_js "js/song.js"
     request_js "js/main.js"
@@ -22,11 +42,11 @@ empty_page "", "alesap.blankaex.reisen", theme: :dark do
     # Content
     #
     tabs do
-        tab "Search" do
-            h4 "Song search:"
+        tab t(_strings, "tab_search") do
+            h4 s(_strings, "song_search_heading")
             wform id: "song_search_form" do
-                textfield "search", nil, placeholder: "Type to start searching", id: "search-field"
-                submit "Search", :search do
+                textfield "search", nil, placeholder: t(_strings, "search_placeholder"), id: "search-field", "data-i18n-placeholder": "search_placeholder"
+                submit t(_strings, "search_button"), :search, id: "search-button", "data-i18n-value": "search_button" do
                     script "start_search();"
                 end
                 normal_button :stop, nil, id: "stop-playback", style: "danger", css_style: "display: none;" do
@@ -34,14 +54,14 @@ empty_page "", "alesap.blankaex.reisen", theme: :dark do
                 end
             end
             small id: "search-help" do
-                a "Search help", href: "javascript:$('#search-help-modal').modal('show');;"
+                a s(_strings, "search_help_link"), href: "javascript:$('#search-help-modal').modal('show');;"
             end
             # wrap table in div to avoid conflicts with pagination element
             div do
                 table striped: true, id: "song-table", style: "display: none;" do
                     thead id: "song-table-head" do
-                        th { text "Title" }
-                        th { text "Artist" }
+                        th { text s(_strings, "column_title") }
+                        th { text s(_strings, "column_artist") }
                     end
                     tbody id: "song-table-body" do
                     end
@@ -49,7 +69,7 @@ empty_page "", "alesap.blankaex.reisen", theme: :dark do
             end
             div id: "empty-search", style: "display: none;" do
                 jumbotron do
-                  span "Nothing to see here 😗"
+                  span s(_strings, "empty_search")
                 end
             end
             div id: "loader-div" do
@@ -58,23 +78,23 @@ empty_page "", "alesap.blankaex.reisen", theme: :dark do
             end
         end
 
-        tab "History" do
+        tab t(_strings, "tab_history") do
             # TODO: weaver can't add ids on jumbotron divs either
             div id: "empty-history" do
                 jumbotron do
-                    p "No songs in history 🥺"
-                    span  "Queue a song to get started"
+                    p s(_strings, "empty_history_title")
+                    span s(_strings, "empty_history_subtitle")
                 end
             end
             div id: "history", style: "display: none;" do
-                block_button :magic, "I'm feeling lucky", id: "random-history", style: "none" do
+                block_button :magic, t(_strings, "feeling_lucky"), id: "random-history", style: "none" do
                     script "queue_random('history');"
                 end
                 table striped: true, id: "history-table" do
                     thead id: "history-table-head" do
-                        th { text "Title" }
-                        th { text "Artist" }
-                        th { text "Last Played" }
+                        th { text s(_strings, "column_title") }
+                        th { text s(_strings, "column_artist") }
+                        th { text s(_strings, "column_last_played") }
                     end
                     tbody id: "history-table-body" do
                     end
@@ -82,22 +102,22 @@ empty_page "", "alesap.blankaex.reisen", theme: :dark do
             end
         end
 
-        tab "Favourites" do
+        tab t(_strings, "tab_favourites") do
             # TODO: weaver can't add ids on jumbotron divs either
             div id: "empty-favourites" do
                 jumbotron do
-                    p "No songs in favourites 🥺"
-                    span  "Favourite a song to get started"
+                    p s(_strings, "empty_favourites_title")
+                    span s(_strings, "empty_favourites_subtitle")
                 end
             end
             div id: "favourites", style: "display: none;" do
-                block_button :magic, "I'm feeling lucky", id: "random-favourite", style: "none" do
+                block_button :magic, t(_strings, "feeling_lucky"), id: "random-favourite", style: "none" do
                     script "queue_random('favourites');"
                 end
                 table striped: true, id: "favourites-table" do
                     thead id: "favourites-table-head" do
-                        th { text "Title" }
-                        th { text "Artist" }
+                        th { text s(_strings, "column_title") }
+                        th { text s(_strings, "column_artist") }
                     end
                     tbody id: "favourites-table-body" do
                     end
@@ -105,25 +125,26 @@ empty_page "", "alesap.blankaex.reisen", theme: :dark do
             end
         end
 
-        tab "Advanced" do
+        tab t(_strings, "tab_advanced") do
             ibox do
                 type :panel
-                title "Settings"
+                title t(_strings, "settings_title")
                 div id: "settings" do
-                    h4 "Nickname:"
+                    h4 s(_strings, "nickname_heading")
                     wform id: "nickname_form" do
                         textfield "nickname", nil, id: "nickname-field"
-                        submit "Set nickname", :check do
+                        submit t(_strings, "set_nickname_button"), :check, id: "set-nickname-button", "data-i18n-value": "set_nickname_button" do
                             script "set_nickname(false);"
                         end
                     end
-                    h4 "Options:"
+                    h4 s(_strings, "options_heading")
                     wform id: "developer_mode_form" do
-                        checkbox "developer-mode", "Enable Developer Tools"
+                        checkbox "developer-mode", t(_strings, "enable_developer_tools"), id: "developer-mode-label", "data-i18n-checkbox": "enable_developer_tools"
+                        checkbox "japanese-mode", t(_strings, "enable_japanese"), id: "japanese-mode-label", "data-i18n-checkbox": "enable_japanese"
                     end
-                    h4 "Info:"
+                    h4 s(_strings, "info_heading")
                     div do
-                        block_button nil, "Show Info", id: "show-info" do
+                        block_button nil, t(_strings, "show_info_button"), id: "show-info", "data-i18n-btn": "show_info_button" do
                             script "show_info();"
                         end
                     end
@@ -131,11 +152,11 @@ empty_page "", "alesap.blankaex.reisen", theme: :dark do
             end
             ibox do
                 type :panel
-                title "Queue song by code"
+                title t(_strings, "queue_song_by_code")
                 # TODO: weaver breaks when form ids contain - (changes function name)
                 wform id: "queue_code_form" do
-                    textfield "ecd", nil, placeholder: "Song code", id: "ecd-field"
-                    submit "Add to queue", :play do
+                    textfield "ecd", nil, placeholder: t(_strings, "song_code_placeholder"), id: "ecd-field", "data-i18n-placeholder": "song_code_placeholder"
+                    submit t(_strings, "add_to_queue_button"), :play, id: "add-to-queue-btn", "data-i18n-value": "add_to_queue_button" do
                         script "queue_song($('#ecd-field').val());"
                     end
                 end
@@ -143,26 +164,26 @@ empty_page "", "alesap.blankaex.reisen", theme: :dark do
             div id: "developer-tools" do
                 ibox do
                     type :warning
-                    block_button nil, "Clear localStorage", style: "warning" do
+                    block_button nil, t(_strings, "clear_local_storage"), id: "clear-ls-btn", style: "warning", "data-i18n-btn": "clear_local_storage" do
                         script "localStorage.clear();"
                     end
-                    block_button nil, "Clear sessionStorage", style: "warning" do
+                    block_button nil, t(_strings, "clear_session_storage"), id: "clear-ss-btn", style: "warning", "data-i18n-btn": "clear_session_storage" do
                         script "sessionStorage.clear();"
                     end
-                    title "Developer Tools"
-                    block_button nil, "Toggle Debug Mode", style: "warning" do
+                    title t(_strings, "developer_tools_title")
+                    block_button nil, t(_strings, "toggle_debug_mode"), id: "toggle-debug-btn", style: "warning", "data-i18n-btn": "toggle_debug_mode" do
                         script "toggle_debug();"
                     end
                     div id: "debug-div", style: "display: none;" do
                         # TODO: feature request to weaver to enable click on .panel-heading
                         accordion do
-                            tab "Device Info" do
+                            tab t(_strings, "device_info_tab") do
                                 pre id: "device-info"
                             end
-                            tab "sessionStorage" do
+                            tab t(_strings, "session_storage_tab") do
                                 pre id: "session-storage"
                             end
-                            tab "localStorage" do
+                            tab t(_strings, "local_storage_tab") do
                                 pre id: "local-storage"
                             end
                         end
@@ -174,7 +195,7 @@ empty_page "", "alesap.blankaex.reisen", theme: :dark do
 
     div id: "footer" do
         div id: "button-container" do
-            block_button :qrcode, "Scan QR Code", id: "scan-qr" do
+            block_button :qrcode, t(_strings, "scan_qr_code"), id: "scan-qr", "data-i18n-btn": "scan_qr_code" do
                 script "$('#scan-modal').modal('show'); scan_qr();"
             end
             normal_button :unlink, nil, id: "leave-room", style: "danger", css_style: "display: none" do
@@ -183,14 +204,14 @@ empty_page "", "alesap.blankaex.reisen", theme: :dark do
         end
     end
 
-    small "Created by <a href='https://github.com/davidsiaw/alesap-server'>astrobunny</a> and <a href='https://github.com/blankaex/alesap'>Blankaex</a>"
+    small _strings.dig('created_by', 'en'), id: "created-by", "data-i18n-html": "created_by"
 
     #
     # Modals
     #
     modal "scan-modal" do
         header {
-            h4 "Scan QR Code"
+            h4 s(_strings, "scan_qr_code")
         }
         body {
             div class: "camera-container" do
@@ -198,13 +219,13 @@ empty_page "", "alesap.blankaex.reisen", theme: :dark do
                 end
                 div id: "selector-container", style: "display: none;" do
                     wform id: "camera_form" do
-                        dropdown "cameras", "Select Camera", [], id: "camera-selector"
+                        dropdown "cameras", t(_strings, "select_camera"), [], id: "camera-selector"
                     end
                 end
             end
         }
         footer do
-            block_button "Close" do
+            block_button t(_strings, "close_button"), id: "scan-close-btn", "data-i18n-btn": "close_button" do
                 script "$('#scan-modal').modal('hide');"
             end
         end
@@ -212,29 +233,29 @@ empty_page "", "alesap.blankaex.reisen", theme: :dark do
 
     modal "search-help-modal" do
         header {
-            h4 "Search Help", id: "search-help-modal-title"
+            h4 s(_strings, "search_help_title"), id: "search-help-modal-title"
         }
         body {
             div id: "search-help-modal-body" do
                 code "artist:"
                 p do
-                    text "Filter by artist, e.g. "
+                    span s(_strings, "search_help_artist")
                     code "artist:yoasobi"
                 end
                 code "genre:"
                 p do
-                    text "Filter by genre, e.g. "
+                    span s(_strings, "search_help_genre")
                     code "genre:アニメ"
                 end
                 code "type:"
                 p do
-                    text "Filter by content type, e.g. "
+                    span s(_strings, "search_help_type")
                     code "type:vocaloid"
                 end
             end
         }
         footer do
-            block_button "Close" do
+            block_button t(_strings, "close_button"), id: "search-help-close-btn", "data-i18n-btn": "close_button" do
                 script "$('#search-help-modal').modal('hide');"
             end
         end
@@ -249,7 +270,7 @@ empty_page "", "alesap.blankaex.reisen", theme: :dark do
             end
         }
         footer do
-            block_button "Add to queue", id: "add-to-queue", style: "none" do
+            block_button t(_strings, "add_to_queue_button"), id: "add-to-queue", style: "none", "data-i18n-btn": "add_to_queue_button" do
                 script "queue_song($('#current-song-code').text())"
             end
             normal_button :heart, nil, style: "default", id: "favourite-button" do
@@ -260,11 +281,11 @@ empty_page "", "alesap.blankaex.reisen", theme: :dark do
 
     modal "info-modal" do
         header {
-            h4 "Info", id: "info-modal-title"
+            h4 s(_strings, "info_modal_title"), id: "info-modal-title"
         }
         body {
             div id: "info-modal-body" do
-                h4 "Session Status:"
+                h4 s(_strings, "session_status_heading")
                 p id: "connected" do
                 end
                 div id: "most-played" do
@@ -272,7 +293,7 @@ empty_page "", "alesap.blankaex.reisen", theme: :dark do
             end
         }
         footer do
-            block_button "Close" do
+            block_button t(_strings, "close_button"), id: "info-close-btn", "data-i18n-btn": "close_button" do
                 script "$('#info-modal').modal('hide');"
             end
         end

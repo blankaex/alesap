@@ -45,28 +45,28 @@ function normalize_song(song_code) {
 function build_song_modal_data(song_code) {
     const song_cache = JSON.parse(localStorage.getItem("song_cache"));
     const song_count = JSON.parse(localStorage.getItem("song_count")) ?? {};
-    const song_info = {
-        Title: song_cache[song_code].song,
-        Artist: song_cache[song_code].artist,
-        Genre: song_cache[song_code].extra.genre_name,
-        Info: song_cache[song_code].extra.information ?? 
-            song_cache[song_code].extra.program_name ?? 
-            song_cache[song_code].extra.tie_up,
-        Lyrics: song_cache[song_code].extra?.introcha ?
-            `${song_cache[song_code].extra.introcha}…` : null,
-        "Play Count": song_count[song_code],
-        Code: song_cache[song_code].code
-    };
+    const song_info = [
+        { key: "field_title",      id: "title",      value: song_cache[song_code].song },
+        { key: "field_artist",     id: "artist",     value: song_cache[song_code].artist },
+        { key: "field_genre",      id: "genre",      value: song_cache[song_code].extra.genre_name },
+        { key: "field_info",       id: "info",       value: song_cache[song_code].extra.information ??
+                                                                 song_cache[song_code].extra.program_name ??
+                                                                 song_cache[song_code].extra.tie_up },
+        { key: "field_lyrics",     id: "lyrics",     value: song_cache[song_code].extra?.introcha ?
+                                                                 `${song_cache[song_code].extra.introcha}…` : null },
+        { key: "field_play_count", id: "play-count", value: song_count[song_code] },
+        { key: "field_code",       id: "code",       value: song_cache[song_code].code }
+    ];
     let modal_data = [];
-    Object.keys(song_info).forEach(key => {
-        if (song_info[key]) {
-            modal_data.push($("<h4>").text(`${key}:`));
-            const tag = $("<p>").attr("id", `current-song-${key.toLowerCase()}`);
-            modal_data.push(tag.text(song_info[key]));
+    song_info.forEach(({ key, id, value }) => {
+        if (value) {
+            modal_data.push($("<h4>").text(`${i18n(key)}:`));
+            const tag = $("<p>").attr("id", `current-song-${id}`);
+            modal_data.push(tag.text(value));
         }
     });
     if (sessionStorage.getItem("debug_mode")) {
-        modal_data.push($("<hr>"), $("<h4>").text("Debugging info:"));
+        modal_data.push($("<hr>"), $("<h4>").text(i18n("debugging_info_heading")));
         modal_data.push($("<pre>").text(JSON.stringify(song_cache[song_code], null, 2)));
     }
     return modal_data;
@@ -115,7 +115,7 @@ function toast(message, class_name) {
 
 function show_connection_toast() {
     CONNECTION_TOAST = Toastify({
-        text: "Not connected—scan QR code to get started",
+        text: i18n("toast_not_connected_long"),
         duration: -1,
         position: "center",
         gravity: "bottom",
@@ -126,7 +126,7 @@ function show_connection_toast() {
 
 function show_debug_toast() {
     DEBUG_TOAST = Toastify({
-        text: "🐞 Debugging Enabled",
+        text: i18n("toast_debug_enabled"),
         duration: -1,
         position: "center",
         className: "toast-yellow",

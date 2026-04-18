@@ -4,20 +4,6 @@ require 'json'
 # Load all UI strings from the project root
 _strings = JSON.parse(File.read(File.join(__dir__, 'strings.json')))
 
-# Helper: returns the English text for a key (used as weaver string arguments)
-# and renders a <span data-i18n="key"> so JS can swap to Japanese at runtime.
-def s(strings, key)
-  en = strings.dig(key, 'en') || key
-  "<span data-i18n=\"#{key}\">#{en}</span>"
-end
-
-# Plain English text for arguments that weaver renders as HTML attributes
-# (e.g. tab names, button labels) — weaver wraps these itself so we use spans.
-# For truly plain-text-only contexts we fall back to the English string directly.
-def t(strings, key)
-  strings.dig(key, 'en') || key
-end
-
 empty_page "", "alesap.blankaex.reisen", theme: :dark do
     #
     # Imports
@@ -42,11 +28,11 @@ empty_page "", "alesap.blankaex.reisen", theme: :dark do
     # Content
     #
     tabs do
-        tab t(_strings, "tab_search") do
-            h4 s(_strings, "song_search_heading")
+        tab "#{_strings.dig('tab_search', 'en') || 'tab_search'}" do
+            h4 "<span data-i18n=\"song_search_heading\">#{_strings.dig('song_search_heading', 'en') || 'song_search_heading'}</span>"
             wform id: "song_search_form" do
-                textfield "search", nil, placeholder: t(_strings, "search_placeholder"), id: "search-field", "data-i18n-placeholder": "search_placeholder"
-                submit t(_strings, "search_button"), :search, id: "search-button", "data-i18n-value": "search_button" do
+                textfield "search", nil, placeholder: "#{_strings.dig('search_placeholder', 'en') || 'search_placeholder'}", id: "search-field", "data-i18n-placeholder": "search_placeholder"
+                submit "#{_strings.dig('search_button', 'en') || 'search_button'}", :search, id: "search-button", "data-i18n-value": "search_button" do
                     script "start_search();"
                 end
                 normal_button :stop, nil, id: "stop-playback", style: "danger", css_style: "display: none;" do
@@ -54,14 +40,14 @@ empty_page "", "alesap.blankaex.reisen", theme: :dark do
                 end
             end
             small id: "search-help" do
-                a s(_strings, "search_help_link"), href: "javascript:$('#search-help-modal').modal('show');;"
+                a "<span data-i18n=\"search_help_link\">#{_strings.dig('search_help_link', 'en') || 'search_help_link'}</span>", href: "javascript:$('#search-help-modal').modal('show');;"
             end
             # wrap table in div to avoid conflicts with pagination element
             div do
                 table striped: true, id: "song-table", style: "display: none;" do
                     thead id: "song-table-head" do
-                        th { text s(_strings, "column_title") }
-                        th { text s(_strings, "column_artist") }
+                        th { text "<span data-i18n=\"column_title\">#{_strings.dig('column_title', 'en') || 'column_title'}</span>" }
+                        th { text "<span data-i18n=\"column_artist\">#{_strings.dig('column_artist', 'en') || 'column_artist'}</span>" }
                     end
                     tbody id: "song-table-body" do
                     end
@@ -69,7 +55,7 @@ empty_page "", "alesap.blankaex.reisen", theme: :dark do
             end
             div id: "empty-search", style: "display: none;" do
                 jumbotron do
-                  span s(_strings, "empty_search")
+                  span "<span data-i18n=\"empty_search\">#{_strings.dig('empty_search', 'en') || 'empty_search'}</span>"
                 end
             end
             div id: "loader-div" do
@@ -78,23 +64,23 @@ empty_page "", "alesap.blankaex.reisen", theme: :dark do
             end
         end
 
-        tab t(_strings, "tab_history") do
+        tab "#{_strings.dig('tab_history', 'en') || 'tab_history'}" do
             # TODO: weaver can't add ids on jumbotron divs either
             div id: "empty-history" do
                 jumbotron do
-                    p s(_strings, "empty_history_title")
-                    span s(_strings, "empty_history_subtitle")
+                    p "<span data-i18n=\"empty_history_title\">#{_strings.dig('empty_history_title', 'en') || 'empty_history_title'}</span>"
+                    span "<span data-i18n=\"empty_history_subtitle\">#{_strings.dig('empty_history_subtitle', 'en') || 'empty_history_subtitle'}</span>"
                 end
             end
             div id: "history", style: "display: none;" do
-                block_button :magic, t(_strings, "feeling_lucky"), id: "random-history", style: "none" do
+                block_button :magic, "#{_strings.dig('feeling_lucky', 'en') || 'feeling_lucky'}", id: "random-history", style: "none" do
                     script "queue_random('history');"
                 end
                 table striped: true, id: "history-table" do
                     thead id: "history-table-head" do
-                        th { text s(_strings, "column_title") }
-                        th { text s(_strings, "column_artist") }
-                        th { text s(_strings, "column_last_played") }
+                        th { text "<span data-i18n=\"column_title\">#{_strings.dig('column_title', 'en') || 'column_title'}</span>" }
+                        th { text "<span data-i18n=\"column_artist\">#{_strings.dig('column_artist', 'en') || 'column_artist'}</span>" }
+                        th { text "<span data-i18n=\"column_last_played\">#{_strings.dig('column_last_played', 'en') || 'column_last_played'}</span>" }
                     end
                     tbody id: "history-table-body" do
                     end
@@ -102,22 +88,22 @@ empty_page "", "alesap.blankaex.reisen", theme: :dark do
             end
         end
 
-        tab t(_strings, "tab_favourites") do
+        tab "#{_strings.dig('tab_favourites', 'en') || 'tab_favourites'}" do
             # TODO: weaver can't add ids on jumbotron divs either
             div id: "empty-favourites" do
                 jumbotron do
-                    p s(_strings, "empty_favourites_title")
-                    span s(_strings, "empty_favourites_subtitle")
+                    p "<span data-i18n=\"empty_favourites_title\">#{_strings.dig('empty_favourites_title', 'en') || 'empty_favourites_title'}</span>"
+                    span "<span data-i18n=\"empty_favourites_subtitle\">#{_strings.dig('empty_favourites_subtitle', 'en') || 'empty_favourites_subtitle'}</span>"
                 end
             end
             div id: "favourites", style: "display: none;" do
-                block_button :magic, t(_strings, "feeling_lucky"), id: "random-favourite", style: "none" do
+                block_button :magic, "#{_strings.dig('feeling_lucky', 'en') || 'feeling_lucky'}", id: "random-favourite", style: "none" do
                     script "queue_random('favourites');"
                 end
                 table striped: true, id: "favourites-table" do
                     thead id: "favourites-table-head" do
-                        th { text s(_strings, "column_title") }
-                        th { text s(_strings, "column_artist") }
+                        th { text "<span data-i18n=\"column_title\">#{_strings.dig('column_title', 'en') || 'column_title'}</span>" }
+                        th { text "<span data-i18n=\"column_artist\">#{_strings.dig('column_artist', 'en') || 'column_artist'}</span>" }
                     end
                     tbody id: "favourites-table-body" do
                     end
@@ -125,26 +111,26 @@ empty_page "", "alesap.blankaex.reisen", theme: :dark do
             end
         end
 
-        tab t(_strings, "tab_advanced") do
+        tab "#{_strings.dig('tab_advanced', 'en') || 'tab_advanced'}" do
             ibox do
                 type :panel
-                title t(_strings, "settings_title")
+                title "#{_strings.dig('settings_title', 'en') || 'settings_title'}"
                 div id: "settings" do
-                    h4 s(_strings, "nickname_heading")
+                    h4 "<span data-i18n=\"nickname_heading\">#{_strings.dig('nickname_heading', 'en') || 'nickname_heading'}</span>"
                     wform id: "nickname_form" do
                         textfield "nickname", nil, id: "nickname-field"
-                        submit t(_strings, "set_nickname_button"), :check, id: "set-nickname-button", "data-i18n-value": "set_nickname_button" do
+                        submit "#{_strings.dig('set_nickname_button', 'en') || 'set_nickname_button'}", :check, id: "set-nickname-button", "data-i18n-value": "set_nickname_button" do
                             script "set_nickname(false);"
                         end
                     end
-                    h4 s(_strings, "options_heading")
+                    h4 "<span data-i18n=\"options_heading\">#{_strings.dig('options_heading', 'en') || 'options_heading'}</span>"
                     wform id: "developer_mode_form" do
-                        checkbox "developer-mode", t(_strings, "enable_developer_tools"), id: "developer-mode-label", "data-i18n-checkbox": "enable_developer_tools"
-                        checkbox "japanese-mode", t(_strings, "enable_japanese"), id: "japanese-mode-label", "data-i18n-checkbox": "enable_japanese"
+                        checkbox "developer-mode", "#{_strings.dig('enable_developer_tools', 'en') || 'enable_developer_tools'}", id: "developer-mode-label", "data-i18n-checkbox": "enable_developer_tools"
+                        checkbox "japanese-mode", "#{_strings.dig('enable_japanese', 'en') || 'enable_japanese'}", id: "japanese-mode-label", "data-i18n-checkbox": "enable_japanese"
                     end
-                    h4 s(_strings, "info_heading")
+                    h4 "<span data-i18n=\"info_heading\">#{_strings.dig('info_heading', 'en') || 'info_heading'}</span>"
                     div do
-                        block_button nil, t(_strings, "show_info_button"), id: "show-info", "data-i18n-btn": "show_info_button" do
+                        block_button nil, "#{_strings.dig('show_info_button', 'en') || 'show_info_button'}", id: "show-info", "data-i18n-btn": "show_info_button" do
                             script "show_info();"
                         end
                     end
@@ -152,38 +138,38 @@ empty_page "", "alesap.blankaex.reisen", theme: :dark do
             end
             ibox do
                 type :panel
-                title t(_strings, "queue_song_by_code")
+                title "#{_strings.dig('queue_song_by_code', 'en') || 'queue_song_by_code'}"
                 # TODO: weaver breaks when form ids contain - (changes function name)
                 wform id: "queue_code_form" do
-                    textfield "ecd", nil, placeholder: t(_strings, "song_code_placeholder"), id: "ecd-field", "data-i18n-placeholder": "song_code_placeholder"
-                    submit t(_strings, "add_to_queue_button"), :play, id: "add-to-queue-btn", "data-i18n-value": "add_to_queue_button" do
+                    textfield "ecd", nil, placeholder: "#{_strings.dig('song_code_placeholder', 'en') || 'song_code_placeholder'}", id: "ecd-field", "data-i18n-placeholder": "song_code_placeholder"
+                    submit "#{_strings.dig('add_to_queue_button', 'en') || 'add_to_queue_button'}", :play, id: "add-to-queue-btn", "data-i18n-value": "add_to_queue_button" do
                         script "queue_song($('#ecd-field').val());"
                     end
                 end
             end
-            div id: "developer-tools" do
+div id: "developer-tools" do
                 ibox do
                     type :warning
-                    block_button nil, t(_strings, "clear_local_storage"), id: "clear-ls-btn", style: "warning", "data-i18n-btn": "clear_local_storage" do
+                    block_button nil, "#{_strings.dig('clear_local_storage', 'en') || 'clear_local_storage'}", id: "clear-ls-btn", style: "warning", "data-i18n-btn": "clear_local_storage" do
                         script "localStorage.clear();"
                     end
-                    block_button nil, t(_strings, "clear_session_storage"), id: "clear-ss-btn", style: "warning", "data-i18n-btn": "clear_session_storage" do
+                    block_button nil, "#{_strings.dig('clear_session_storage', 'en') || 'clear_session_storage'}", id: "clear-ss-btn", style: "warning", "data-i18n-btn": "clear_session_storage" do
                         script "sessionStorage.clear();"
                     end
-                    title t(_strings, "developer_tools_title")
-                    block_button nil, t(_strings, "toggle_debug_mode"), id: "toggle-debug-btn", style: "warning", "data-i18n-btn": "toggle_debug_mode" do
+                    title "#{_strings.dig('developer_tools_title', 'en') || 'developer_tools_title'}"
+                    block_button nil, "#{_strings.dig('toggle_debug_mode', 'en') || 'toggle_debug_mode'}", id: "toggle-debug-btn", style: "warning", "data-i18n-btn": "toggle_debug_mode" do
                         script "toggle_debug();"
                     end
                     div id: "debug-div", style: "display: none;" do
                         # TODO: feature request to weaver to enable click on .panel-heading
                         accordion do
-                            tab t(_strings, "device_info_tab") do
+                            tab "#{_strings.dig('device_info_tab', 'en') || 'device_info_tab'}" do
                                 pre id: "device-info"
                             end
-                            tab t(_strings, "session_storage_tab") do
+                            tab "#{_strings.dig('session_storage_tab', 'en') || 'session_storage_tab'}" do
                                 pre id: "session-storage"
                             end
-                            tab t(_strings, "local_storage_tab") do
+                            tab "#{_strings.dig('local_storage_tab', 'en') || 'local_storage_tab'}" do
                                 pre id: "local-storage"
                             end
                         end
@@ -195,7 +181,7 @@ empty_page "", "alesap.blankaex.reisen", theme: :dark do
 
     div id: "footer" do
         div id: "button-container" do
-            block_button :qrcode, t(_strings, "scan_qr_code"), id: "scan-qr", "data-i18n-btn": "scan_qr_code" do
+            block_button :qrcode, "#{_strings.dig('scan_qr_code', 'en') || 'scan_qr_code'}", id: "scan-qr", "data-i18n-btn": "scan_qr_code" do
                 script "$('#scan-modal').modal('show'); scan_qr();"
             end
             normal_button :unlink, nil, id: "leave-room", style: "danger", css_style: "display: none" do
@@ -211,7 +197,7 @@ empty_page "", "alesap.blankaex.reisen", theme: :dark do
     #
     modal "scan-modal" do
         header {
-            h4 s(_strings, "scan_qr_code")
+            h4 "<span data-i18n=\"scan_qr_code\">#{_strings.dig('scan_qr_code', 'en') || 'scan_qr_code'}</span>"
         }
         body {
             div class: "camera-container" do
@@ -219,13 +205,13 @@ empty_page "", "alesap.blankaex.reisen", theme: :dark do
                 end
                 div id: "selector-container", style: "display: none;" do
                     wform id: "camera_form" do
-                        dropdown "cameras", t(_strings, "select_camera"), [], id: "camera-selector"
+                        dropdown "cameras", "#{_strings.dig('select_camera', 'en') || 'select_camera'}", [], id: "camera-selector"
                     end
                 end
             end
         }
         footer do
-            block_button t(_strings, "close_button"), id: "scan-close-btn", "data-i18n-btn": "close_button" do
+            block_button "#{_strings.dig('close_button', 'en') || 'close_button'}", id: "scan-close-btn", "data-i18n-btn": "close_button" do
                 script "$('#scan-modal').modal('hide');"
             end
         end
@@ -233,29 +219,29 @@ empty_page "", "alesap.blankaex.reisen", theme: :dark do
 
     modal "search-help-modal" do
         header {
-            h4 s(_strings, "search_help_title"), id: "search-help-modal-title"
+            h4 "<span data-i18n=\"search_help_title\">#{_strings.dig('search_help_title', 'en') || 'search_help_title'}</span>", id: "search-help-modal-title"
         }
         body {
             div id: "search-help-modal-body" do
                 code "artist:"
                 p do
-                    span s(_strings, "search_help_artist")
+                    span "<span data-i18n=\"search_help_artist\">#{_strings.dig('search_help_artist', 'en') || 'search_help_artist'}</span>"
                     code "artist:yoasobi"
                 end
                 code "genre:"
                 p do
-                    span s(_strings, "search_help_genre")
+                    span "<span data-i18n=\"search_help_genre\">#{_strings.dig('search_help_genre', 'en') || 'search_help_genre'}</span>"
                     code "genre:アニメ"
                 end
                 code "type:"
                 p do
-                    span s(_strings, "search_help_type")
+                    span "<span data-i18n=\"search_help_type\">#{_strings.dig('search_help_type', 'en') || 'search_help_type'}</span>"
                     code "type:vocaloid"
                 end
             end
         }
         footer do
-            block_button t(_strings, "close_button"), id: "search-help-close-btn", "data-i18n-btn": "close_button" do
+            block_button "#{_strings.dig('close_button', 'en') || 'close_button'}", id: "search-help-close-btn", "data-i18n-btn": "close_button" do
                 script "$('#search-help-modal').modal('hide');"
             end
         end
@@ -270,7 +256,7 @@ empty_page "", "alesap.blankaex.reisen", theme: :dark do
             end
         }
         footer do
-            block_button t(_strings, "add_to_queue_button"), id: "add-to-queue", style: "none", "data-i18n-btn": "add_to_queue_button" do
+            block_button "#{_strings.dig('add_to_queue_button', 'en') || 'add_to_queue_button'}", id: "add-to-queue", style: "none", "data-i18n-btn": "add_to_queue_button" do
                 script "queue_song($('#current-song-code').text())"
             end
             normal_button :heart, nil, style: "default", id: "favourite-button" do
@@ -281,11 +267,11 @@ empty_page "", "alesap.blankaex.reisen", theme: :dark do
 
     modal "info-modal" do
         header {
-            h4 s(_strings, "info_modal_title"), id: "info-modal-title"
+            h4 "<span data-i18n=\"info_modal_title\">#{_strings.dig('info_modal_title', 'en') || 'info_modal_title'}</span>", id: "info-modal-title"
         }
         body {
             div id: "info-modal-body" do
-                h4 s(_strings, "session_status_heading")
+                h4 "<span data-i18n=\"session_status_heading\">#{_strings.dig('session_status_heading', 'en') || 'session_status_heading'}</span>"
                 p id: "connected" do
                 end
                 div id: "most-played" do
@@ -293,7 +279,7 @@ empty_page "", "alesap.blankaex.reisen", theme: :dark do
             end
         }
         footer do
-            block_button t(_strings, "close_button"), id: "info-close-btn", "data-i18n-btn": "close_button" do
+            block_button "#{_strings.dig('close_button', 'en') || 'close_button'}", id: "info-close-btn", "data-i18n-btn": "close_button" do
                 script "$('#info-modal').modal('hide');"
             end
         end

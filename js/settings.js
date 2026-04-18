@@ -24,7 +24,7 @@ async function set_nickname(startup = false) {
     $("#nickname-field").val(nickname);
     localStorage.setItem("nickname", nickname);
     if (!startup) {
-        toast("Nickname saved", "toast-green");
+        toast(i18n("toast_nickname_saved"), "toast-green");
     }
 }
 
@@ -43,7 +43,7 @@ function show_info() {
                 most_played_table.append($row);
             }
         );
-        $("#most-played").html($("<h4>").text("Most Played:"));
+        $("#most-played").html($("<h4>").text(i18n("most_played_heading")));
         $("#most-played").append(most_played_table);
     }
     $("#info-modal").modal("show");

@@ -11,6 +11,9 @@
 function start_search(page = 0, push = true) {
     // update ui to give feedback that search is starting
     if (page === 0) {
+        if (CURRENT_SEARCH) {
+            CURRENT_SEARCH.abort();
+        }
         $("#empty-search").hide();
         $("#song-table-body").empty();
         $("#song-table").show();
@@ -20,7 +23,7 @@ function start_search(page = 0, push = true) {
         }
     }
     // call search api
-    $.ajax({
+    CURRENT_SEARCH = $.ajax({
         type: "POST",
         url: API_URL + "/api/v1/command/search/",
         data: JSON.stringify({
@@ -29,7 +32,8 @@ function start_search(page = 0, push = true) {
             page: page
         }),
         contentType: "application/json; charset=utf-8"
-    }).then(function(data) {
+    })
+    CURRENT_SEARCH.then(function(data) {
         if (data.results?.length && data.total) {
             // add search results to song cache + search table
             data.results[0].forEach(result => {

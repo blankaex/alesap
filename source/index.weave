@@ -33,8 +33,10 @@ empty_page "", "alesap.blankaex.reisen", theme: :dark do
                 submit "Search", :search do
                     script "start_search();"
                 end
-                normal_button :stop, nil, id: "stop-playback", style: "danger", css_style: "display: none;" do
-                    script "stop_song();"
+                span class: "stop-playback", css_style: "display: none;" do
+                    normal_button :stop, nil, style: "danger" do
+                        script "stop_song();"
+                    end
                 end
             end
             small id: "search-help" do
@@ -71,8 +73,15 @@ empty_page "", "alesap.blankaex.reisen", theme: :dark do
                 end
             end
             div id: "history", style: "display: none;" do
-                block_button :magic, "I'm feeling lucky", id: "random-history", style: "none" do
-                    script "queue_random('history');"
+                div class: "button-container" do
+                    block_button :magic, "I'm feeling lucky", id: "random-history", style: "none" do
+                        script "queue_random('history');"
+                    end
+                    span class: "stop-playback", css_style: "display: none;" do
+                        normal_button :stop, nil, style: "danger" do
+                            script "stop_song();"
+                        end
+                    end
                 end
                 table striped: true, id: "history-table" do
                     thead id: "history-table-head" do
@@ -95,8 +104,15 @@ empty_page "", "alesap.blankaex.reisen", theme: :dark do
                 end
             end
             div id: "favourites", style: "display: none;" do
-                block_button :magic, "I'm feeling lucky", id: "random-favourite", style: "none" do
-                    script "queue_random('favourites');"
+                div class: "button-container" do
+                    block_button :magic, "I'm feeling lucky", id: "random-favourite", style: "none" do
+                        script "queue_random('favourites');"
+                    end
+                    span class: "stop-playback", css_style: "display: none;" do
+                        normal_button :stop, nil, style: "danger" do
+                            script "stop_song();"
+                        end
+                    end
                 end
                 table striped: true, id: "favourites-table" do
                     thead id: "favourites-table-head" do
@@ -176,14 +192,12 @@ empty_page "", "alesap.blankaex.reisen", theme: :dark do
         end
     end
 
-    div id: "footer" do
-        div id: "button-container" do
-            block_button :qrcode, "Scan QR Code", id: "scan-qr" do
-                script "$('#scan-modal').modal('show'); scan_qr();"
-            end
-            normal_button :unlink, nil, id: "leave-room", style: "danger", css_style: "display: none" do
-                script "update_status(false);"
-            end
+    div id: "footer", class: "panel-body button-container" do
+        block_button :qrcode, "Scan QR Code", id: "scan-qr" do
+            script "$('#scan-modal').modal('show'); scan_qr();"
+        end
+        normal_button :unlink, nil, id: "leave-room", style: "danger", css_style: "display: none" do
+            script "update_status(false);"
         end
     end
 

@@ -90,7 +90,7 @@ function update_status(status) {
     $("#random-history, #random-favourite, #add-to-queue")
         .toggleClass("btn-primary", active);
 
-    $("#stop-playback, #leave-room")
+    $(".stop-playback, #leave-room")
         .toggle(active);
 
     if (active) {

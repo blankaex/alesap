@@ -172,11 +172,6 @@ form input, form select {
     border-radius: 4px !important;
 }
 
-#button-container {
-    display: flex !important;
-    gap: 6px !important;
-}
-
 #scan-qr, #leave-room {
     margin: 0px !important;
 }
@@ -232,12 +227,12 @@ form input, form select {
 }
 
 /* fix when wform supports ids with - */
-form {
+form, .button-container {
     display: flex !important;
-    gap: 5px !important;
+    gap: 6px !important;
 }
 
-form button {
+form button, .button-container button {
     display: inline-block;
     height: 34px !important;
     box-sizing: border-box;

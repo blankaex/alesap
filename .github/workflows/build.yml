@@ -14,11 +14,7 @@ jobs:
     - name: build site
       env:
         API_URL: ${{ secrets.API_URL }}
-        GIT_USER_NAME: ${{ secrets.GIT_USER_NAME }}
-        GIT_EMAIL: ${{ secrets.GIT_EMAIL }}
         FRONTEND_ROOT: ${{ secrets.FRONTEND_ROOT }}
-        FRONTEND_URL: ${{ secrets.FRONTEND_URL }}
-        SIGNINGKEY: ${{ secrets.SIGNINGKEY }}
       run: bundle exec weaver build --root=$FRONTEND_ROOT
     - name: artifact site
       id: upload

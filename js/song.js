@@ -7,21 +7,6 @@
  * +------------------------------------------------------------
  */
 
-var count = 0;
-var current_request_id = '';
-var current_search_term = '';
-
-var current_search_page = 0;
-var search_active = false;
-var search_ready = false;
-setInterval(() => {
-    if (search_active && search_ready)
-    {
-        current_search_page += 1;
-        start_search(current_search_page);
-    }
-}, SEARCH_INTERVAL);
-
 // sends a search query to the API and renders results into the song table
 function start_search(page = 0, push = true) {
     // update ui to give feedback that search is starting
@@ -39,8 +24,7 @@ function start_search(page = 0, push = true) {
         type: "POST",
         url: API_URL + "/api/v1/command/search/",
         data: JSON.stringify({
-            str: current_search_term,
-            request_id: current_request_id,
+            str: $("#search-field").val(),
             page: page
         }),
         contentType: "application/json; charset=utf-8"

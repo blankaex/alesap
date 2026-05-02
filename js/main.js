@@ -32,6 +32,11 @@ function startup() {
     $("li a:contains('Favourites')").on("click", function() {
         fill_favourites();
     });
+    $("#song_search_form input").on("ifChecked", function () {
+        if ($("#search-field").val().trim()) {
+            start_search();
+        }
+    });
 
     // load various settings options
     set_nickname(true);

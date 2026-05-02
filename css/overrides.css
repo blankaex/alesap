@@ -156,8 +156,34 @@ form input, form select {
 #favourites-table th:nth-child(1) { width: 60% !important; }
 #favourites-table th:nth-child(2) { width: 40% !important; }
 
-#search-help {
-    margin-left: 6px !important;
+#song_search_form {
+    flex-wrap: wrap !important;
+}
+
+#song_search_form .form-group {
+    width: auto !important;
+    flex: 1 1 auto !important;
+}
+
+#song_search_form > :last-child {
+    flex: 0 0 100% !important;
+}
+
+#song_search_form div:has(.i-checks) {
+    margin: 0px 6px !important;
+    display: flex !important;
+    gap: 14px !important;
+}
+
+.iradio_square-green {
+    transform: scale(0.75) !important;
+    transform-origin: top left !important;
+    margin-right: -5px !important;
+}
+
+label:has(.iradio_square-green) {
+    font-size: 12px !important;
+    font-weight: 500 !important;
 }
 
 #empty-search .jumbotron {
@@ -204,10 +230,6 @@ form input, form select {
 
 #song-modal-body p, #settings p, #info-modal-body p, #info-modal-body table {
     margin: 0px 20px 10px 20px !important;
-}
-
-#search-help-modal-body p {
-    margin: 6px 20px 10px 20px !important;
 }
 
 #song-modal-body pre {

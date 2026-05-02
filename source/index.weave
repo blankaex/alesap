@@ -38,11 +38,13 @@ empty_page "", "alesap.blankaex.reisen", theme: :dark do
                         script "stop_song();"
                     end
                 end
+                radio "options", [
+                  { label: "All", value: "all" },
+                  { label: "Title", value: "title" },
+                  { label: "Artist", value: "artist" },
+                  { label: "Franchise", value: "franchise" }
+                ], value: "all"
             end
-            small id: "search-help" do
-                a "Search help", href: "javascript:$('#search-help-modal').modal('show');;"
-            end
-            # wrap table in div to avoid conflicts with pagination element
             div do
                 table striped: true, id: "song-table", style: "display: none;" do
                     thead id: "song-table-head" do
@@ -224,36 +226,6 @@ empty_page "", "alesap.blankaex.reisen", theme: :dark do
         footer do
             block_button "Close" do
                 script "$('#scan-modal').modal('hide');"
-            end
-        end
-    end
-
-    modal "search-help-modal" do
-        header {
-            h4 "Search Help", id: "search-help-modal-title"
-        }
-        body {
-            div id: "search-help-modal-body" do
-                code "artist:"
-                p do
-                    text "Filter by artist, e.g. "
-                    code "artist:yoasobi"
-                end
-                code "genre:"
-                p do
-                    text "Filter by genre, e.g. "
-                    code "genre:アニメ"
-                end
-                code "type:"
-                p do
-                    text "Filter by content type, e.g. "
-                    code "type:vocaloid"
-                end
-            end
-        }
-        footer do
-            block_button "Close" do
-                script "$('#search-help-modal').modal('hide');"
             end
         end
     end

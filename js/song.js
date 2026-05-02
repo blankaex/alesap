@@ -25,6 +25,7 @@ function start_search(page = 0, push = true) {
         url: API_URL + "/api/v1/command/search/",
         data: JSON.stringify({
             str: $("#search-field").val(),
+            constraint: $('#song_search_form input:checked').val(),
             page: page
         }),
         contentType: "application/json; charset=utf-8"

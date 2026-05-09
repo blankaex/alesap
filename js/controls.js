@@ -87,8 +87,9 @@ function back_handler() {
     // check if active tab is not search tab
     // -> back to search tab
     const $active_tab = $("li.active");
-    if (!$active_tab.find("a:contains('Search')").length) {
-        $("li a:contains('Search')").focus().trigger("click");
+    // TODO: replace ids when weaver supports
+    if (!$active_tab.find("a[href='#tab0']").length) {
+        $("li a[href='#tab0']").focus().trigger("click");
         return;
     }
 
@@ -115,5 +116,5 @@ function back_handler() {
 
     // no search results displayed
     // -> toast user
-    toast("Search history empty", "toast-red");
+    toast(i18n("search_history_empty"), "toast-red");
 }

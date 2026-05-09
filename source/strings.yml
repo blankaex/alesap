@@ -193,3 +193,6 @@ status_connected_on:
 status_not_connected:
   en: Not Connected
   ja: 未接続
+search_history_empty:
+  en: Search history empty
+  ja: 検索歴史がありません

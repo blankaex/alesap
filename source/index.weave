@@ -159,10 +159,16 @@ languages.each do |lang|
                                 script "set_nickname(false);"
                             end
                         end
+                        h4 I18N.s('language_selector_dropdown', lang)
+                        wform id: "language_form" do
+                            dropdown "languages", "", [
+                                I18N.s('language_selector_en', lang),
+                                I18N.s('language_selector_ja', lang)
+                            ]
+                        end
                         h4 I18N.s('options_heading', lang)
                         wform id: "developer_mode_form" do
-                            checkbox "developer-mode", I18N.s('enable_developer_tools', lang), id: "developer-mode-label"
-                            checkbox "japanese-mode", I18N.s('enable_japanese', lang), id: "japanese-mode-label"
+                            checkbox "developer-mode", I18N.s('enable_developer_tools', lang)
                         end
                         h4 I18N.s('info_heading', lang)
                         div do

@@ -200,6 +200,10 @@ label:has(.iradio_square-green) {
     font-weight: 500 !important;
 }
 
+#search-field-group, #ecd-field-group {
+    margin-bottom: 0px !important;
+}
+
 #empty-search .jumbotron {
     margin: 10px 0px 0px 0px !important;
 }
@@ -254,12 +258,12 @@ label:has(.iradio_square-green) {
     margin: 10px 20px 0px 20px !important;
 }
 
-#nickname-field-group {
-    margin-bottom: 6px !important;
+#settings h4:first-of-type {
+    margin-top: 0px !important;
 }
 
-#search-field-group, #ecd-field-group {
-    margin-bottom: 0px !important;
+#nickname_form div, #language_form div {
+    margin-bottom: 6px !important;
 }
 
 /* fix when wform supports ids with - */
@@ -272,6 +276,10 @@ form button, .button-container button {
     display: inline-block;
     height: 34px !important;
     box-sizing: border-box;
+}
+
+#language_form .control-label {
+    display: none !important;
 }
 
 #developer_mode_form .i-checks label {

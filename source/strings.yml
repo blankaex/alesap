@@ -65,6 +65,15 @@ nickname_heading:
 options_heading:
   en: 'Options:'
   ja: 'オプション:'
+language_selector_dropdown:
+  en: 'Language:'
+  ja: '言語:'
+language_selector_en:
+  en: English
+  ja: English
+language_selector_ja:
+  en: 日本語
+  ja: 日本語
 enable_developer_tools:
   en: Enable Developer Tools
   ja: 開発者向けツールを有効にする

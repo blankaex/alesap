@@ -28,11 +28,11 @@ function startup() {
         });
 
         // add listeners to populate tabs
-        // use data-i18n-original (set by apply_translations) for stable selection
-        $("li a[data-i18n-original='History']").on("click", function() {
+        // TODO: use ids when weaver supports
+        $("a[href='#tab1']").on("click", function () {
             fill_song_history();
         });
-        $("li a[data-i18n-original='Favourites']").on("click", function() {
+        $("a[href='#tab2']").on("click", function () {
             fill_favourites();
         });
         $("#song_search_form input").on("ifChecked", function () {

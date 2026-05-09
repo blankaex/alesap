@@ -216,7 +216,7 @@ languages.each do |lang|
         end
 
         div id: "footer" do
-            div id: "button-container" do
+            div class: "button-container" do
                 block_button :qrcode, I18N.s('scan_qr_code', lang), id: "scan-qr" do
                     script "$('#scan-modal').modal('show'); scan_qr();"
                 end

@@ -94,7 +94,7 @@ add_to_queue_button:
   ja: 予約
 developer_tools_title:
   en: Developer Tools
-  ja: 開発者ツール
+  ja: 開発者向けツール
 clear_local_storage:
   en: Clear localStorage
   ja: localStorageをクリア

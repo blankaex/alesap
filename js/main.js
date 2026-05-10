@@ -82,7 +82,7 @@ function startup() {
 
         // clears forms on reload
         $(document).ready(function() {
-            // TODO: update these if IDs can be set in weaver
+            // TODO: update these when IDs with hypens can be set in weaver
             $("#song_search_form")[0].reset();
             $("#queue_code_form")[0].reset();
         });

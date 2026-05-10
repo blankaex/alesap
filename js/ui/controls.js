@@ -1,9 +1,8 @@
 /*
  * +------------------------------------------------------------
- * | controls.js
+ * | ui/controls.js
  * +------------------------------------------------------------
- * | user-initiated actions that send commands to the API,
- * | such as queuing and stopping songs
+ * | user-initiated API commands and navigation
  * +------------------------------------------------------------
  */
 
@@ -25,6 +24,7 @@ function queue_song(song_code) {
             $("#song-modal").modal("hide");
             toast(i18n("toast_sent_to_queue"), "toast-green");
             append_history(song_code);
+            update_song_stats(song_code);
         });
     } else {
         const toast_text = !session_is_active() ?

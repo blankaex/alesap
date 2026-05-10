@@ -1,10 +1,52 @@
 /*
  * +------------------------------------------------------------
- * | settings.js
+ * | ui/settings.js
  * +------------------------------------------------------------
- * | functionality related to settings tab
+ * | settings, nickname, info modal, debug mode
  * +------------------------------------------------------------
  */
+
+// formats localStorage data as a pretty-printed JSON string
+function parse_local_storage() {
+    const local_storage = {};
+    Object.keys(localStorage).forEach(key => {
+        const value = localStorage.getItem(key);
+        try {
+            local_storage[key] = JSON.parse(value);
+        } catch (e) {
+            local_storage[key] = value;
+        }
+    });
+    return JSON.stringify(local_storage, null, 2);
+}
+
+// formats device and browser info as a pretty-printed JSON string
+function parse_device_info() {
+    const device_info = {
+        userAgent: navigator.userAgent,
+        language: navigator.language,
+        languages: navigator.languages,
+        screenWidth: window.screen.width,
+        screenHeight: window.screen.height,
+        pixelRatio: window.devicePixelRatio,
+        platform: navigator.platform,
+        onLine: navigator.onLine,
+        cookieEnabled: navigator.cookieEnabled,
+        hardwareConcurrency: navigator.hardwareConcurrency,
+        deviceMemory: navigator.deviceMemory
+    };
+    return JSON.stringify(device_info, null, 2);
+}
+
+// generates a random nickname from adjective + noun pairs via Datamuse
+async function generate_random_nickname() {
+    const [adjs, nouns] = await Promise.all([
+        fetch('https://api.datamuse.com/words?rel_jjb=thing&max=1000').then(r => r.json()),
+        fetch('https://api.datamuse.com/words?rel_jja=blue&max=1000').then(r => r.json())
+    ]);
+    const pick = arr => arr[Math.floor(Math.random() * arr.length)].word;
+    return `${pick(adjs)}${pick(nouns)}`;
+}
 
 // set user nickname
 async function set_nickname(startup = false) {
@@ -14,12 +56,7 @@ async function set_nickname(startup = false) {
         null;
     if (!nickname) {
         // TODO: remove network call
-        const [adjs, nouns] = await Promise.all([
-            fetch('https://api.datamuse.com/words?rel_jjb=thing&max=1000').then(r => r.json()),
-            fetch('https://api.datamuse.com/words?rel_jja=blue&max=1000').then(r => r.json())
-        ]);
-        const pick = arr => arr[Math.floor(Math.random() * arr.length)].word;
-        nickname = `${pick(adjs)}${pick(nouns)}`;
+        nickname = await generate_random_nickname();
     }
     $("#nickname-field").val(nickname);
     localStorage.setItem("nickname", nickname);

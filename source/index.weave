@@ -25,13 +25,18 @@ languages.each do |lang|
         #
         # Imports
         #
-        request_js "js/i18n.js"
-        request_js "js/utils.js"
-        request_js "js/song.js"
+        request_js "js/i18n/index.js"
+        request_js "js/ui/toasts.js"
+        request_js "js/song/cache.js"
+        request_js "js/song/table.js"
+        request_js "js/song/modal.js"
+        request_js "js/song/search.js"
+        request_js "js/song/history.js"
+        request_js "js/song/favourites.js"
+        request_js "js/session/index.js"
+        request_js "js/ui/settings.js"
+        request_js "js/ui/controls.js"
         request_js "js/main.js"
-        request_js "js/session.js"
-        request_js "js/settings.js"
-        request_js "js/controls.js"
         request_css "css/overrides.css"
 
         request_js "js/libs/html5-qrcode.min.js"

@@ -1,10 +1,17 @@
 /*
  * +------------------------------------------------------------
- * | i18n.js
+ * | i18n/index.js
  * +------------------------------------------------------------
  * | internationalization functions
  * +------------------------------------------------------------
  */
+
+const UI_LANGUAGE = location.pathname.replace(/\/$/, "").split("/").pop() || "en";
+const LANGUAGE_ROUTES = {
+    "English": "/",
+    "日本語": "/ja/"
+};
+let UI_STRINGS = {};
 
 function load_strings() {
     return fetch("/strings.json", { cache: "no-cache" })

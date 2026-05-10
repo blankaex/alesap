@@ -43,6 +43,12 @@ function startup() {
             }
         });
 
+        // ensure cursor focuses at the end of search bar
+        $("#search-field").on("focus", function () {
+            const end = this.value.length;
+            this.setSelectionRange(end, end);
+        });
+
         // load various settings options
         set_nickname(true);
         $("#developer-tools").toggle($('input[name="developer-mode"]').prop('checked'));

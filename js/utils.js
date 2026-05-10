@@ -15,7 +15,7 @@ const SEARCH_INTERVAL = 1000;
 const UI_LANGUAGE = window.location.pathname.split('/').pop() || "en";
 const LANGUAGE_ROUTES = {
     "English": "/",
-    "日本語": "/ja"
+    "日本語": "/ja/"
 };
 let UI_STRINGS = {};
 let TOAST_DURATION = 2000;

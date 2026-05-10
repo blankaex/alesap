@@ -8,7 +8,7 @@
  */
 
 // initialize globals
-const HISTORY_MAX_LENGTH = 20;
+const HISTORY_MAX_LENGTH = 100;
 const SEARCH_RESULTS_LIMIT = 20;
 const SEARCH_PAGE_LIMIT = 1000;
 const SEARCH_INTERVAL = 1000;

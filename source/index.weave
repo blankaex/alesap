@@ -208,7 +208,7 @@ languages.each do |lang|
                         end
                         div do
                             block_button nil, I18N.s('clear_history', lang), id: "clear-history" do
-                                script "alert('Under construction 👷');"
+                                script "clear_history()"
                             end
                         end
                         div do
@@ -333,6 +333,23 @@ languages.each do |lang|
             footer do
                 block_button I18N.s('close_button', lang), id: "info-close-btn" do
                     script "$('#info-modal').modal('hide');"
+                end
+            end
+        end
+
+        modal "confirm-modal" do
+            header {
+                h4 I18N.s('confirm_title', lang)
+            }
+            body {
+                p I18N.s('confirm_destructive_action', lang)
+            }
+            footer do
+                block_button I18N.s('cancel_button', lang), id: "confirm-cancel-btn", style: "danger" do
+                    script "$('#confirm-modal').modal('hide');"
+                end
+                block_button I18N.s('confirm_button', lang), id: "confirm-ok-btn" do
+                    script "confirm_action();"
                 end
             end
         end

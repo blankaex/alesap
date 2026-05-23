@@ -81,6 +81,10 @@ form input, form select {
     border: 0px !important;
 }
 
+.btn-block {
+    margin: 0px !important;
+}
+
 .btn-warning, .panel-warning > .panel-heading, div.widget.yellow-bg {
     color: #1e1e1e !important;
 }
@@ -134,6 +138,11 @@ form input, form select {
 .modal-footer {
     border-top: 1px solid rgba(136, 142, 168, 0.5) !important;
     display: flex !important;
+    gap: 6px !important;
+}
+
+.modal-footer > .btn {
+    margin: 0px !important;
 }
 
 .close, .close:hover {

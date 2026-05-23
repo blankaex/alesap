@@ -55,3 +55,11 @@ function append_history(song_code) {
 
     fill_song_history();
 }
+
+function clear_history() {
+    window._confirmCallback = function() {
+        localStorage.removeItem("song_history");
+        toast("History cleared", "toast-green");
+    };
+    $('#confirm-modal').modal('show');
+}

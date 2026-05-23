@@ -106,3 +106,11 @@ function toggle_debug() {
         // no need to empty debug info as it's overwritten on next run
     }
 }
+
+function confirm_action() {
+    if (window._confirmCallback) {
+        window._confirmCallback();
+        window._confirmCallback = null;
+    }
+    $('#confirm-modal').modal('hide');
+}

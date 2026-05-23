@@ -80,6 +80,9 @@ language_selector_ja:
 enable_developer_tools:
   en: Enable Developer Tools
   ja: 開発者向けツールを有効にする
+confirm_stop_label:
+  en: Require confirmation for stop request
+  ja: 演奏停止時に確認を求める
 info_heading:
   en: 'Info:'
   ja: 'ユーザー情報:'

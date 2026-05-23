@@ -49,9 +49,25 @@ function startup() {
             this.setSelectionRange(end, end);
         });
 
-        // load various settings options
+        // load/generate nickname
         set_nickname(true);
+
+        // restore confirm-stop setting
+        if (localStorage.getItem('confirm_stop') === 'true') {
+            $('input[name="confirm-stop"]').iCheck('check');
+        } else {
+            $('input[name="confirm-stop"]').iCheck('uncheck');
+        }
+
+        // save confirm-stop setting on toggle
+        $('input[name="confirm-stop"]').on('ifChecked ifUnchecked', function () {
+            localStorage.setItem('confirm_stop', $(this).prop('checked'));
+        });
+
+        // show/hide dev tools
         $("#developer-tools").toggle($('input[name="developer-mode"]').prop('checked'));
+
+        // add listeners for dev tools checkbox
         $('input[name="developer-mode"]').on('ifChecked ifUnchecked', function () {
             $("#developer-tools").toggle($('input[name="developer-mode"]').prop('checked'));
         });
@@ -87,7 +103,7 @@ function startup() {
             $("#queue_code_form")[0].reset();
         });
 
-        // disables debug mode on reload
+        // ensures debug mode doesn't persist on reload
         window.addEventListener("beforeunload", () => {
             sessionStorage.removeItem("debug_mode");
         });

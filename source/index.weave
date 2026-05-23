@@ -172,6 +172,9 @@ languages.each do |lang|
                             ], id: "language-selector"
                         end
                         h4 I18N.s('options_heading', lang)
+                        wform id: "confirm_stop_form" do
+                            checkbox "confirm-stop", I18N.s('confirm_stop_label', lang)
+                        end
                         wform id: "developer_mode_form" do
                             checkbox "developer-mode", I18N.s('enable_developer_tools', lang)
                         end

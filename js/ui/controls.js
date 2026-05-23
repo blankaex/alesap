@@ -65,6 +65,18 @@ function queue_random(table) {
 
 // sends a stop request to the API to halt the current song
 function stop_song() {
+    if (localStorage.getItem('confirm_stop') === 'true') {
+        window._confirmCallback = function() {
+            execute_stop();
+        };
+        $('#confirm-modal').modal('show');
+    } else {
+        execute_stop();
+    }
+}
+
+// helper function called by stop_song(); not called directly
+function execute_stop() {
     $.ajax({
         type: "POST",
         url: API_URL + "/api/v1/command/stop/",

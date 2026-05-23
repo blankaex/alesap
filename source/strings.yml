@@ -78,7 +78,7 @@ language_selector_ja:
   en: 日本語
   ja: 日本語
 enable_developer_tools:
-  en: Enable Developer Tools
+  en: Enable developer tools
   ja: 開発者向けツールを有効にする
 confirm_stop_label:
   en: Require confirmation for stop request

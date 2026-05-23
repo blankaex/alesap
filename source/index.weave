@@ -11,7 +11,7 @@ class I18N
 end
 
 raw_page "strings.json", "strings" do
-  text JSON.generate(YAML.load_file("source/strings.yml"))
+    text JSON.generate(YAML.load_file("source/strings.yml"))
 end
 
 languages = ["", "ja"]

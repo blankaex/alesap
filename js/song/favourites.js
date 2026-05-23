@@ -6,18 +6,32 @@
  * +------------------------------------------------------------
  */
 
-function sort_favourites(table_body, ...cols) {
-    const rows = $(`${table_body} tr`).get();
-    rows.sort((a, b) => {
-        for (const col of cols) {
-            const va = $(a).children("td").eq(col).text().trim().toLowerCase();
-            const vb = $(b).children("td").eq(col).text().trim().toLowerCase();
-            if (va < vb) return -1;
-            if (va > vb) return 1;
+// remove items that have been un-favourited
+function clean_favourites(favourites) {
+    for (const key in favourites) {
+        if (favourites[key] === false) {
+            delete favourites[key];
         }
-        return 0;
-    });
-    return rows;
+    }
+    return favourites;
+}
+
+// sort favourites based on artist first, then by title
+function sort_favourites(favourites) {
+    return Object.fromEntries(
+        Object.entries(favourites).sort(([keyA], [keyB]) => {
+            const artistA = song_cache_get(keyA, "artist");
+            const artistB = song_cache_get(keyB, "artist");
+            const artistCompare = artistA.localeCompare(artistB);
+            if (artistCompare !== 0) {
+                return artistCompare;
+            } else {
+                const songA = song_cache_get(keyA, "song");
+                const songB = song_cache_get(keyB, "song");
+                return songA.localeCompare(songB);
+            }
+        })
+    );
 }
 
 // reads favourites from localStorage and renders it into the favourites table
@@ -33,7 +47,4 @@ function fill_favourites() {
             }
         });
     }
-    // sort table by artist, then title
-    const sorted = sort_favourites("#favourites-table-body");
-    $(sorted).appendTo($("#favourites-table-body"));
 }

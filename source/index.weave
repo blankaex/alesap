@@ -6,7 +6,7 @@ class I18N
     STRINGS = YAML.load_file("source/strings.yml")
 
     def self.s(key, language)
-      STRINGS.dig(key, language) || "⚠️ #{key}"
+        STRINGS.dig(key, language) || "⚠️ #{key}"
     end
 end
 
@@ -53,8 +53,8 @@ languages.each do |lang|
             tab I18N.s('tab_search', lang) do
                 h4 I18N.s('song_search_heading', lang)
                 wform id: "song_search_form" do
-                textfield "search", nil, placeholder: I18N.s('search_placeholder', lang), id: "search-field"
-                submit I18N.s('search_button', lang), :search, id: "search-button" do
+                    textfield "search", nil, placeholder: I18N.s('search_placeholder', lang), id: "search-field"
+                    submit I18N.s('search_button', lang), :search, id: "search-button" do
                         script "start_search();"
                     end
                     span class: "stop-playback", css_style: "display: none;" do
@@ -82,7 +82,7 @@ languages.each do |lang|
                 end
                 div id: "empty-search", style: "display: none;" do
                     jumbotron do
-                      span I18N.s('empty_search', lang)
+                        span I18N.s('empty_search', lang)
                     end
                 end
                 div id: "loader-div" do
@@ -250,15 +250,15 @@ languages.each do |lang|
                         div id: "debug-div", style: "display: none;" do
                             # TODO: feature request to weaver to enable click on .panel-heading
                             accordion do
-                            tab I18N.s('device_info_tab', lang) do
-                                pre id: "device-info"
-                            end
-                            tab I18N.s('session_storage_tab', lang) do
-                                pre id: "session-storage"
-                            end
-                            tab I18N.s('local_storage_tab', lang) do
-                                pre id: "local-storage"
-                            end
+                                tab I18N.s('device_info_tab', lang) do
+                                    pre id: "device-info"
+                                end
+                                tab I18N.s('session_storage_tab', lang) do
+                                    pre id: "session-storage"
+                                end
+                                tab I18N.s('local_storage_tab', lang) do
+                                    pre id: "local-storage"
+                                end
                             end
                         end
                     end
@@ -363,11 +363,11 @@ languages.each do |lang|
         # Javascript
         #
         script <<~SCRIPT
-          let API_URL = "#{ ENV['API_URL']&.chomp('/') || 'http://localhost:3000' }";
+            let API_URL = "#{ ENV['API_URL']&.chomp('/') || 'http://localhost:3000' }";
         SCRIPT
 
         on_page_load <<~SCRIPT
-          startup();
+            startup();
         SCRIPT
     end
 end

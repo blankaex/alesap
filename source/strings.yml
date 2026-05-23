@@ -196,6 +196,12 @@ toast_nickname_saved:
 toast_debug_enabled:
   en: "\U0001F41E Debugging Enabled"
   ja: "\U0001F41E デバッグモード有効"
+toast_history_cleared:
+  en: History cleared
+  ja: 履歴をクリアしました
+toast_favourites_cleared:
+  en: Favourites cleared
+  ja: お気に入りをクリアしました
 toast_not_connected_long:
   en: Not connected—scan QR code to get started
   ja: 未接続—QRコードをスキャンして下さい

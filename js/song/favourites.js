@@ -46,5 +46,16 @@ function fill_favourites() {
                 append_table("#favourites-table-body", song_code);
             }
         });
+    } else {
+        $("#favourites").hide();
+        $("#empty-favourites").show();
     }
+}
+
+function clear_favourites() {
+    window._confirmCallback = function() {
+        localStorage.removeItem("favourites");
+        toast(i18n("toast_favourites_cleared"), "toast-green");
+    };
+    $('#confirm-modal').modal('show');
 }

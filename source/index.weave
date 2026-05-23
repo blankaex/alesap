@@ -213,7 +213,7 @@ languages.each do |lang|
                         end
                         div do
                             block_button nil, I18N.s('clear_favourites', lang), id: "clear-favourites" do
-                                script "alert('Under construction 👷');"
+                                script "clear_favourites();"
                             end
                         end
                     end

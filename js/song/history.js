@@ -29,6 +29,9 @@ function fill_song_history() {
         // sort table in reverse chronological
         const rows = $("#history-table-body tr").get().reverse();
         $(rows).appendTo("#history-table-body");
+    } else {
+        $("#history").hide();
+        $("#empty-history").show();
     }
 }
 
@@ -59,7 +62,8 @@ function append_history(song_code) {
 function clear_history() {
     window._confirmCallback = function() {
         localStorage.removeItem("song_history");
-        toast("History cleared", "toast-green");
+        toast(i18n("toast_history_cleared"), "toast-green");
+        fill_song_history();
     };
     $('#confirm-modal').modal('show');
 }

@@ -175,10 +175,45 @@ languages.each do |lang|
                         wform id: "developer_mode_form" do
                             checkbox "developer-mode", I18N.s('enable_developer_tools', lang)
                         end
-                        h4 I18N.s('info_heading', lang)
+                    end
+                end
+                ibox do
+                    type :panel
+                    title I18N.s('info_title', lang)
+                    div id: "info" do
                         div do
                             block_button nil, I18N.s('show_info_button', lang), id: "show-info" do
                                 script "show_info();"
+                            end
+                        end
+                        div do
+                            block_button nil, I18N.s('import_history', lang), id: "import-history" do
+                                script "alert('Under construction 👷');"
+                            end
+                        end
+                        div do
+                            block_button nil, I18N.s('import_favourites', lang), id: "import-favourites" do
+                                script "alert('Under construction 👷');"
+                            end
+                        end
+                        div do
+                            block_button nil, I18N.s('export_history', lang), id: "export-history" do
+                                script "alert('Under construction 👷');"
+                            end
+                        end
+                        div do
+                            block_button nil, I18N.s('export_favourites', lang), id: "export-favourites" do
+                                script "alert('Under construction 👷');"
+                            end
+                        end
+                        div do
+                            block_button nil, I18N.s('clear_history', lang), id: "clear-history" do
+                                script "alert('Under construction 👷');"
+                            end
+                        end
+                        div do
+                            block_button nil, I18N.s('clear_favourites', lang), id: "clear-favourites" do
+                                script "alert('Under construction 👷');"
                             end
                         end
                     end

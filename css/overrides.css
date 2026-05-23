@@ -262,6 +262,20 @@ label:has(.iradio_square-green) {
     margin-top: 0px !important;
 }
 
+#info {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+
+#info > div {
+    flex: 1 1 calc(50% - 3px);
+}
+
+#info > div:first-child {
+    flex: 2 1 100%;
+}
+
 #nickname_form div, #language_form div {
     margin-bottom: 6px !important;
 }

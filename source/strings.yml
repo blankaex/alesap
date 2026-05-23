@@ -59,6 +59,9 @@ empty_favourites_subtitle:
 settings_title:
   en: Settings
   ja: 設定
+info_title:
+  en: Info
+  ja: ユーザー情報
 nickname_heading:
   en: 'Nickname:'
   ja: 'ニックネーム:'
@@ -79,10 +82,10 @@ enable_developer_tools:
   ja: 開発者向けツールを有効にする
 info_heading:
   en: 'Info:'
-  ja: '個人情報:'
+  ja: 'ユーザー情報:'
 show_info_button:
   en: Show Info
-  ja: 個人情報を表示
+  ja: ユーザー情報を表示
 queue_song_by_code:
   en: Queue song by code
   ja: 曲番号で予約
@@ -126,7 +129,7 @@ close_button:
   ja: 閉じる
 info_modal_title:
   en: Info
-  ja: 個人情報
+  ja: ユーザー情報
 session_status_heading:
   en: 'Session Status:'
   ja: '接続状態:'
@@ -193,6 +196,27 @@ status_connected_on:
 status_not_connected:
   en: Not Connected
   ja: 未接続
+import_favourites:
+  en: Import Favourites
+  ja: お気に入りをインポート
+export_favourites:
+  en: Export Favourites
+  ja: お気に入りをエクスポート
+import_history:
+  en: Import History
+  ja: 履歴をインポート
+export_history:
+  en: Export History
+  ja: 履歴をエクスポート
+clear_favourites:
+  en: Clear Favourites
+  ja: お気に入りをクリア
+clear_history:
+  en: Clear History
+  ja: 履歴をクリア
+confirm_destructive_action:
+  en: Are you sure? This action cannot be undone.
+  ja: よろしいですか？この操作は元に戻せません。
 search_history_empty:
   en: Search history empty
-  ja: 検索歴史がありません
+  ja: 検索履歴がありません

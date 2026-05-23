@@ -229,18 +229,20 @@ languages.each do |lang|
                         end
                     end
                 end
-    div id: "developer-tools" do
+                div id: "developer-tools" do
                     ibox do
                         type :warning
-                        block_button nil, I18N.s('clear_local_storage', lang), id: "clear-ls-btn", style: "warning" do
-                            script "localStorage.clear();"
-                        end
-                        block_button nil, I18N.s('clear_session_storage', lang), id: "clear-ss-btn", style: "warning" do
-                            script "sessionStorage.clear();"
-                        end
                         title I18N.s('developer_tools_title', lang)
-                        block_button nil, I18N.s('toggle_debug_mode', lang), id: "toggle-debug-btn", style: "warning" do
-                            script "toggle_debug();"
+                        div id: "developer-tools-buttons" do
+                            block_button nil, I18N.s('clear_local_storage', lang), id: "clear-ls-btn", style: "warning" do
+                                script "localStorage.clear();"
+                            end
+                            block_button nil, I18N.s('clear_session_storage', lang), id: "clear-ss-btn", style: "warning" do
+                                script "sessionStorage.clear();"
+                            end
+                            block_button nil, I18N.s('toggle_debug_mode', lang), id: "toggle-debug-btn", style: "warning" do
+                                script "toggle_debug();"
+                            end
                         end
                         div id: "debug-div", style: "display: none;" do
                             # TODO: feature request to weaver to enable click on .panel-heading

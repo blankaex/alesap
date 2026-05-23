@@ -305,12 +305,20 @@ form button, .button-container button {
     display: none !important;
 }
 
+#confirm_stop_form .i-checks label,
 #developer_mode_form .i-checks label {
     font-size: 13px !important;
     font-weight: normal !important;
-    margin-bottom: 4px;
+    margin-bottom: 0px !important;
 }
 
+#confirm_stop_form label div,
 #developer_mode_form label div {
-    margin: 0px 4px 4px 0px !important;
+    margin-right: 4px !important;
+}
+
+#developer-tools-buttons {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 6px !important;
 }

@@ -19,9 +19,12 @@ languages = ["", "ja"]
 languages.each do |lang|
     empty_page "#{lang}", "alesap.blankaex.reisen", theme: :dark do
         lang = "en" if lang.empty?
-        ## HACK IOS ZOOM
-        request_css '#" /> <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, maximum-scale=1, viewport-fit=cover"><bla h="'
 
+        clear_default_meta!
+        head do
+            meta charset: 'utf-8'
+            meta name: 'viewport', content: 'width=device-width, initial-scale=1, shrink-to-fit=no, maximum-scale=1, viewport-fit=cover'
+        end
         #
         # Imports
         #

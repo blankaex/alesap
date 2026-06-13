@@ -70,6 +70,65 @@ function fill_favourites() {
     }
 }
 
+function import_favourites() {
+    window._confirmCallback = function() {
+        $.ajax({
+            type: "GET",
+            url: API_URL + "/api/v1/command/import_favourites/",
+            data: {
+                nickname: localStorage.getItem("nickname")
+            }
+        }).then(function(data) {
+            if(data) {
+                // add "new" songs to local song cache
+                data.cache.forEach(result => {
+                    song_cache_set(result.code, result);
+                });
+                // append favourites
+                const old_favourites = JSON.parse(
+                    localStorage.getItem("favourites") || "{}"
+                );
+                localStorage.setItem(
+                    "favourites",
+                    JSON.stringify(
+                        sort_favourites({
+                            ...old_favourites,
+                            ...data.favourites
+                        })
+                    )
+                );
+                // send ui confirmation message
+                toast(i18n("imported_favourites"), "toast-green");
+            } else {
+                toast(i18n("import_failed"), "toast-red");
+            }
+        });
+    };
+    $('#confirm-modal').modal('show');
+}
+
+function export_favourites() {
+    window._confirmCallback = function() {
+        const favourites = JSON.parse(localStorage.getItem("favourites")) || null;
+        if(favourites) {
+            $.ajax({
+                type: "POST",
+                url: API_URL + "/api/v1/command/export_favourites/",
+                data: JSON.stringify({
+                    nickname: localStorage.getItem("nickname"),
+                    data: favourites
+                }),
+                contentType: "application/json; charset=utf-8"
+            }).then(function(data) {
+                toast(i18n("exported_favourites"), "toast-green");
+            });
+        } else {
+            toast(i18n("export_failed"), "toast-red");
+        }
+    };
+    $('#confirm-modal').modal('show');
+}
+
 function clear_favourites() {
     window._confirmCallback = function() {
         localStorage.removeItem("favourites");

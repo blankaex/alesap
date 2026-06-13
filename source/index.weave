@@ -194,22 +194,22 @@ languages.each do |lang|
                         end
                         div do
                             block_button nil, I18N.s('import_history', lang), id: "import-history" do
-                                script "alert('Under construction 👷');"
+                                script "import_history();"
                             end
                         end
                         div do
                             block_button nil, I18N.s('import_favourites', lang), id: "import-favourites" do
-                                script "alert('Under construction 👷');"
+                                script "import_favourites();"
                             end
                         end
                         div do
                             block_button nil, I18N.s('export_history', lang), id: "export-history" do
-                                script "alert('Under construction 👷');"
+                                script "export_history();"
                             end
                         end
                         div do
                             block_button nil, I18N.s('export_favourites', lang), id: "export-favourites" do
-                                script "alert('Under construction 👷');"
+                                script "export_favourites();"
                             end
                         end
                         div do

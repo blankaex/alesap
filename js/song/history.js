@@ -59,6 +59,63 @@ function append_history(song_code) {
     fill_song_history();
 }
 
+function import_history() {
+    window._confirmCallback = function() {
+        $.ajax({
+            type: "GET",
+            url: API_URL + "/api/v1/command/import_history/",
+            data: {
+                nickname: localStorage.getItem("nickname")
+            }
+        }).then(function(data) {
+            if(data) {
+                // add "new" songs to local song cache
+                data.cache.forEach(result => {
+                    song_cache_set(result.code, result);
+                });
+                // append history
+                const old_history = JSON.parse(
+                    localStorage.getItem("song_history") || "[]"
+                );
+                localStorage.setItem(
+                    "song_history",
+                    JSON.stringify([
+                        ...old_history,
+                        ...data.song_history
+                    ])
+                );
+                // send ui confirmation message
+                toast(i18n("imported_history"), "toast-green");
+            } else {
+                toast(i18n("import_failed"), "toast-red");
+            }
+        });
+    };
+    $('#confirm-modal').modal('show');
+}
+
+function export_history() {
+    window._confirmCallback = function() {
+        const history = JSON.parse(localStorage.getItem("song_history")) || null;
+        if(history) {
+            $.ajax({
+                type: "POST",
+                url: API_URL + "/api/v1/command/export_history/",
+                data: JSON.stringify({
+                    nickname: localStorage.getItem("nickname"),
+                    data: history
+                }),
+                contentType: "application/json; charset=utf-8"
+            }).then(function(data) {
+                toast(i18n("exported_history"), "toast-green");
+            });
+        } else {
+            toast(i18n("export_failed"), "toast-red");
+        }
+    };
+    $('#confirm-modal').modal('show');
+}
+
 function clear_history() {
     window._confirmCallback = function() {
         localStorage.removeItem("song_history");

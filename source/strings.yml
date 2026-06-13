@@ -223,15 +223,33 @@ status_not_connected:
 import_favourites:
   en: Import Favourites
   ja: お気に入りをインポート
+imported_favourites:
+  en: Imported favourites
+  ja: お気に入りをインポートしました
 export_favourites:
   en: Export Favourites
   ja: お気に入りをエクスポート
+exported_favourites:
+  en: Exported favourites
+  ja: お気に入りをエクスポートしました
 import_history:
   en: Import History
   ja: 履歴をインポート
+imported_history:
+  en: Imported history
+  ja: 履歴をインポートしました
 export_history:
   en: Export History
   ja: 履歴をエクスポート
+exported_history:
+  en: Exported history
+  ja: 履歴をエクスポートしました
+import_failed:
+  en: No data saved for current user
+  ja: 現在のユーザーのデータがありません
+export_failed:
+  en: No data to export
+  ja: エクスポートするデーターがありません
 clear_favourites:
   en: Clear Favourites
   ja: お気に入りをクリア

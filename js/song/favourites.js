@@ -6,6 +6,24 @@
  * +------------------------------------------------------------
  */
 
+function add_favourite(song_code) {
+    let favourites = JSON.parse(localStorage.getItem("favourites")) || {};
+    // update ui to indicate favourite status
+    $("#favourite-button")
+        .toggleClass("btn-default", favourites[song_code])
+        .toggleClass("btn-danger", !favourites[song_code]);
+    // add/remove from favourites based on current favourite status
+    favourites[song_code] = !favourites[song_code];
+    // clean & sort favourites list
+    favourites = clean_favourites(favourites);
+    favourites = sort_favourites(favourites);
+    // update localstorage & refresh UI if necessary
+    localStorage.setItem("favourites", JSON.stringify(favourites));
+    if ($('a[href="#tab2"]').parent().hasClass('active')) {
+        fill_favourites();
+    }
+}
+
 // remove items that have been un-favourited
 function clean_favourites(favourites) {
     for (const key in favourites) {

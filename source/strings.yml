@@ -107,6 +107,12 @@ clear_local_storage:
 clear_session_storage:
   en: Clear sessionStorage
   ja: sessionStorageをクリア
+local_storage_cleared:
+  en: localStorage cleared
+  ja: localStorageをクリアしました
+session_storage_cleared:
+  en: sessionStorage cleared
+  ja: sessionStorageをクリアしました
 toggle_debug_mode:
   en: Toggle Debug Mode
   ja: デバッグモードを切り替え

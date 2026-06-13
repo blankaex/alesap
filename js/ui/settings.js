@@ -20,6 +20,22 @@ function parse_local_storage() {
     return JSON.stringify(local_storage, null, 2);
 }
 
+function clear_storage(type) {
+    window._confirmCallback = function() {
+        switch(type) {
+            case "local":
+                localStorage.clear();
+                toast(i18n("local_storage_cleared"), "toast-green");
+                break;
+            case "session":
+                sessionStorage.clear();
+                toast(i18n("session_storage_cleared"), "toast-green");
+                break;
+        }
+    };
+    $('#confirm-modal').modal('show');
+}
+
 // formats device and browser info as a pretty-printed JSON string
 function parse_device_info() {
     const device_info = {

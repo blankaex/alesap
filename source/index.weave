@@ -238,10 +238,10 @@ languages.each do |lang|
                         title I18N.s('developer_tools_title', lang)
                         div id: "developer-tools-buttons" do
                             block_button nil, I18N.s('clear_local_storage', lang), id: "clear-ls-btn", style: "warning" do
-                                script "localStorage.clear();"
+                                script "clear_storage('local');"
                             end
                             block_button nil, I18N.s('clear_session_storage', lang), id: "clear-ss-btn", style: "warning" do
-                                script "sessionStorage.clear();"
+                                script "clear_storage('session');"
                             end
                             block_button nil, I18N.s('toggle_debug_mode', lang), id: "toggle-debug-btn", style: "warning" do
                                 script "toggle_debug();"

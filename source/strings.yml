@@ -214,6 +214,9 @@ toast_favourites_cleared:
 toast_not_connected_long:
   en: Not connected—scan QR code to get started
   ja: 未接続—QRコードをスキャンして下さい
+toast_stale_session:
+  en: Session may be stale
+  ja: セッションが失効している可能性があります
 status_connected_on:
   en: Connected on {date}
   ja: "{date}に接続"

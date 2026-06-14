@@ -9,6 +9,7 @@
 const TOAST_DURATION = 2000;
 let CONNECTION_TOAST;
 let DEBUG_TOAST;
+let STALE_TOAST;
 
 function toast(message, class_name) {
     return Toastify({
@@ -27,6 +28,17 @@ function show_connection_toast() {
         gravity: "bottom",
         className: "toast-red",
         onClick: () => CONNECTION_TOAST.hideToast()
+    }).showToast();
+}
+
+function show_stale_toast() {
+    STALE_TOAST = Toastify({
+        text: i18n("toast_stale_session"),
+        duration: -1,
+        position: "center",
+        gravity: "bottom",
+        className: "toast-red",
+        onClick: () => STALE_TOAST.hideToast()
     }).showToast();
 }
 

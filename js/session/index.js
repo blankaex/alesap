@@ -116,6 +116,7 @@ function update_status(status) {
 
     if (active) {
         CONNECTION_TOAST?.hideToast();
+        STALE_TOAST?.hideToast();
     } else if (status === false && session_is_active()) {
         sessionStorage.clear();
         show_connection_toast();

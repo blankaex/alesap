@@ -186,6 +186,15 @@ form input, form select {
 #song_search_form .form-group {
     width: auto !important;
     flex: 1 1 auto !important;
+    min-width: 0;
+}
+
+#song_search_form .form-group:has(#search-button) {
+    flex: 0 0 auto;
+}
+
+#search-field {
+    min-width: 0;
 }
 
 #song_search_form > :last-child {

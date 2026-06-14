@@ -59,6 +59,26 @@ function append_history(song_code) {
     fill_song_history();
 }
 
+// merge, dedup, sort, and truncate imported history with local history
+function merge_history(old_history, imported_history) {
+    const seen = new Set();
+    return [...old_history, ...imported_history]
+        .filter(function(entry) {
+            const key = entry.song_code + "|" +
+                entry.last_played_date + "|" +
+                entry.last_played_time;
+            if(seen.has(key)) { return false; }
+            seen.add(key);
+            return true;
+        })
+        .sort(function(a, b) {
+            const da = a.last_played_date + " " + a.last_played_time;
+            const db = b.last_played_date + " " + b.last_played_time;
+            return da.localeCompare(db);
+        })
+        .slice(-HISTORY_MAX_LENGTH);
+}
+
 function import_history() {
     window._confirmCallback = function() {
         $.ajax({
@@ -68,27 +88,27 @@ function import_history() {
                 nickname: localStorage.getItem("nickname")
             }
         }).then(function(data) {
-            if(data) {
-                // add "new" songs to local song cache
-                data.cache.forEach(result => {
-                    song_cache_set(result.code, result);
-                });
-                // append history
-                const old_history = JSON.parse(
-                    localStorage.getItem("song_history") || "[]"
-                );
-                localStorage.setItem(
-                    "song_history",
-                    JSON.stringify([
-                        ...old_history,
-                        ...data.song_history
-                    ])
-                );
-                // send ui confirmation message
-                toast(i18n("imported_history"), "toast-green");
-            } else {
-                toast(i18n("import_failed"), "toast-red");
-            }
+            // add "new" songs to local song cache
+            data.cache.forEach(result => {
+                song_cache_set(result.code, result);
+            });
+            // merge, dedup, and sort history
+            const old_history = JSON.parse(
+                localStorage.getItem("song_history") || "[]"
+            );
+            localStorage.setItem(
+                "song_history",
+                JSON.stringify(
+                    merge_history(
+                        old_history,
+                        data.song_history
+                    )
+                )
+            );
+            // send ui confirmation message
+            toast(i18n("imported_history"), "toast-green");
+        }).fail(function() {
+            toast(i18n("import_failed"), "toast-red");
         });
     };
     $('#confirm-modal').modal('show');
@@ -106,8 +126,10 @@ function export_history() {
                     data: history
                 }),
                 contentType: "application/json; charset=utf-8"
-            }).then(function(data) {
+            }).then(function() {
                 toast(i18n("exported_history"), "toast-green");
+            }).fail(function() {
+                toast(i18n("export_failed"), "toast-red");
             });
         } else {
             toast(i18n("export_failed"), "toast-red");

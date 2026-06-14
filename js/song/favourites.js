@@ -79,29 +79,27 @@ function import_favourites() {
                 nickname: localStorage.getItem("nickname")
             }
         }).then(function(data) {
-            if(data) {
-                // add "new" songs to local song cache
-                data.cache.forEach(result => {
-                    song_cache_set(result.code, result);
-                });
-                // append favourites
-                const old_favourites = JSON.parse(
-                    localStorage.getItem("favourites") || "{}"
-                );
-                localStorage.setItem(
-                    "favourites",
-                    JSON.stringify(
-                        sort_favourites({
-                            ...old_favourites,
-                            ...data.favourites
-                        })
-                    )
-                );
-                // send ui confirmation message
-                toast(i18n("imported_favourites"), "toast-green");
-            } else {
-                toast(i18n("import_failed"), "toast-red");
-            }
+            // add "new" songs to local song cache
+            data.cache.forEach(result => {
+                song_cache_set(result.code, result);
+            });
+            // append favourites
+            const old_favourites = JSON.parse(
+                localStorage.getItem("favourites") || "{}"
+            );
+            localStorage.setItem(
+                "favourites",
+                JSON.stringify(
+                    sort_favourites({
+                        ...old_favourites,
+                        ...data.favourites
+                    })
+                )
+            );
+            // send ui confirmation message
+            toast(i18n("imported_favourites"), "toast-green");
+        }).fail(function() {
+            toast(i18n("import_failed"), "toast-red");
         });
     };
     $('#confirm-modal').modal('show');
@@ -119,8 +117,10 @@ function export_favourites() {
                     data: favourites
                 }),
                 contentType: "application/json; charset=utf-8"
-            }).then(function(data) {
+            }).then(function() {
                 toast(i18n("exported_favourites"), "toast-green");
+            }).fail(function() {
+                toast(i18n("export_failed"), "toast-red");
             });
         } else {
             toast(i18n("export_failed"), "toast-red");

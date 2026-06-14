@@ -72,9 +72,8 @@ function merge_history(old_history, imported_history) {
             return true;
         })
         .sort(function(a, b) {
-            const da = a.last_played_date + " " + a.last_played_time;
-            const db = b.last_played_date + " " + b.last_played_time;
-            return da.localeCompare(db);
+            return new Date(a.last_played_date + " " + a.last_played_time) -
+                   new Date(b.last_played_date + " " + b.last_played_time);
         })
         .slice(-HISTORY_MAX_LENGTH);
 }
@@ -116,24 +115,19 @@ function import_history() {
 
 function export_history() {
     window._confirmCallback = function() {
-        const history = JSON.parse(localStorage.getItem("song_history")) || null;
-        if(history) {
-            $.ajax({
-                type: "POST",
-                url: API_URL + "/api/v1/command/export_history/",
-                data: JSON.stringify({
-                    nickname: localStorage.getItem("nickname"),
-                    data: history
-                }),
-                contentType: "application/json; charset=utf-8"
-            }).then(function() {
-                toast(i18n("exported_history"), "toast-green");
-            }).fail(function() {
-                toast(i18n("export_failed"), "toast-red");
-            });
-        } else {
+        $.ajax({
+            type: "POST",
+            url: API_URL + "/api/v1/command/export_history/",
+            data: JSON.stringify({
+                nickname: localStorage.getItem("nickname"),
+                data: JSON.parse(localStorage.getItem("song_history"))
+            }),
+            contentType: "application/json; charset=utf-8"
+        }).then(function() {
+            toast(i18n("exported_history"), "toast-green");
+        }).fail(function() {
             toast(i18n("export_failed"), "toast-red");
-        }
+        });
     };
     $('#confirm-modal').modal('show');
 }

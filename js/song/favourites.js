@@ -38,14 +38,14 @@ function clean_favourites(favourites) {
 function sort_favourites(favourites) {
     return Object.fromEntries(
         Object.entries(favourites).sort(([keyA], [keyB]) => {
-            const artistA = song_cache_get(keyA, "artist");
-            const artistB = song_cache_get(keyB, "artist");
+            const artistA = song_cache_get(keyA, "artist") || "";
+            const artistB = song_cache_get(keyB, "artist") || "";
             const artistCompare = artistA.localeCompare(artistB);
             if (artistCompare !== 0) {
                 return artistCompare;
             } else {
-                const songA = song_cache_get(keyA, "song");
-                const songB = song_cache_get(keyB, "song");
+                const songA = song_cache_get(keyA, "song") || "";
+                const songB = song_cache_get(keyB, "song") || "";
                 return songA.localeCompare(songB);
             }
         })
@@ -107,24 +107,19 @@ function import_favourites() {
 
 function export_favourites() {
     window._confirmCallback = function() {
-        const favourites = JSON.parse(localStorage.getItem("favourites")) || null;
-        if(favourites) {
-            $.ajax({
-                type: "POST",
-                url: API_URL + "/api/v1/command/export_favourites/",
-                data: JSON.stringify({
-                    nickname: localStorage.getItem("nickname"),
-                    data: favourites
-                }),
-                contentType: "application/json; charset=utf-8"
-            }).then(function() {
-                toast(i18n("exported_favourites"), "toast-green");
-            }).fail(function() {
-                toast(i18n("export_failed"), "toast-red");
-            });
-        } else {
+        $.ajax({
+            type: "POST",
+            url: API_URL + "/api/v1/command/export_favourites/",
+            data: JSON.stringify({
+                nickname: localStorage.getItem("nickname"),
+                data: JSON.parse(localStorage.getItem("favourites"))
+            }),
+            contentType: "application/json; charset=utf-8"
+        }).then(function() {
+            toast(i18n("exported_favourites"), "toast-green");
+        }).fail(function() {
             toast(i18n("export_failed"), "toast-red");
-        }
+        });
     };
     $('#confirm-modal').modal('show');
 }

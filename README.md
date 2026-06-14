@@ -36,13 +36,17 @@ mobile-first, and works on any device.
 ### ❤️ Favourites
 - **One-tap favouriting.** Star songs straight from the song menu.
 - **Auto-sorted list.** Organised by artist then title.
-- **Local-only storage.** Your taste in music never leaves your device.
+- **Local-first storage.** Your taste in music never leaves your device.
 
 ### 🕘 History
 - **Automatic tracking.** Every queued song is saved with a timestamp.
 - **Searchable timeline.** See what you played today, last week, or last month.
 - **Most-played stats.** Track your top songs over time in the built-in stats
   view.
+
+### 📦 Import / Export
+- **Cross-device sync.** Share history/favourites between devices and friends.
+- **Anonymous nickname keyed.** No accounts or passwords required.
 
 ### 🎲 "I'm Feeling Lucky"
 - **Random from history.** Queue something you've sung before.
@@ -58,7 +62,6 @@ mobile-first, and works on any device.
 ### 🛑 Full playback control
 - **Queue songs.** Send instantly to the active room.
 - **Stop the current song.** One tap to move on.
-- **Leave the room.** Disconnect cleanly when you're done.
 
 ### 🛠️ Developer mode
 - **Live debug widget.** See session state, local storage, and device info in
@@ -66,9 +69,10 @@ mobile-first, and works on any device.
 - **Raw API payloads.** Inspect exactly what the server returned for any song.
 
 ### 🙈 Privacy-first
-- **No accounts, no tracking, no backend persistence.**
+- **No accounts, no tracking, no mandatory backend persistence.**
 - **Local-first storage.** Favourites, history, nicknames, and stats live in
-  your browser.
+  your browser by default. Import/export is opt-in and keyed only by your
+  anonymous nickname — no personal data is ever required.
 - **Auto-generated nicknames.** Never think one up again, unless you want to.
 
 ## 🧠 Powered by

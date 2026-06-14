@@ -259,6 +259,10 @@ clear_history:
 confirm_destructive_action:
   en: Are you sure? This action cannot be undone.
   ja: よろしいですか？この操作は元に戻せません。
+end_session:
+  en: End Session
+  ja: セッションを終了
+
 search_history_empty:
   en: Search history empty
   ja: 検索履歴がありません

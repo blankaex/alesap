@@ -100,7 +100,7 @@ async function scan_success(decoded_text, decoded_result) {
 
 // helper function to change & display connection status to user
 function update_status(status) {
-    const active = status && session_is_active();
+    const active = status !== false && session_is_active();
 
     $("#connected").text(active ?
         i18n("status_connected_on")
@@ -111,12 +111,12 @@ function update_status(status) {
     $("#random-history, #random-favourite, #add-to-queue")
         .toggleClass("btn-primary", active);
 
-    $(".stop-playback, #leave-room")
+    $(".stop-playback")
         .toggle(active);
 
     if (active) {
         CONNECTION_TOAST?.hideToast();
-    } else if (!status && session_is_active()) {
+    } else if (status === false && session_is_active()) {
         sessionStorage.clear();
         show_connection_toast();
     }

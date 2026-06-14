@@ -217,19 +217,28 @@ label:has(.iradio_square-green) {
     margin: 10px 0px 0px 0px !important;
 }
 
-#footer {
-    background: #1b1e35 !important;
-    margin-top: 6px !important;
-    padding: 20px !important;
-    border: 1px solid rgba(136, 142, 168, 0.5) !important;
-    border-radius: 4px !important;
+#scan-qr {
+    position: fixed !important;
+    bottom: 20px !important;
+    right: 20px !important;
+    z-index: 1000 !important;
+    width: 48px !important;
+    height: 48px !important;
+    padding: 0 !important;
+    border-radius: 6px !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3) !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
 }
 
-#scan-qr, #leave-room {
-    margin: 0px !important;
+#scan-qr i {
+    font-size: 20px !important;
+    margin-right: 0 !important;
+    vertical-align: middle !important;
 }
 
-#random-history i, #random-favourite i, #scan-qr i {
+#random-history i, #random-favourite i {
     margin-right: 4px !important;
 }
 

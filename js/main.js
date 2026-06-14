@@ -91,7 +91,7 @@ function startup() {
         });
 
         // checks if session is already active
-        update_status(session_is_active());
+        update_status();
         if (!session_is_active()) {
             show_connection_toast();
         }

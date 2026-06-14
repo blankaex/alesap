@@ -249,6 +249,9 @@ languages.each do |lang|
                             block_button nil, I18N.s('toggle_debug_mode', lang), id: "toggle-debug-btn", style: "warning" do
                                 script "toggle_debug();"
                             end
+                            block_button nil, I18N.s('end_session', lang), id: "end-session-btn", style: "warning" do
+                                script "update_status(false);"
+                            end
                         end
                         div id: "debug-div", style: "display: none;" do
                             # TODO: feature request to weaver to enable click on .panel-heading
@@ -269,15 +272,8 @@ languages.each do |lang|
             end
         end
 
-        div id: "footer" do
-            div class: "button-container" do
-                block_button :qrcode, I18N.s('scan_qr_code', lang), id: "scan-qr" do
-                    script "$('#scan-modal').modal('show'); scan_qr();"
-                end
-                normal_button :unlink, nil, id: "leave-room", style: "danger", css_style: "display: none" do
-                    script "update_status(false);"
-                end
-            end
+        block_button :qrcode, nil, id: "scan-qr" do
+            script "$('#scan-modal').modal('show'); scan_qr();"
         end
 
         small I18N.s('created_by', lang), id: "created-by"

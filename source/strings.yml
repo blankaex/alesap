@@ -59,9 +59,9 @@ empty_favourites_subtitle:
 settings_title:
   en: Settings
   ja: 設定
-info_title:
-  en: Info
-  ja: ユーザー情報
+user_data_title:
+  en: User data
+  ja: ユーザーデータ
 nickname_heading:
   en: 'Nickname:'
   ja: 'ニックネーム:'
@@ -262,6 +262,9 @@ clear_history:
 confirm_destructive_action:
   en: Are you sure? This action cannot be undone.
   ja: よろしいですか？この操作は元に戻せません。
+new_session:
+  en: New Session
+  ja: 新規セッション
 end_session:
   en: End Session
   ja: セッションを終了

@@ -158,6 +158,54 @@ form input, form select {
     background: #f8ac59 !important;
 }
 
+.popover {
+    position: fixed !important;
+    top: 50% !important;
+    left: 50% !important;
+    transform: translate(-50%, -50%) !important;
+    outline: none;
+    width: 50%;
+    background: #1b1e35;
+    border: 1px solid #3b3f5c;
+    border-radius: 2px;
+}
+
+.popover-content {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.popover-content > div {
+    background: #1b1e35 !important;
+    display: flex !important;
+    flex-wrap: wrap !important;
+    justify-content: center !important;
+    gap: 8px !important;
+    padding-bottom: 10px !important;
+}
+
+.popover-content > div > button {
+    flex: 1 1 calc(50% - 4px) !important;
+    width: 48px !important;
+    height: 48px !important;
+    padding: 0 !important;
+    border-radius: 6px !important;
+}
+
+.popover-content > button {
+    height: 48px !important;
+    border-radius: 6px !important;
+}
+
+.popover.fade {
+    transition: opacity 0.15s linear;
+}
+
+.popover .arrow {
+    display: none !important;
+}
+
 #song-table, #history-table, #favourites-table {
     margin-top: 0px !important;
     margin-bottom: 0px !important;
@@ -235,6 +283,7 @@ html, body {
     height: 100%;
     display: flex;
     flex-direction: column;
+    padding: 20px 10px 20px !important;
 }
 
 .container {
@@ -242,6 +291,13 @@ html, body {
     min-height: 0;
     display: flex;
     flex-direction: column;
+}
+
+@media (max-width: 767px) {
+    .container {
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+    }
 }
 
 .tabs-container {
@@ -290,7 +346,6 @@ html, body {
     min-height: 0;
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
-    /* padding-bottom: 40px; */
 }
 
 #advanced-content {
@@ -298,7 +353,6 @@ html, body {
     min-height: 0;
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
-    padding-bottom: 40px;
 }
 
 #song-table thead,
@@ -320,7 +374,7 @@ html, body {
     flex-shrink: 0;
 }
 
-#scan-qr {
+#scan-qr, #popover-button {
     position: fixed !important;
     bottom: 20px !important;
     right: 20px !important;
@@ -330,7 +384,7 @@ html, body {
     padding: 0 !important;
     border-radius: 6px !important;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3) !important;
-    display: inline-flex !important;
+    display: inline-flex;
     align-items: center !important;
     justify-content: center !important;
 }
@@ -393,21 +447,17 @@ html, body {
     flex: 1 1 calc(50% - 3px);
 }
 
-#info > div:first-child {
-    flex: 2 1 100%;
-}
-
 #nickname_form div, #language_form div {
     margin-bottom: 6px !important;
 }
 
 /* fix when wform supports ids with - */
-form, .button-container {
+form {
     display: flex !important;
     gap: 6px !important;
 }
 
-form button, .button-container button {
+form button {
     display: inline-block;
     height: 34px !important;
     box-sizing: border-box;

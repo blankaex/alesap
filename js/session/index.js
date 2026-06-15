@@ -108,16 +108,18 @@ function update_status(status) {
         i18n("status_not_connected")
     );
 
-    $("#random-history, #random-favourite, #add-to-queue")
-        .toggleClass("btn-primary", active);
+    $("#scan-qr").toggle(!active);
+    $("#popover-button").toggle(active);
 
-    $(".stop-playback")
-        .toggle(active);
+    $("#random-history, #random-favourite, #add-to-queue")
+        .toggleClass("btn-primary", active)
+        .toggleClass("btn-default", !active);
 
     if (active) {
         CONNECTION_TOAST?.hideToast();
         STALE_TOAST?.hideToast();
     } else if (status === false && session_is_active()) {
+        $('#popover-button').popover('hide');
         sessionStorage.clear();
         show_connection_toast();
     }

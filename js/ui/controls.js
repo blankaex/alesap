@@ -37,30 +37,38 @@ function queue_song(song_code) {
 
 // queues a random song selected from the song history
 function queue_random(table) {
-    let songs = [];
+    if (session_is_active()) {
+        let songs = [];
 
-    if (table === "history") {
-        const song_history = JSON.parse(localStorage.getItem("song_history"));
-        songs = song_history.map(song => song.song_code);
-    } else if (table === "favourites") {
-        const favourites = JSON.parse(localStorage.getItem("favourites"));
-        songs = Object.keys(favourites).filter(key => favourites[key]);
+        if (table === "history") {
+            const song_history = JSON.parse(localStorage.getItem("song_history"));
+            songs = song_history.map(song => song.song_code);
+        } else if (table === "favourites") {
+            const favourites = JSON.parse(localStorage.getItem("favourites"));
+            songs = Object.keys(favourites).filter(key => favourites[key]);
+        }
+
+        const storage_key = `queued_random_${table}`;
+        let queued = JSON.parse(sessionStorage.getItem(storage_key));
+
+        // reset if all songs already used
+        if (queued.length >= new Set(songs).size) {
+            queued = [];
+        }
+
+        const available = songs.filter(song => !queued.includes(song));
+        const selected = available[Math.floor(Math.random() * available.length)];
+
+        queued.push(selected);
+        sessionStorage.setItem(storage_key, JSON.stringify(queued));
+        queue_song(selected);
+    } else {
+        toast(i18n("toast_not_connected"), "toast-red");
     }
+}
 
-    const storage_key = `queued_random_${table}`;
-    let queued = JSON.parse(sessionStorage.getItem(storage_key));
-
-    // reset if all songs already used
-    if (queued.length >= new Set(songs).size) {
-        queued = [];
-    }
-
-    const available = songs.filter(song => !queued.includes(song));
-    const selected = available[Math.floor(Math.random() * available.length)];
-
-    queued.push(selected);
-    sessionStorage.setItem(storage_key, JSON.stringify(queued));
-    queue_song(selected);
+function show_popover() {
+    $('#popover-button').popover('show');
 }
 
 // sends a stop request to the API to halt the current song
@@ -89,6 +97,28 @@ function execute_stop() {
         contentType: "application/json; charset=utf-8"
     }).then(function(data) {
         toast(i18n("toast_sent_stop_request"), "toast-green");
+    });
+}
+
+function change_pitch(direction) {
+    const pitch = direction ? "sharp" : "flat";
+    $.ajax({
+        type: "POST",
+        url: API_URL + "/api/v1/command/pitch/",
+        data: JSON.stringify({
+            nickname: localStorage.getItem("nickname"),
+            akey: sessionStorage.getItem("akey"),
+            skey: sessionStorage.getItem("skey"),
+            scd: sessionStorage.getItem("scd"),
+            pitch: pitch
+        }),
+        contentType: "application/json; charset=utf-8"
+    }).then(function(data) {
+        if (direction) {
+            toast(i18n("toast_sent_sharp_request"), "toast-green");
+        } else {
+            toast(i18n("toast_sent_flat_request"), "toast-green");
+        }
     });
 }
 

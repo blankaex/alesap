@@ -98,6 +98,11 @@ function startup() {
             trigger: 'manual'
         });
 
+        // backdrop overlay when popover is open
+        var backdrop = $('<div id="popover-backdrop"></div>').appendTo('body');
+        $('#popover-button').on('shown.bs.popover', function() { backdrop.addClass('visible'); });
+        $('#popover-button').on('hidden.bs.popover', function() { backdrop.removeClass('visible'); });
+
         // hide popover on click outside, without interacting with other elements
         document.addEventListener('click', function(e) {
             var $btn = $('#popover-button');

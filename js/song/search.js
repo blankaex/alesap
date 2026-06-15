@@ -36,6 +36,7 @@ function start_search(page = 0, push = true) {
         if (CURRENT_SEARCH) {
             CURRENT_SEARCH.abort();
         }
+        $("#database").hide();
         $("#empty-search").hide();
         $("#song-table-body").empty();
         $("#song-table").show();

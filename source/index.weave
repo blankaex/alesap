@@ -54,55 +54,54 @@ languages.each do |lang|
         #
         tabs do
             tab I18N.s('tab_search', lang) do
-                h4 I18N.s('song_search_heading', lang)
-                wform id: "song_search_form" do
-                    textfield "search", nil, placeholder: I18N.s('search_placeholder', lang), id: "search-field"
-                    submit I18N.s('search_button', lang), :search, id: "search-button" do
-                        script "start_search();"
-                    end
-                    span class: "stop-playback", css_style: "display: none;" do
-                        normal_button :stop, nil, style: "danger" do
-                            script "stop_song();"
+                div id: "search-controls" do
+                    h4 I18N.s('song_search_heading', lang)
+                    wform id: "song_search_form" do
+                        textfield "search", nil, placeholder: I18N.s('search_placeholder', lang), id: "search-field"
+                        submit I18N.s('search_button', lang), :search, id: "search-button" do
+                            script "start_search();"
                         end
-                    end
-                    radio "options", [
-                      { label: I18N.s("filter_all", lang),    value: "all"    },
-                      { label: I18N.s("filter_title", lang),  value: "title"  },
-                      { label: I18N.s("filter_artist", lang), value: "artist" },
-                      { label: I18N.s("filter_tags", lang),   value: "tags"   }
-                    ], value: "all"
-                end
-                # wrap table in div to avoid conflicts with pagination element
-                div do
-                    table striped: true, id: "song-table", style: "display: none;" do
-                        thead id: "song-table-head" do
-                            th { text I18N.s('column_title', lang) }
-                            th { text I18N.s('column_artist', lang) }
+                        span class: "stop-playback", css_style: "display: none;" do
+                            normal_button :stop, nil, style: "danger" do
+                                script "stop_song();"
+                            end
                         end
-                        tbody id: "song-table-body" do
-                        end
+                        radio "options", [
+                          { label: I18N.s("filter_all", lang),    value: "all"    },
+                          { label: I18N.s("filter_title", lang),  value: "title"  },
+                          { label: I18N.s("filter_artist", lang), value: "artist" },
+                          { label: I18N.s("filter_tags", lang),   value: "tags"   }
+                        ], value: "all"
                     end
                 end
-                div id: "empty-search", style: "display: none;" do
-                    jumbotron do
-                        span I18N.s('empty_search', lang)
-                    end
+                div id: "database" do
+                    image "database.gif"
                 end
-                div id: "loader-div" do
-                    span class: "loader" do
+                div id: "search-results" do
+                    div do
+                        table striped: true, id: "song-table", style: "display: none;" do
+                            thead id: "song-table-head" do
+                                th { text I18N.s('column_title', lang) }
+                                th { text I18N.s('column_artist', lang) }
+                            end
+                            tbody id: "song-table-body" do
+                            end
+                        end
+                    end
+                    div id: "empty-search", style: "display: none;" do
+                        jumbotron do
+                            span I18N.s('empty_search', lang)
+                        end
+                    end
+                    div id: "loader-div" do
+                        span class: "loader" do
+                        end
                     end
                 end
             end
 
             tab I18N.s('tab_history', lang) do
-                # TODO: weaver can't add ids on jumbotron divs either
-                div id: "empty-history" do
-                    jumbotron do
-                        p I18N.s('empty_history_title', lang)
-                        span I18N.s('empty_history_subtitle', lang)
-                    end
-                end
-                div id: "history", style: "display: none;" do
+                div id: "history-controls", style: "display: none;" do
                     div class: "button-container" do
                         block_button :magic, I18N.s('feeling_lucky', lang), id: "random-history", style: "none" do
                             script "queue_random('history');"
@@ -113,27 +112,30 @@ languages.each do |lang|
                             end
                         end
                     end
-                    table striped: true, id: "history-table" do
-                        thead id: "history-table-head" do
-                            th { text I18N.s('column_title', lang) }
-                            th { text I18N.s('column_artist', lang) }
-                            th { text I18N.s('column_last_played', lang) }
+                end
+                div id: "history-results" do
+                    div id: "empty-history" do
+                        jumbotron do
+                            p I18N.s('empty_history_title', lang)
+                            span I18N.s('empty_history_subtitle', lang)
                         end
-                        tbody id: "history-table-body" do
+                    end
+                    div id: "history", style: "display: none;" do
+                        table striped: true, id: "history-table" do
+                            thead id: "history-table-head" do
+                                th { text I18N.s('column_title', lang) }
+                                th { text I18N.s('column_artist', lang) }
+                                th { text I18N.s('column_last_played', lang) }
+                            end
+                            tbody id: "history-table-body" do
+                            end
                         end
                     end
                 end
             end
 
             tab I18N.s('tab_favourites', lang) do
-                # TODO: weaver can't add ids on jumbotron divs either
-                div id: "empty-favourites" do
-                    jumbotron do
-                        p I18N.s('empty_favourites_title', lang)
-                        span I18N.s('empty_favourites_subtitle', lang)
-                    end
-                end
-                div id: "favourites", style: "display: none;" do
+                div id: "favourites-controls", style: "display: none;" do
                     div class: "button-container" do
                         block_button :magic, I18N.s('feeling_lucky', lang), id: "random-favourite", style: "none" do
                             script "queue_random('favourites');"
@@ -144,126 +146,138 @@ languages.each do |lang|
                             end
                         end
                     end
-                    table striped: true, id: "favourites-table" do
-                        thead id: "favourites-table-head" do
-                            th { text I18N.s('column_title', lang) }
-                            th { text I18N.s('column_artist', lang) }
+                end
+                div id: "favourites-results" do
+                    div id: "empty-favourites" do
+                        jumbotron do
+                            p I18N.s('empty_favourites_title', lang)
+                            span I18N.s('empty_favourites_subtitle', lang)
                         end
-                        tbody id: "favourites-table-body" do
+                    end
+                    div id: "favourites", style: "display: none;" do
+                        table striped: true, id: "favourites-table" do
+                            thead id: "favourites-table-head" do
+                                th { text I18N.s('column_title', lang) }
+                                th { text I18N.s('column_artist', lang) }
+                            end
+                            tbody id: "favourites-table-body" do
+                            end
                         end
                     end
                 end
             end
 
             tab I18N.s('tab_advanced', lang) do
-                ibox do
-                    type :panel
-                    title I18N.s('settings_title', lang)
-                    div id: "settings" do
-                        h4 I18N.s('nickname_heading', lang)
-                        wform id: "nickname_form" do
-                            textfield "nickname", nil, id: "nickname-field"
-                            submit I18N.s('set_nickname_button', lang), :check, id: "set-nickname-button" do
-                                script "set_nickname(false);"
-                            end
-                        end
-                        h4 I18N.s('language_selector_dropdown', lang)
-                        wform id: "language_form" do
-                            dropdown "languages", "", [
-                                I18N.s('language_selector_en', lang),
-                                I18N.s('language_selector_ja', lang)
-                            ], id: "language-selector"
-                        end
-                        h4 I18N.s('options_heading', lang)
-                        wform id: "confirm_stop_form" do
-                            checkbox "confirm-stop", I18N.s('confirm_stop_label', lang)
-                        end
-                        wform id: "developer_mode_form" do
-                            checkbox "developer-mode", I18N.s('enable_developer_tools', lang)
-                        end
-                    end
-                end
-                ibox do
-                    type :panel
-                    title I18N.s('info_title', lang)
-                    div id: "info" do
-                        div do
-                            block_button nil, I18N.s('show_info_button', lang), id: "show-info" do
-                                script "show_info();"
-                            end
-                        end
-                        div do
-                            block_button nil, I18N.s('import_history', lang), id: "import-history" do
-                                script "import_history();"
-                            end
-                        end
-                        div do
-                            block_button nil, I18N.s('import_favourites', lang), id: "import-favourites" do
-                                script "import_favourites();"
-                            end
-                        end
-                        div do
-                            block_button nil, I18N.s('export_history', lang), id: "export-history" do
-                                script "export_history();"
-                            end
-                        end
-                        div do
-                            block_button nil, I18N.s('export_favourites', lang), id: "export-favourites" do
-                                script "export_favourites();"
-                            end
-                        end
-                        div do
-                            block_button nil, I18N.s('clear_history', lang), id: "clear-history" do
-                                script "clear_history()"
-                            end
-                        end
-                        div do
-                            block_button nil, I18N.s('clear_favourites', lang), id: "clear-favourites" do
-                                script "clear_favourites();"
-                            end
-                        end
-                    end
-                end
-                ibox do
-                    type :panel
-                    title I18N.s('queue_song_by_code', lang)
-                    # TODO: weaver breaks when form ids contain - (changes function name)
-                    wform id: "queue_code_form" do
-                        textfield "ecd", nil, placeholder: I18N.s('song_code_placeholder', lang), id: "ecd-field"
-                        submit I18N.s('add_to_queue_button', lang), :play, id: "add-to-queue-btn" do
-                            script "queue_song($('#ecd-field').val());"
-                        end
-                    end
-                end
-                div id: "developer-tools" do
+                div id: "advanced-content" do
                     ibox do
-                        type :warning
-                        title I18N.s('developer_tools_title', lang)
-                        div id: "developer-tools-buttons" do
-                            block_button nil, I18N.s('clear_local_storage', lang), id: "clear-ls-btn", style: "warning" do
-                                script "clear_storage('local');"
+                        type :panel
+                        title I18N.s('settings_title', lang)
+                        div id: "settings" do
+                            h4 I18N.s('nickname_heading', lang)
+                            wform id: "nickname_form" do
+                                textfield "nickname", nil, id: "nickname-field"
+                                submit I18N.s('set_nickname_button', lang), :check, id: "set-nickname-button" do
+                                    script "set_nickname(false);"
+                                end
                             end
-                            block_button nil, I18N.s('clear_session_storage', lang), id: "clear-ss-btn", style: "warning" do
-                                script "clear_storage('session');"
+                            h4 I18N.s('language_selector_dropdown', lang)
+                            wform id: "language_form" do
+                                dropdown "languages", "", [
+                                    I18N.s('language_selector_en', lang),
+                                    I18N.s('language_selector_ja', lang)
+                                ], id: "language-selector"
                             end
-                            block_button nil, I18N.s('toggle_debug_mode', lang), id: "toggle-debug-btn", style: "warning" do
-                                script "toggle_debug();"
+                            h4 I18N.s('options_heading', lang)
+                            wform id: "confirm_stop_form" do
+                                checkbox "confirm-stop", I18N.s('confirm_stop_label', lang)
                             end
-                            block_button nil, I18N.s('end_session', lang), id: "end-session-btn", style: "warning" do
-                                script "update_status(false);"
+                            wform id: "developer_mode_form" do
+                                checkbox "developer-mode", I18N.s('enable_developer_tools', lang)
                             end
                         end
-                        div id: "debug-div", style: "display: none;" do
-                            # TODO: feature request to weaver to enable click on .panel-heading
-                            accordion do
-                                tab I18N.s('device_info_tab', lang) do
-                                    pre id: "device-info"
+                    end
+                    ibox do
+                        type :panel
+                        title I18N.s('info_title', lang)
+                        div id: "info" do
+                            div do
+                                block_button nil, I18N.s('show_info_button', lang), id: "show-info" do
+                                    script "show_info();"
                                 end
-                                tab I18N.s('session_storage_tab', lang) do
-                                    pre id: "session-storage"
+                            end
+                            div do
+                                block_button nil, I18N.s('import_history', lang), id: "import-history" do
+                                    script "import_history();"
                                 end
-                                tab I18N.s('local_storage_tab', lang) do
-                                    pre id: "local-storage"
+                            end
+                            div do
+                                block_button nil, I18N.s('import_favourites', lang), id: "import-favourites" do
+                                    script "import_favourites();"
+                                end
+                            end
+                            div do
+                                block_button nil, I18N.s('export_history', lang), id: "export-history" do
+                                    script "export_history();"
+                                end
+                            end
+                            div do
+                                block_button nil, I18N.s('export_favourites', lang), id: "export-favourites" do
+                                    script "export_favourites();"
+                                end
+                            end
+                            div do
+                                block_button nil, I18N.s('clear_history', lang), id: "clear-history" do
+                                    script "clear_history()"
+                                end
+                            end
+                            div do
+                                block_button nil, I18N.s('clear_favourites', lang), id: "clear-favourites" do
+                                    script "clear_favourites();"
+                                end
+                            end
+                        end
+                    end
+                    ibox do
+                        type :panel
+                        title I18N.s('queue_song_by_code', lang)
+                        # TODO: weaver breaks when form ids contain - (changes function name)
+                        wform id: "queue_code_form" do
+                            textfield "ecd", nil, placeholder: I18N.s('song_code_placeholder', lang), id: "ecd-field"
+                            submit I18N.s('add_to_queue_button', lang), :play, id: "add-to-queue-btn" do
+                                script "queue_song($('#ecd-field').val());"
+                            end
+                        end
+                    end
+                    div id: "developer-tools" do
+                        ibox do
+                            type :warning
+                            title I18N.s('developer_tools_title', lang)
+                            div id: "developer-tools-buttons" do
+                                block_button nil, I18N.s('clear_local_storage', lang), id: "clear-ls-btn", style: "warning" do
+                                    script "clear_storage('local');"
+                                end
+                                block_button nil, I18N.s('clear_session_storage', lang), id: "clear-ss-btn", style: "warning" do
+                                    script "clear_storage('session');"
+                                end
+                                block_button nil, I18N.s('toggle_debug_mode', lang), id: "toggle-debug-btn", style: "warning" do
+                                    script "toggle_debug();"
+                                end
+                                block_button nil, I18N.s('end_session', lang), id: "end-session-btn", style: "warning" do
+                                    script "update_status(false);"
+                                end
+                            end
+                            div id: "debug-div", style: "display: none;" do
+                                # TODO: feature request to weaver to enable click on .panel-heading
+                                accordion do
+                                    tab I18N.s('device_info_tab', lang) do
+                                        pre id: "device-info"
+                                    end
+                                    tab I18N.s('session_storage_tab', lang) do
+                                        pre id: "session-storage"
+                                    end
+                                    tab I18N.s('local_storage_tab', lang) do
+                                        pre id: "local-storage"
+                                    end
                                 end
                             end
                         end

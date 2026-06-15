@@ -16,10 +16,6 @@ input::placeholder {
     opacity: 50% !important;
 }
 
-thead {
-    border-top: 1px solid rgba(136, 142, 168, 0.5) !important;
-}
-
 form input, form select {
     border-radius: 4px !important;
 }
@@ -163,7 +159,7 @@ form input, form select {
 }
 
 #song-table, #history-table, #favourites-table {
-    margin-top: 10px !important;
+    margin-top: 0px !important;
     margin-bottom: 0px !important;
     table-layout: fixed !important;
     width: 100% !important;
@@ -224,6 +220,104 @@ label:has(.iradio_square-green) {
 
 #empty-search .jumbotron {
     margin: 10px 0px 0px 0px !important;
+}
+
+/* Make tabs fixed with scrollable content */
+html, body {
+    height: 100%;
+}
+
+#content, #wrapper {
+    height: 100%;
+}
+
+.wrapper-content {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.container {
+    flex: 1;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.tabs-container {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-height: 0;
+}
+
+.tabs-normal {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-height: 0;
+}
+
+.tab-content {
+    flex: 1;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.tabs-container .tab-content > .tab-pane.active {
+    flex: 1;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.tabs-container .tab-content > .tab-pane.active > .panel-body {
+    flex: 1;
+    min-height: 0;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+#search-controls, #history-controls, #favourites-controls {
+    flex-shrink: 0;
+    padding-bottom: 10px;
+}
+
+#search-results, #history-results, #favourites-results {
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    /* padding-bottom: 40px; */
+}
+
+#advanced-content {
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 40px;
+}
+
+#song-table thead,
+#history-table thead,
+#favourites-table thead {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+}
+
+#song-table thead th,
+#history-table thead th,
+#favourites-table thead th {
+    background: #1b1e35;
+    box-shadow: inset 0 1px 0 rgba(136, 142, 168, 0.5), inset 0 -1px 0 rgba(136, 142, 168, 0.5);
+}
+
+#created-by {
+    flex-shrink: 0;
 }
 
 #scan-qr {
@@ -339,4 +433,14 @@ form button, .button-container button {
     display: flex !important;
     flex-direction: column !important;
     gap: 6px !important;
+}
+
+#database {
+    margin-top: 5% !important;
+    display: flex;
+    justify-content: center !important;
+}
+
+#database > img {
+    mask-image: radial-gradient(ellipse, black 60%, transparent 85%) !important;
 }

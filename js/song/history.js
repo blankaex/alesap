@@ -12,6 +12,7 @@ const HISTORY_MAX_LENGTH = 100;
 function fill_song_history() {
     if (localStorage.getItem("song_history") != null) {
         const song_history = JSON.parse(localStorage.getItem("song_history"));
+        $("#history-controls").show();
         $("#empty-history").hide();
         $("#history").show();
         $("#history-table-body").empty();
@@ -30,6 +31,7 @@ function fill_song_history() {
         const rows = $("#history-table-body tr").get().reverse();
         $(rows).appendTo("#history-table-body");
     } else {
+        $("#history-controls").hide();
         $("#history").hide();
         $("#empty-history").show();
     }

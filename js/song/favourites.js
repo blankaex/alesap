@@ -56,6 +56,7 @@ function sort_favourites(favourites) {
 function fill_favourites() {
     const favourites = JSON.parse(localStorage.getItem("favourites"));
     if (favourites) {
+        $("#favourites-controls").show();
         $("#empty-favourites").hide();
         $("#favourites").show();
         $("#favourites-table-body").empty();
@@ -65,6 +66,7 @@ function fill_favourites() {
             }
         });
     } else {
+        $("#favourites-controls").hide();
         $("#favourites").hide();
         $("#empty-favourites").show();
     }

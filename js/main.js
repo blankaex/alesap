@@ -98,14 +98,16 @@ function startup() {
             trigger: 'manual'
         });
 
-        // hide popover on click outside
-        $(document).on('click', function(e) {
+        // hide popover on click outside, without interacting with other elements
+        document.addEventListener('click', function(e) {
             var $btn = $('#popover-button');
             var popover = $btn.data('bs.popover');
             if (popover && popover.$tip && popover.$tip.is(':visible') && !$btn.is(e.target) && $btn.has(e.target).length === 0 && popover.$tip.has(e.target).length === 0) {
                 $btn.popover('hide');
+                e.stopPropagation();
+                e.preventDefault();
             }
-        });
+        }, true);
 
         // checks if session is already active
         update_status();

@@ -73,6 +73,7 @@ function show_popover() {
 
 // sends a stop request to the API to halt the current song
 function stop_song() {
+    $('#popover-button').popover('hide');
     if (localStorage.getItem('confirm_stop') === 'true') {
         window._confirmCallback = function() {
             execute_stop();
@@ -85,7 +86,6 @@ function stop_song() {
 
 // helper function called by stop_song(); not called directly
 function execute_stop() {
-    $('#popover-button').popover('hide');
     $.ajax({
         type: "POST",
         url: API_URL + "/api/v1/command/stop/",

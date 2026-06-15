@@ -3,6 +3,13 @@
     src: url("fonts/MomiageMono-Regular-NerdFont.ttf") format("ttf");
 }
 
+/* WebKit/Blink */
+::-webkit-scrollbar { display: none; }
+/* Firefox */
+* { scrollbar-width: none; }
+/* IE/Edge legacy */
+* { -ms-overflow-style: none; }
+
 body {
     font-family: momiage, sans-serif;
 }

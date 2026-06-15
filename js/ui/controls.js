@@ -85,6 +85,7 @@ function stop_song() {
 
 // helper function called by stop_song(); not called directly
 function execute_stop() {
+    $('#popover-button').popover('hide');
     $.ajax({
         type: "POST",
         url: API_URL + "/api/v1/command/stop/",

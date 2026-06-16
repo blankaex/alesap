@@ -28,7 +28,7 @@ function scan_qr() {
             await enumerate_cameras();
         });
     // stop scanners if modal is closed
-    $("#scan-modal").on("hidden.bs.modal", async function() {
+    $("#scan-modal").off("hidden.bs.modal").on("hidden.bs.modal", async function() {
         await stop_scanning();
     });
 }
@@ -45,12 +45,14 @@ async function enumerate_cameras() {
     // show list selection
     $("#selector-container").show();
     const devices = await Html5Qrcode.getCameras();
-    if (devices?.length > $("#camera-selector option").length) {
-        for (const { label } of devices) $("#camera-selector").append(`<option>${label}</option>`);
+    // clear and repopulate camera list
+    $("#camera-selector").empty();
+    for (const { label } of devices) {
+        $("#camera-selector").append($("<option>").text(label));
     }
     // set active device, then listen for changes
     await set_device(devices);
-    $("#camera-selector").on("change", "", async function() {
+    $("#camera-selector").off("change").on("change", "", async function() {
         await set_device(devices);
     });
 }

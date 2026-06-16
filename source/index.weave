@@ -58,7 +58,7 @@ languages.each do |lang|
                     h4 I18N.s('song_search_heading', lang)
                     wform id: "song_search_form" do
                         textfield "search", nil, placeholder: I18N.s('search_placeholder', lang), id: "search-field"
-                        submit I18N.s('search_button', lang), :search, id: "search-button" do
+                        submit nil, :search, id: "search-button" do
                             script "start_search();"
                         end
                         radio "options", [
@@ -358,7 +358,7 @@ languages.each do |lang|
                     script "change_pitch(false);"
                 end
                 block_button :info, nil, style: "success" do
-                    script "$('#popover-button').popover('hide'); $('#info-modal').modal('show');"
+                    script "$('#popover-button').popover('hide'); show_info();"
                 end
                 block_button :stop, nil, style: "danger" do
                     script "stop_song();"

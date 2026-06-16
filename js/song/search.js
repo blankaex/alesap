@@ -43,7 +43,7 @@ function start_search(page = 0, push = true) {
         }
         SEARCH_COUNTER++;
     }
-    const search_count = SEARCH_COUNTER;
+    const current_search_count = SEARCH_COUNTER;
     // call search api
     $.ajax({
         type: "POST",
@@ -55,7 +55,7 @@ function start_search(page = 0, push = true) {
         }),
         contentType: "application/json; charset=utf-8"
     }).then(function(data) {
-        if (search_count !== SEARCH_COUNTER) return;
+        if (current_search_count !== SEARCH_COUNTER) return;
         if (data.results?.length && data.total) {
             // add search results to song cache + search table
             data.results[0].forEach(result => {
@@ -63,10 +63,10 @@ function start_search(page = 0, push = true) {
                 append_search_results(result.code);
             });
             // continue searching unless no more results or max page limit reached
-            const end_search =
+            const search_results_remaining =
                 data.total / SEARCH_RESULTS_LIMIT > data.page + 1 ||
                 data.page >= SEARCH_PAGE_LIMIT;
-            if (end_search) {
+            if (search_results_remaining) {
                 setTimeout(() => { start_search(page + 1); }, SEARCH_INTERVAL);
             } else {
                 $("#loader-div").hide();

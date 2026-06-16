@@ -91,8 +91,8 @@ function show_info() {
                 .slice(0, 10), // limit to top 10 results
             function (_, [code, count]) {
                 const $row = $("<tr>")
-                    .append($("<td>").text(`〈${count}〉`))
-                    .append($("<td>").text(normalize_song(code)));
+                    .append($("<td>").addClass("count-cell").text(`〈${count}〉`))
+                    .append($("<td>").addClass("song-cell").text(normalize_song(code)));
                 most_played_table.append($row);
             }
         );

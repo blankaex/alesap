@@ -507,6 +507,12 @@ form button {
     gap: 6px !important;
 }
 
+#most-played .count-cell {
+    text-align: right;
+    width: 1%;
+    white-space: nowrap;
+}
+
 #easter-egg {
     margin-top: 5% !important;
     display: flex;

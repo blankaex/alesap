@@ -25,6 +25,9 @@ function queue_song(song_code) {
             toast(i18n("toast_sent_to_queue"), "toast-green");
             append_history(song_code);
             update_song_stats(song_code);
+        }).fail(function() {
+            $("#song-modal").modal("hide");
+            toast(i18n("toast_server_error"), "toast-red");
         });
     } else {
         const toast_text = !session_is_active() ?
@@ -120,6 +123,9 @@ function change_pitch(direction) {
         } else {
             toast(i18n("toast_sent_flat_request"), "toast-green");
         }
+    }).fail(function() {
+        $('#popover-button').popover('hide');
+        toast(i18n("toast_server_error"), "toast-red");
     });
 }
 

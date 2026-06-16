@@ -259,6 +259,15 @@ clear_favourites:
 clear_history:
   en: Clear History
   ja: 履歴をクリア
+toast_server_error:
+  en: Error connecting to server
+  ja: サーバーへの接続に失敗しました
+toast_sent_sharp_request:
+  en: "Sent ♯ request"
+  ja: "♯ を送信しました"
+toast_sent_flat_request:
+  en: "Sent ♭ request"
+  ja: "♭ を送信しました"
 confirm_destructive_action:
   en: Are you sure? This action cannot be undone.
   ja: よろしいですか？この操作は元に戻せません。

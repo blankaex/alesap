@@ -9,7 +9,7 @@
 const SEARCH_RESULTS_LIMIT = 20;
 const SEARCH_PAGE_LIMIT = 1000;
 const SEARCH_INTERVAL = 1000;
-let CURRENT_SEARCH = null;
+let SEARCH_COUNTER = 0;
 
 // helper functions to manage search query history stack
 function search_history_push(query) {
@@ -33,9 +33,6 @@ function search_history_pop() {
 function start_search(page = 0, push = true) {
     // update ui to give feedback that search is starting
     if (page === 0) {
-        if (CURRENT_SEARCH) {
-            CURRENT_SEARCH.abort();
-        }
         $("#easter-egg").hide();
         $("#empty-search").hide();
         $("#search-table-body").empty();
@@ -44,9 +41,11 @@ function start_search(page = 0, push = true) {
         if (push) {
             search_history_push($("#search-field").val());
         }
+        SEARCH_COUNTER++;
     }
+    const search_count = SEARCH_COUNTER;
     // call search api
-    CURRENT_SEARCH = $.ajax({
+    $.ajax({
         type: "POST",
         url: API_URL + "/api/v1/command/search/",
         data: JSON.stringify({
@@ -55,8 +54,8 @@ function start_search(page = 0, push = true) {
             page: page
         }),
         contentType: "application/json; charset=utf-8"
-    })
-    CURRENT_SEARCH.then(function(data) {
+    }).then(function(data) {
+        if (search_count !== SEARCH_COUNTER) return;
         if (data.results?.length && data.total) {
             // add search results to song cache + search table
             data.results[0].forEach(result => {
@@ -78,5 +77,8 @@ function start_search(page = 0, push = true) {
             $("#song-table").hide();
             $("#loader-div").hide();
         }
+    }).fail(function() {
+        $("#loader-div").hide();
+        toast(i18n("toast_server_error"), "toast-red");
     });
 }

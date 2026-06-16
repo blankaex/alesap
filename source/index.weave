@@ -69,7 +69,7 @@ languages.each do |lang|
                         ], value: "all"
                     end
                 end
-                div id: "database" do
+                div id: "easter-egg", style: "display: none;" do
                     image "database.gif"
                 end
                 div id: "search-results" do

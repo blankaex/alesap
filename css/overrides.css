@@ -507,12 +507,12 @@ form button {
     gap: 6px !important;
 }
 
-#database {
+#easter-egg {
     margin-top: 5% !important;
     display: flex;
     justify-content: center !important;
 }
 
-#database > img {
+#easter-egg > img {
     mask-image: radial-gradient(ellipse, black 60%, transparent 85%) !important;
 }

@@ -137,5 +137,10 @@ function startup() {
         window.addEventListener("beforeunload", () => {
             sessionStorage.removeItem("debug_mode");
         });
+
+        // show easter egg if you're lucky
+        if (Math.random() < 0.1) {
+            $("#easter-egg").show();
+        }
     });
 }

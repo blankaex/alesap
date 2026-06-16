@@ -14,7 +14,7 @@ jobs:
     - name: build site
       env:
         API_URL: ${{ secrets.API_URL }}
-      run: bundle exec weaver build --root=/
+      run: bundle exec weaver build
     - name: artifact site
       id: upload
       uses: actions/upload-pages-artifact@v5

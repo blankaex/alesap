@@ -30,8 +30,7 @@ languages.each do |lang|
         #
         request_js "js/i18n/index.js"
         request_js "js/ui/toasts.js"
-        request_js "js/song/cache.js"
-        request_js "js/song/table.js"
+        request_js "js/song/song.js"
         request_js "js/song/modal.js"
         request_js "js/song/search.js"
         request_js "js/song/history.js"

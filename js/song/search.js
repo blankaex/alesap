@@ -82,3 +82,10 @@ function start_search(page = 0, push = true) {
         toast(i18n("toast_server_error"), "toast-red");
     });
 }
+
+// appends a single search result row to the song table
+function append_search_results(song_code) {
+    const song_cache = JSON.parse(localStorage.getItem("song_cache"));
+    const row = build_song_row(song_cache, song_code);
+    if (row) $("#search-table-body").append(row);
+}

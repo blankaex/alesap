@@ -61,13 +61,11 @@ function fill_favourites() {
         $("#empty-favourites").hide();
         $("#favourites").show();
         let rows = Object.keys(favourites)
-            .filter(code => favourites[code] && song_cache[code])
+            .filter(code => favourites[code])
             .map(code => {
-                let row = $("<tr>").attr("id", code).attr("onclick", "fill_song_modal(this)");
-                row.append($("<td>").text(normalize_song(code)));
-                row.append($("<td>").text(song_cache[code].artist));
-                return row.prop("outerHTML");
-            }).join("");
+                const row = build_song_row(song_cache, code);
+                return row ? row.prop("outerHTML") : null;
+            }).filter(Boolean).join("");
         $("#favourites-table-body").html(rows);
     } else {
         $("#favourites-controls").hide();

@@ -21,12 +21,8 @@ function fill_song_history() {
             const date_time = e.last_played_date == today
                 ? e.last_played_time
                 : e.last_played_date;
-            if (!song_cache[e.song_code]) return null;
-            let row = $("<tr>").attr("id", e.song_code).attr("onclick", "fill_song_modal(this)");
-            row.append($("<td>").text(normalize_song(e.song_code)));
-            row.append($("<td>").text(song_cache[e.song_code].artist));
-            row.append($("<td>").text(date_time));
-            return row.prop("outerHTML");
+            const row = build_song_row(song_cache, e.song_code, [date_time]);
+            return row ? row.prop("outerHTML") : null;
         }).filter(Boolean).join("");
         $("#history-table-body").html(rows);
     } else {

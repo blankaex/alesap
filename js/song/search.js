@@ -38,7 +38,7 @@ function start_search(page = 0, push = true) {
         }
         $("#easter-egg").hide();
         $("#empty-search").hide();
-        $("#song-table-body").empty();
+        $("#search-table-body").empty();
         $("#song-table").show();
         $("#loader-div").css("display", "flex");
         if (push) {
@@ -61,7 +61,7 @@ function start_search(page = 0, push = true) {
             // add search results to song cache + search table
             data.results[0].forEach(result => {
                 song_cache_set(result.code, result);
-                append_table("#song-table-body", result.code);
+                append_search_results(result.code);
             });
             // continue searching unless no more results or max page limit reached
             const end_search =

@@ -99,14 +99,14 @@ function startup() {
         });
 
         // backdrop overlay when popover is open
-        var backdrop = $('<div id="popover-backdrop"></div>').appendTo('body');
+        let backdrop = $('<div id="popover-backdrop"></div>').appendTo('body');
         $('#popover-button').on('shown.bs.popover', function() { backdrop.addClass('visible'); });
         $('#popover-button').on('hidden.bs.popover', function() { backdrop.removeClass('visible'); });
 
         // hide popover on click outside, without interacting with other elements
         document.addEventListener('click', function(e) {
-            var $btn = $('#popover-button');
-            var popover = $btn.data('bs.popover');
+            let $btn = $('#popover-button');
+            let popover = $btn.data('bs.popover');
             if (popover && popover.$tip && popover.$tip.is(':visible') && !$btn.is(e.target) && $btn.has(e.target).length === 0 && popover.$tip.has(e.target).length === 0) {
                 $btn.popover('hide');
                 e.stopPropagation();

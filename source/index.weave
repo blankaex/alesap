@@ -79,7 +79,7 @@ languages.each do |lang|
                                 th { text I18N.s('column_title', lang) }
                                 th { text I18N.s('column_artist', lang) }
                             end
-                            tbody id: "song-table-body" do
+                            tbody id: "search-table-body" do
                             end
                         end
                     end

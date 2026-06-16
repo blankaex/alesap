@@ -159,7 +159,7 @@ function back_handler() {
         $("#song_search_form")[0].reset();
         $("#empty-search").hide();
         $("#song-table").hide();
-        $("#song-table-body").empty();
+        $("#search-table-body").empty();
         return;
     }
 

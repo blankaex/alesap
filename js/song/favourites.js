@@ -56,15 +56,19 @@ function sort_favourites(favourites) {
 function fill_favourites() {
     const favourites = JSON.parse(localStorage.getItem("favourites"));
     if (favourites) {
+        const song_cache = JSON.parse(localStorage.getItem("song_cache")) || {};
         $("#favourites-controls").show();
         $("#empty-favourites").hide();
         $("#favourites").show();
-        $("#favourites-table-body").empty();
-        Object.keys(favourites).forEach(song_code => {
-            if (favourites[song_code]) {
-                append_table("#favourites-table-body", song_code);
-            }
-        });
+        let rows = Object.keys(favourites)
+            .filter(code => favourites[code] && song_cache[code])
+            .map(code => {
+                let row = $("<tr>").attr("id", code).attr("onclick", "fill_song_modal(this)");
+                row.append($("<td>").text(normalize_song(code)));
+                row.append($("<td>").text(song_cache[code].artist));
+                return row.prop("outerHTML");
+            }).join("");
+        $("#favourites-table-body").html(rows);
     } else {
         $("#favourites-controls").hide();
         $("#favourites").hide();

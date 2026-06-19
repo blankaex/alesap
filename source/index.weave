@@ -22,8 +22,14 @@ languages.each do |lang|
 
         clear_default_meta!
         head do
-            meta charset: 'utf-8'
-            meta name: 'viewport', content: 'width=device-width, initial-scale=1, shrink-to-fit=no, maximum-scale=1, viewport-fit=cover'
+            meta charset: "utf-8"
+            meta name: "description", content: I18N.s('site_description', lang)
+            meta name: "viewport", content: "width=device-width, initial-scale=1, shrink-to-fit=no, maximum-scale=1, viewport-fit=cover"
+            meta property: "og:type", content: "website"
+            meta property: "og:url", content: "https://alesap.blankaex.reisen/"
+            meta property: "og:title", content: "alesap.blankaex.reisen"
+            meta property: "og:description", content: I18N.s('site_description', lang)
+            meta property: "og:image", content: "https://alesap.blankaex.reisen/images/preview.png"
         end
         #
         # Imports

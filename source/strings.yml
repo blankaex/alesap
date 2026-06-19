@@ -1,4 +1,7 @@
 ---
+site_description:
+  en: Browser controller for a certain carb-heavy karaoke system.
+  ja: 某炭水化物多めのカラオケシステム用ブラウザコントローラー。
 tab_search:
   en: Search
   ja: 検索

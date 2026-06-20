@@ -82,15 +82,15 @@ function store_session_keys(keys) {
     sessionStorage.setItem("skey", keys[1]);
     sessionStorage.setItem("scd", keys[2]);
     sessionStorage.setItem("connected_date", new Date().toLocaleDateString("ja-JP"));
-    fetch("/shop_data.json")
-        .then(r => r.json())
-        .then(data => {
-            for (const areas of Object.values(data.result))
-                for (const area of areas)
-                    for (const shop of area.list)
-                        if (shop.shop_code === keys[2])
-                            sessionStorage.setItem("connected_shop", shop.shop_name);
-        });
+    $.ajax({
+        type: "GET",
+        url: API_URL + "/api/v1/command/shop/",
+        data: { scd: keys[2] }
+    }).then(function(data) {
+        sessionStorage.setItem("connected_shop", data.shop_name);
+    }).fail(function() {
+        sessionStorage.setItem("connected_shop", "カラオケパセラ");
+    });
 }
 
 // callback that runs when qr code successfully scanned

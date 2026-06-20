@@ -13,7 +13,7 @@ const LANGUAGE_ROUTES = {
 };
 let UI_STRINGS = {};
 
-function load_strings() {
+function load_i18n_strings() {
     return fetch("/strings.json", { cache: "no-cache" })
         .then(r => r.json())
         .then(data => { UI_STRINGS = data; })

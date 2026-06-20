@@ -57,18 +57,22 @@ function fill_favourites(filter) {
     const favourites = JSON.parse(localStorage.getItem("favourites"));
     if (favourites) {
         const song_cache = load_song_cache();
+        const active_codes = Object.keys(favourites).filter(code => favourites[code]);
+        const total = active_codes.length;
+        const filtered_codes = active_codes.filter(code => song_filter(code, filter));
+        const visible = filtered_codes.length;
+        $("#favourites-controls h4").text(i18n("song_filter_heading").replace("{count}", `(${visible}/${total})`));
         $("#favourites-controls").show();
         $("#empty-favourites").hide();
         $("#favourites").show();
-        let rows = Object.keys(favourites)
-            .filter(code => favourites[code])
-            .filter(code => song_filter(code, filter))
+        let rows = filtered_codes
             .map(code => {
                 const row = build_song_row(song_cache, code);
                 return row ? row.prop("outerHTML") : null;
             }).filter(Boolean).join("");
         $("#favourites-table-body").html(rows);
     } else {
+        $("#favourites-controls h4").text(i18n("song_filter_heading").replace("{count}", "(0/0)"));
         $("#favourites-controls").hide();
         $("#favourites").hide();
         $("#empty-favourites").show();

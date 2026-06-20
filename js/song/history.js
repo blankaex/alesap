@@ -13,12 +13,15 @@ function fill_song_history(filter) {
     const song_history = JSON.parse(localStorage.getItem("song_history"));
     if (song_history) {
         const song_cache = load_song_cache();
+        const total = song_history.length;
+        const filtered = song_history.filter(e => song_filter(e.song_code, filter));
+        const visible = filtered.length;
+        $("#history-controls h4").text(i18n("song_filter_heading").replace("{count}", `(${visible}/${total})`));
         $("#history-controls").show();
         $("#empty-history").hide();
         $("#history").show();
         const today = new Date().toLocaleDateString("ja-JP");
-        let rows = song_history
-            .filter(e => song_filter(e.song_code, filter))
+        let rows = filtered
             .map(e => {
                 const date_time = e.last_played_date == today
                     ? e.last_played_time
@@ -28,6 +31,7 @@ function fill_song_history(filter) {
             }).filter(Boolean).join("");
         $("#history-table-body").html(rows);
     } else {
+        $("#history-controls h4").text(i18n("song_filter_heading").replace("{count}", "(0/0)"));
         $("#history-controls").hide();
         $("#history").hide();
         $("#empty-history").show();

@@ -14,6 +14,11 @@ raw_page "strings.json", "strings" do
     text JSON.generate(YAML.load_file("source/strings.yml"))
 end
 
+# TODO: replace with API call
+raw_page "shop_data.json", "shop_data" do
+    text File.read("source/shop_data.json")
+end
+
 languages = ["", "ja"]
 
 languages.each do |lang|

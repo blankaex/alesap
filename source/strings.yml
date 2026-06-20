@@ -221,8 +221,8 @@ toast_stale_session:
   en: Session may be stale
   ja: セッションが失効している可能性があります
 status_connected_on:
-  en: Connected on {date}
-  ja: "{date}に接続"
+  en: Connected on {date} at {shop}
+  ja: "{shop}で{date}に接続"
 status_not_connected:
   en: Not Connected
   ja: 未接続

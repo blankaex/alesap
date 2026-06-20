@@ -146,7 +146,7 @@ function check_session() {
     if (!session_is_active()) {
         show_connection_toast();
     } else {
-        const connectedAt = sessionStorage.getItem("connected_at");
+        const connectedAt = sessionStorage.getItem("connected_date");
         const today = new Date().toLocaleDateString("ja-JP");
         if (connectedAt && connectedAt !== today) {
             show_stale_toast();

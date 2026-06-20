@@ -186,7 +186,8 @@ form input, form select {
     left: 50% !important;
     transform: translate(-50%, -50%) !important;
     outline: none;
-    width: 50%;
+    width: auto;
+    max-width: 90vw;
     background: #1b1e35;
     border: 1px solid #3b3f5c;
     border-radius: 2px;

@@ -81,7 +81,16 @@ function store_session_keys(keys) {
     sessionStorage.setItem("akey", keys[0]);
     sessionStorage.setItem("skey", keys[1]);
     sessionStorage.setItem("scd", keys[2]);
-    sessionStorage.setItem("connected_at", new Date().toLocaleDateString("ja-JP"));
+    sessionStorage.setItem("connected_date", new Date().toLocaleDateString("ja-JP"));
+    fetch("/shop_data.json")
+        .then(r => r.json())
+        .then(data => {
+            for (const areas of Object.values(data.result))
+                for (const area of areas)
+                    for (const shop of area.list)
+                        if (shop.shop_code === keys[2])
+                            sessionStorage.setItem("connected_shop", shop.shop_name);
+        });
 }
 
 // callback that runs when qr code successfully scanned
@@ -106,7 +115,8 @@ function update_status(status) {
 
     $("#connected").text(active ?
         i18n("status_connected_on")
-            .replace("{date}", sessionStorage.getItem("connected_at")) :
+            .replace("{date}", sessionStorage.getItem("connected_date"))
+            .replace("{shop}", sessionStorage.getItem("connected_shop")) :
         i18n("status_not_connected")
     );
 

@@ -348,9 +348,7 @@ languages.each do |lang|
                 block_button I18N.s('cancel_button', lang), id: "confirm-cancel-btn", style: "danger" do
                     script "$('#confirm-modal').modal('hide');"
                 end
-                block_button I18N.s('confirm_button', lang), id: "confirm-ok-btn" do
-                    script "confirm_action();"
-                end
+                block_button I18N.s('confirm_button', lang), id: "confirm-ok-btn"
             end
         end
 

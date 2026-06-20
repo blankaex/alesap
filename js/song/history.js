@@ -76,7 +76,7 @@ function merge_history(old_history, imported_history) {
 }
 
 function import_history() {
-    window._confirmCallback = function() {
+    show_confirm().then(function() {
         $.ajax({
             type: "GET",
             url: API_URL + "/api/v1/command/import_history/",
@@ -106,12 +106,11 @@ function import_history() {
         }).fail(function() {
             toast(i18n("import_failed"), "toast-red");
         });
-    };
-    $('#confirm-modal').modal('show');
+    });
 }
 
 function export_history() {
-    window._confirmCallback = function() {
+    show_confirm().then(function() {
         $.ajax({
             type: "POST",
             url: API_URL + "/api/v1/command/export_history/",
@@ -125,15 +124,13 @@ function export_history() {
         }).fail(function() {
             toast(i18n("export_failed"), "toast-red");
         });
-    };
-    $('#confirm-modal').modal('show');
+    });
 }
 
 function clear_history() {
-    window._confirmCallback = function() {
+    show_confirm().then(function() {
         localStorage.removeItem("song_history");
         toast(i18n("toast_history_cleared"), "toast-green");
         fill_song_history();
-    };
-    $('#confirm-modal').modal('show');
+    });
 }

@@ -6,6 +6,16 @@
  * +------------------------------------------------------------
  */
 
+let CONFIRM_RESOLVE = null;
+
+// returns a promise that resolves when the user clicks confirm
+function show_confirm() {
+    return new Promise((resolve) => {
+        CONFIRM_RESOLVE = resolve;
+        $('#confirm-modal').modal('show');
+    });
+}
+
 // formats localStorage data as a pretty-printed JSON string
 function parse_local_storage() {
     const local_storage = {};
@@ -21,7 +31,7 @@ function parse_local_storage() {
 }
 
 function clear_storage(type) {
-    window._confirmCallback = function() {
+    show_confirm().then(() => {
         switch(type) {
             case "local":
                 localStorage.clear();
@@ -32,8 +42,7 @@ function clear_storage(type) {
                 toast(i18n("session_storage_cleared"), "toast-green");
                 break;
         }
-    };
-    $('#confirm-modal').modal('show');
+    });
 }
 
 // formats device and browser info as a pretty-printed JSON string
@@ -66,10 +75,9 @@ async function generate_random_nickname() {
 
 // set user nickname
 async function set_nickname(startup = false) {
-    let nickname = startup ? 
+    let nickname = startup ?
         localStorage.getItem("nickname") :
-        $("#nickname-field").val() ||
-        null;
+        $("#nickname-field").val() || null;
     if (!nickname) {
         // TODO: remove network call
         nickname = await generate_random_nickname();
@@ -123,10 +131,4 @@ function toggle_debug() {
     }
 }
 
-function confirm_action() {
-    if (window._confirmCallback) {
-        window._confirmCallback();
-        window._confirmCallback = null;
-    }
-    $('#confirm-modal').modal('hide');
-}
+

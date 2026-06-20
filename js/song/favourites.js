@@ -75,7 +75,7 @@ function fill_favourites() {
 }
 
 function import_favourites() {
-    window._confirmCallback = function() {
+    show_confirm().then(function() {
         $.ajax({
             type: "GET",
             url: API_URL + "/api/v1/command/import_favourites/",
@@ -105,12 +105,11 @@ function import_favourites() {
         }).fail(function() {
             toast(i18n("import_failed"), "toast-red");
         });
-    };
-    $('#confirm-modal').modal('show');
+    });
 }
 
 function export_favourites() {
-    window._confirmCallback = function() {
+    show_confirm().then(function() {
         $.ajax({
             type: "POST",
             url: API_URL + "/api/v1/command/export_favourites/",
@@ -124,14 +123,12 @@ function export_favourites() {
         }).fail(function() {
             toast(i18n("export_failed"), "toast-red");
         });
-    };
-    $('#confirm-modal').modal('show');
+    });
 }
 
 function clear_favourites() {
-    window._confirmCallback = function() {
+    show_confirm().then(function() {
         localStorage.removeItem("favourites");
         toast(i18n("toast_favourites_cleared"), "toast-green");
-    };
-    $('#confirm-modal').modal('show');
+    });
 }

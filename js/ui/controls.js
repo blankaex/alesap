@@ -78,10 +78,9 @@ function show_popover() {
 function stop_song() {
     $('#popover-button').popover('hide');
     if (localStorage.getItem('confirm_stop') === 'true') {
-        window._confirmCallback = function() {
+        show_confirm().then(() => {
             execute_stop();
-        };
-        $('#confirm-modal').modal('show');
+        });
     } else {
         execute_stop();
     }

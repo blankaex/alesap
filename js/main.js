@@ -17,6 +17,7 @@ function startup() {
         restore_confirm_stop();
         init_developer_mode();
         init_language_selector();
+        init_confirm_modal();
         init_popover();
         check_session();
         init_form_reset();
@@ -174,4 +175,18 @@ function maybe_show_easter_egg() {
     if (Math.random() < 0.1) {
         $("#easter-egg").show();
     }
+}
+
+// binds the confirm button once on page load
+function init_confirm_modal() {
+    $('#confirm-ok-btn').on('click', function() {
+        $('#confirm-modal').modal('hide');
+        if (CONFIRM_RESOLVE) {
+            CONFIRM_RESOLVE();
+            CONFIRM_RESOLVE = null;
+        }
+    });
+    $('#confirm-modal').on('hidden.bs.modal', function() {
+        CONFIRM_RESOLVE = null;
+    });
 }

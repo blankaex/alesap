@@ -9,7 +9,7 @@
 const HISTORY_MAX_LENGTH = 100;
 
 // reads song history from localStorage and renders it into the history table
-function fill_song_history() {
+function fill_song_history(filter) {
     const song_history = JSON.parse(localStorage.getItem("song_history"));
     if (song_history) {
         const song_cache = load_song_cache();
@@ -17,13 +17,15 @@ function fill_song_history() {
         $("#empty-history").hide();
         $("#history").show();
         const today = new Date().toLocaleDateString("ja-JP");
-        let rows = song_history.map(e => {
-            const date_time = e.last_played_date == today
-                ? e.last_played_time
-                : e.last_played_date;
-            const row = build_song_row(song_cache, e.song_code, [date_time]);
-            return row ? row.prop("outerHTML") : null;
-        }).filter(Boolean).join("");
+        let rows = song_history
+            .filter(e => song_filter(e.song_code, filter))
+            .map(e => {
+                const date_time = e.last_played_date == today
+                    ? e.last_played_time
+                    : e.last_played_date;
+                const row = build_song_row(song_cache, e.song_code, [date_time]);
+                return row ? row.prop("outerHTML") : null;
+            }).filter(Boolean).join("");
         $("#history-table-body").html(rows);
     } else {
         $("#history-controls").hide();
@@ -53,7 +55,7 @@ function append_history(song_code) {
     }
     localStorage.setItem("song_history", JSON.stringify(song_history));
 
-    fill_song_history();
+    fill_song_history($("#history-filter-field").val());
 }
 
 // merge, dedup, sort, and truncate imported history with local history
@@ -133,6 +135,6 @@ function clear_history() {
     show_confirm().then(function() {
         localStorage.removeItem("song_history");
         toast(i18n("toast_history_cleared"), "toast-green");
-        fill_song_history();
+        fill_song_history($("#history-filter-field").val());
     });
 }

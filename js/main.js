@@ -13,7 +13,8 @@ function startup() {
         init_nickname();
         init_back_navigation();
         init_search_bindings();
-        init_tab_bindings();
+        init_history_tab();
+        init_favourites_tab();
         restore_confirm_stop();
         init_developer_mode();
         init_language_selector();
@@ -63,14 +64,23 @@ function init_search_bindings() {
     });
 }
 
-// fills tab content when switching between history and favourites
-function init_tab_bindings() {
-    // TODO: use ids when weaver supports
+// wires up history tab: click to render, filter input to re-render
+function init_history_tab() {
     $("a[href='#tab1']").on("click", function () {
         fill_song_history();
     });
+    $("#history-filter-field").on("input", function () {
+        fill_song_history($(this).val());
+    });
+}
+
+// wires up favourites tab: click to render, filter input to re-render
+function init_favourites_tab() {
     $("a[href='#tab2']").on("click", function () {
         fill_favourites();
+    });
+    $("#favourites-filter-field").on("input", function () {
+        fill_favourites($(this).val());
     });
 }
 

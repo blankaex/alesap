@@ -45,6 +45,18 @@ function normalize_song(song_code) {
     return normalized;
 }
 
+// returns true if the song's title or artist contains the filter substring (case-insensitive)
+function song_filter(song_code, filter) {
+    if (filter) {
+        const search_string = filter.toLowerCase();
+        const title = (normalize_song(song_code) || "").toLowerCase();
+        const artist = (song_cache_get(song_code, "artist") || "").toLowerCase();
+        return title.includes(search_string) || artist.includes(search_string);
+    } else {
+        return true;
+    }
+}
+
 // builds a single song table row with title and artist cells
 function build_song_row(song_cache, song_code, extra_columns = []) {
     if (song_cache?.[song_code]) {

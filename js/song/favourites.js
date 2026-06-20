@@ -20,7 +20,7 @@ function add_favourite(song_code) {
     // update localstorage & refresh UI if necessary
     localStorage.setItem("favourites", JSON.stringify(favourites));
     if ($('a[href="#tab2"]').parent().hasClass('active')) {
-        fill_favourites();
+        fill_favourites($("#favourites-filter-field").val());
     }
 }
 
@@ -53,7 +53,7 @@ function sort_favourites(favourites) {
 }
 
 // reads favourites from localStorage and renders it into the favourites table
-function fill_favourites() {
+function fill_favourites(filter) {
     const favourites = JSON.parse(localStorage.getItem("favourites"));
     if (favourites) {
         const song_cache = load_song_cache();
@@ -62,6 +62,7 @@ function fill_favourites() {
         $("#favourites").show();
         let rows = Object.keys(favourites)
             .filter(code => favourites[code])
+            .filter(code => song_filter(code, filter))
             .map(code => {
                 const row = build_song_row(song_cache, code);
                 return row ? row.prop("outerHTML") : null;

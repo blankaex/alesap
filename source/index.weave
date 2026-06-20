@@ -107,6 +107,13 @@ languages.each do |lang|
 
             tab I18N.s('tab_history', lang) do
                 div id: "history-controls", style: "display: none;" do
+                    h4 I18N.s('song_filter_heading', lang)
+                    wform id: "history_filter" do
+                        textfield "history-filter", nil, placeholder: I18N.s('song_filter_placeholder', lang), id: "history-filter-field"
+                        submit nil, :trash, style: "danger" do
+                            script "$('#history-filter-field').val(''); fill_song_history();"
+                        end
+                    end
                     block_button :magic, I18N.s('feeling_lucky', lang), id: "random-history", style: "default" do
                         script "queue_random('history');"
                     end
@@ -134,6 +141,13 @@ languages.each do |lang|
 
             tab I18N.s('tab_favourites', lang) do
                 div id: "favourites-controls", style: "display: none;" do
+                    h4 I18N.s('song_filter_heading', lang)
+                    wform id: "favourites_filter" do
+                        textfield "favourites-filter", nil, placeholder: I18N.s('song_filter_placeholder', lang), id: "favourites-filter-field"
+                        submit nil, :trash, style: "danger" do
+                            script "$('#favourites-filter-field').val(''); fill_favourites();"
+                        end
+                    end
                     block_button :magic, I18N.s('feeling_lucky', lang), id: "random-favourite", style: "default" do
                         script "queue_random('favourites');"
                     end

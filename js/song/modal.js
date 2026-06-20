@@ -32,7 +32,11 @@ function build_song_modal_data(song_code) {
     });
     if (sessionStorage.getItem("debug_mode")) {
         modal_data.push($("<hr>"), $("<h4>").text(i18n("debugging_info_heading")));
-        modal_data.push($("<pre>").text(JSON.stringify(song_cache[song_code], null, 2)));
+        const debug_info = $("<pre>").text(JSON.stringify(song_cache[song_code], null, 2));
+        $("<button>").addClass("copy-btn").append(
+            $("<i>").addClass("fa fa-copy")
+        ).prependTo(debug_info);
+        modal_data.push(debug_info);
     }
     return modal_data;
 }
@@ -47,6 +51,14 @@ function fill_song_modal(song) {
     $("#song-modal-title").text(normalize_song(song_code));
     // set modal body
     $("#song-modal-body").html(build_song_modal_data(song_code));
+    // wire copy button for debug pre
+    $("#song-modal-body").off("click", ".copy-btn").on("click", ".copy-btn", function () {
+        const text = $(this).parent("pre").text().trim();
+        navigator.clipboard.writeText(text).then(() => {
+            toast(i18n("toast_copied"), "toast-green");
+        });
+    });
+
     // update ui based on favourite status
     const favourites = JSON.parse(localStorage.getItem("favourites")) || {};
     $("#favourite-button")

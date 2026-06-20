@@ -157,6 +157,9 @@ close_button:
 info_modal_title:
   en: Info
   ja: ユーザー情報
+toast_copied:
+  en: Copied to clipboard
+  jp: クリップボードにコピーしました
 session_status_heading:
   en: 'Session Status:'
   ja: '接続状態:'

@@ -13,6 +13,7 @@ function startup() {
         init_nickname();
         init_back_navigation();
         init_search_bindings();
+        init_song_modal();
         init_history_tab();
         init_favourites_tab();
         restore_confirm_stop();
@@ -64,6 +65,14 @@ function init_search_bindings() {
     });
 }
 
+function init_song_modal() {
+    $("#song-modal-body").on("click", "p", function () {
+        navigator.clipboard.writeText($(this).text().trim()).then(() => {
+            toast(i18n("toast_copied"), "toast-green");
+        });
+    });
+}
+
 // wires up history tab: click to render, filter input to re-render
 function init_history_tab() {
     $("a[href='#tab1']").on("click", function () {
@@ -107,6 +116,13 @@ function init_developer_mode() {
     $('input[name="developer-mode"]').on('ifUnchecked', function () {
         if (DEBUG_TOAST) { DEBUG_TOAST.hideToast(); }
         sessionStorage.removeItem("debug_mode");
+    });
+
+    $(document).on("click", ".copy-btn", function () {
+        const text = $(this).parent("pre").text().trim();
+        navigator.clipboard.writeText(text).then(() => {
+            toast(i18n("toast_copied"), "toast-green");
+        });
     });
 }
 

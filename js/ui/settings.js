@@ -117,9 +117,15 @@ function toggle_debug() {
         sessionStorage.setItem("debug_mode", true);
         show_debug_toast();
         $("#debug-div").show();
-        $("#session-storage").text(JSON.stringify(sessionStorage, null, 2));
-        $("#local-storage").text(parse_local_storage());
-        $("#device-info").text(parse_device_info());
+        $("#session-storage").text(JSON.stringify(sessionStorage, null, 2)).find(".copy-btn").remove().end().prepend(
+            $("<button>").addClass("copy-btn").append($("<i>").addClass("fa fa-copy"))
+        );
+        $("#local-storage").text(parse_local_storage()).find(".copy-btn").remove().end().prepend(
+            $("<button>").addClass("copy-btn").append($("<i>").addClass("fa fa-copy"))
+        );
+        $("#device-info").text(parse_device_info()).find(".copy-btn").remove().end().prepend(
+            $("<button>").addClass("copy-btn").append($("<i>").addClass("fa fa-copy"))
+        );
     // turn off debug mode
     } else {
         if (DEBUG_TOAST) {

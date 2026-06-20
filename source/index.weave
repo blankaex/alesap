@@ -331,7 +331,7 @@ languages.each do |lang|
                     script "queue_song($('#current-song-code').text())"
                 end
                 normal_button :heart, nil, style: "default", id: "favourite-button" do
-                    script "add_favourite($('#current-song-code').text());"
+                    script "toggle_favourite($('#current-song-code').text());"
                 end
             end
         end

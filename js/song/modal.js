@@ -60,8 +60,9 @@ function fill_song_modal(song) {
     });
 
     // update ui based on favourite status
-    const favourites = JSON.parse(localStorage.getItem("favourites")) || {};
+    const favourites = new Set(JSON.parse(localStorage.getItem("favourites")) || []);
+    const is_favourite = favourites.has(song_code);
     $("#favourite-button")
-        .toggleClass("btn-danger", favourites[song_code])
-        .toggleClass("btn-default", !favourites[song_code]);
+        .toggleClass("btn-danger", is_favourite)
+        .toggleClass("btn-default", !is_favourite);
 }

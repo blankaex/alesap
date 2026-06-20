@@ -44,11 +44,10 @@ function queue_random(table) {
         let songs = [];
 
         if (table === "history") {
-            const song_history = JSON.parse(localStorage.getItem("song_history"));
+            const song_history = JSON.parse(localStorage.getItem("song_history")) || [];
             songs = song_history.map(song => song.song_code);
         } else if (table === "favourites") {
-            const favourites = JSON.parse(localStorage.getItem("favourites"));
-            songs = Object.keys(favourites).filter(key => favourites[key]);
+            songs = JSON.parse(localStorage.getItem("favourites")) || [];
         }
 
         const storage_key = `queued_random_${table}`;

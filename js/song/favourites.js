@@ -6,50 +6,37 @@
  * +------------------------------------------------------------
  */
 
-function add_favourite(song_code) {
-    let favourites = JSON.parse(localStorage.getItem("favourites")) || {};
+function toggle_favourite(song_code) {
+    let favourites = new Set(JSON.parse(localStorage.getItem("favourites")) || []);
     // update ui to indicate favourite status
+    const is_favourite = favourites.has(song_code);
     $("#favourite-button")
-        .toggleClass("btn-default", favourites[song_code])
-        .toggleClass("btn-danger", !favourites[song_code]);
+        .toggleClass("btn-default", is_favourite)
+        .toggleClass("btn-danger", !is_favourite);
     // add/remove from favourites based on current favourite status
-    favourites[song_code] = !favourites[song_code];
-    // clean & sort favourites list
-    favourites = clean_favourites(favourites);
-    favourites = sort_favourites(favourites);
-    // update localstorage & refresh UI if necessary
-    localStorage.setItem("favourites", JSON.stringify(favourites));
+    is_favourite ? favourites.delete(song_code) : favourites.add(song_code);
+    // sort & update localstorage
+    const sorted = sort_favourites(favourites);
+    localStorage.setItem("favourites", JSON.stringify());
     if ($('a[href="#tab2"]').parent().hasClass('active')) {
         fill_favourites($("#favourites-filter-field").val());
     }
 }
 
-// remove items that have been un-favourited
-function clean_favourites(favourites) {
-    for (const key in favourites) {
-        if (favourites[key] === false) {
-            delete favourites[key];
-        }
-    }
-    return favourites;
-}
-
 // sort favourites based on artist first, then by title
 function sort_favourites(favourites) {
-    return Object.fromEntries(
-        Object.entries(favourites).sort(([keyA], [keyB]) => {
-            const artistA = song_cache_get(keyA, "artist") || "";
-            const artistB = song_cache_get(keyB, "artist") || "";
-            const artistCompare = artistA.localeCompare(artistB);
-            if (artistCompare !== 0) {
-                return artistCompare;
-            } else {
-                const songA = song_cache_get(keyA, "song") || "";
-                const songB = song_cache_get(keyB, "song") || "";
-                return songA.localeCompare(songB);
-            }
-        })
-    );
+    return [...favourites].sort((codeA, codeB) => {
+        const artistA = song_cache_get(codeA, "artist") || "";
+        const artistB = song_cache_get(codeB, "artist") || "";
+        const artistCompare = artistA.localeCompare(artistB);
+        if (artistCompare !== 0) {
+            return artistCompare;
+        } else {
+            const songA = song_cache_get(codeA, "song") || "";
+            const songB = song_cache_get(codeB, "song") || "";
+            return songA.localeCompare(songB);
+        }
+    });
 }
 
 // reads favourites from localStorage and renders it into the favourites table
@@ -57,9 +44,8 @@ function fill_favourites(filter) {
     const favourites = JSON.parse(localStorage.getItem("favourites"));
     if (favourites) {
         const song_cache = load_song_cache();
-        const active_codes = Object.keys(favourites).filter(code => favourites[code]);
-        const total = active_codes.length;
-        const filtered_codes = active_codes.filter(code => song_filter(code, filter));
+        const total = favourites.length;
+        const filtered_codes = favourites.filter(code => song_filter(code, filter));
         const visible = filtered_codes.length;
         $("#favourites-controls h4").text(i18n("song_filter_heading").replace("{count}", `(${visible}/${total})`));
         $("#favourites-controls").show();
@@ -92,18 +78,21 @@ function import_favourites() {
             data.cache.forEach(result => {
                 song_cache_set(result.code, result);
             });
-            // append favourites
-            const old_favourites = JSON.parse(
-                localStorage.getItem("favourites") || "{}"
+            // merge favourites
+            const favourites = new Set(
+                JSON.parse(localStorage.getItem("favourites")) || []
             );
+            // +------------------------------------------------------
+            // | TODO: remove once endpoint always returns an array
+            // | (old format was {code: true, ...})
+            // +------------------------------------------------------
+            const new_favourites = Array.isArray(data.favourites)
+                ? data.favourites
+                : Object.keys(data.favourites);
+            new_favourites.forEach(code => favourites.add(code));
             localStorage.setItem(
                 "favourites",
-                JSON.stringify(
-                    sort_favourites({
-                        ...old_favourites,
-                        ...data.favourites
-                    })
-                )
+                JSON.stringify(sort_favourites(favourites))
             );
             // send ui confirmation message
             toast(i18n("imported_favourites"), "toast-green");

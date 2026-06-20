@@ -101,6 +101,7 @@ function import_history() {
                     )
                 )
             );
+            localStorage.setItem("song_count", JSON.stringify(data.song_count));
             // send ui confirmation message
             toast(i18n("imported_history"), "toast-green");
         }).fail(function() {
@@ -116,7 +117,8 @@ function export_history() {
             url: API_URL + "/api/v1/command/export_history/",
             data: JSON.stringify({
                 nickname: localStorage.getItem("nickname"),
-                data: JSON.parse(localStorage.getItem("song_history"))
+                song_history: JSON.parse(localStorage.getItem("song_history")),
+                song_count: JSON.parse(localStorage.getItem("song_count"))
             }),
             contentType: "application/json; charset=utf-8"
         }).then(function() {

@@ -56,7 +56,7 @@ function sort_favourites(favourites) {
 function fill_favourites() {
     const favourites = JSON.parse(localStorage.getItem("favourites"));
     if (favourites) {
-        const song_cache = JSON.parse(localStorage.getItem("song_cache")) || {};
+        const song_cache = load_song_cache();
         $("#favourites-controls").show();
         $("#empty-favourites").hide();
         $("#favourites").show();

@@ -12,7 +12,7 @@ const HISTORY_MAX_LENGTH = 100;
 function fill_song_history() {
     const song_history = JSON.parse(localStorage.getItem("song_history"));
     if (song_history) {
-        const song_cache = JSON.parse(localStorage.getItem("song_cache")) || {};
+        const song_cache = load_song_cache();
         $("#history-controls").show();
         $("#empty-history").hide();
         $("#history").show();

@@ -8,7 +8,7 @@
 
 // builds the list of modal body elements for a given song
 function build_song_modal_data(song_code) {
-    const song_cache = JSON.parse(localStorage.getItem("song_cache"));
+    const song_cache = load_song_cache();
     const song_count = JSON.parse(localStorage.getItem("song_count")) ?? {};
     const song_info = [
         { key: "field_title",      id: "title",      value: song_cache[song_code].song },

@@ -6,17 +6,24 @@
  * +------------------------------------------------------------
  */
 
-// helper function to extract values from song cache
-function song_cache_get(song_code, key) {
-    const song_cache = JSON.parse(localStorage.getItem("song_cache"));
-    return song_cache[song_code][key] ?? song_cache[song_code].extra[key] ?? null;
+let SONG_CACHE = null;
+
+function load_song_cache() {
+    if (!SONG_CACHE) {
+        SONG_CACHE = JSON.parse(localStorage.getItem("song_cache")) ?? {};
+    }
+    return SONG_CACHE;
 }
 
-// stores a full song object into the local song cache
+function song_cache_get(song_code, key) {
+    const cache = load_song_cache();
+    return cache[song_code]?.[key] ?? cache[song_code]?.extra?.[key] ?? null;
+}
+
 function song_cache_set(song_code, data) {
-    const song_cache = JSON.parse(localStorage.getItem("song_cache")) ?? {};
-    song_cache[song_code] = data;
-    localStorage.setItem("song_cache", JSON.stringify(song_cache));
+    const cache = load_song_cache();
+    cache[song_code] = data;
+    localStorage.setItem("song_cache", JSON.stringify(cache));
 }
 
 // appends extra content type info to a song title if not already present

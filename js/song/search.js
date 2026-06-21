@@ -85,7 +85,6 @@ function start_search(page = 0, push = true) {
 
 // appends a single search result row to the song table
 function append_search_results(song_code) {
-    const song_cache = load_song_cache();
-    const row = build_song_row(song_cache, song_code);
+    const row = build_song_row(song_code);
     if (row) $("#search-table-body").append(row);
 }

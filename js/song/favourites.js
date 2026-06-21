@@ -43,7 +43,6 @@ function sort_favourites(favourites) {
 function fill_favourites(filter) {
     const favourites = JSON.parse(localStorage.getItem("favourites"));
     if (favourites) {
-        const song_cache = load_song_cache();
         const total = favourites.length;
         const filtered_codes = favourites.filter(code => song_filter(code, filter));
         const visible = filtered_codes.length;
@@ -53,7 +52,7 @@ function fill_favourites(filter) {
         $("#favourites").show();
         let rows = filtered_codes
             .map(code => {
-                const row = build_song_row(song_cache, code);
+                const row = build_song_row(code);
                 return row ? row.prop("outerHTML") : null;
             }).filter(Boolean).join("");
         $("#favourites-table-body").html(rows);
@@ -75,21 +74,14 @@ function import_favourites() {
             }
         }).then(function(data) {
             // add "new" songs to local song cache
-            data.cache.forEach(result => {
+            (data.cache || []).forEach(result => {
                 song_cache_set(result.code, result);
             });
             // merge favourites
             const favourites = new Set(
                 JSON.parse(localStorage.getItem("favourites")) || []
             );
-            // +------------------------------------------------------
-            // | TODO: remove once endpoint always returns an array
-            // | (old format was {code: true, ...})
-            // +------------------------------------------------------
-            const new_favourites = Array.isArray(data.favourites)
-                ? data.favourites
-                : Object.keys(data.favourites);
-            new_favourites.forEach(code => favourites.add(code));
+            (data.favourites || []).forEach(code => favourites.add(code));
             localStorage.setItem(
                 "favourites",
                 JSON.stringify(sort_favourites(favourites))

@@ -58,11 +58,12 @@ function song_filter(song_code, filter) {
 }
 
 // builds a single song table row with title and artist cells
-function build_song_row(song_cache, song_code, extra_columns = []) {
-    if (song_cache?.[song_code]) {
+function build_song_row(song_code, extra_columns = []) {
+    const cache = load_song_cache();
+    if (cache?.[song_code]) {
         let row = $("<tr>").attr("id", song_code).attr("onclick", "fill_song_modal(this)");
         row.append($("<td>").text(normalize_song(song_code)));
-        row.append($("<td>").text(song_cache[song_code].artist));
+        row.append($("<td>").text(cache[song_code].artist));
         extra_columns.forEach(col => row.append($("<td>").text(col)));
         return row;
     } else {

@@ -10,19 +10,6 @@
 // orchestrates all startup tasks once i18n strings are loaded
 function startup() {
     load_i18n_strings().then(() => {
-        // +----------------------------------------------------------
-        // | TODO: remove once all users have migrated from the old
-        // | object format ({code: true, ...}) to the new array format
-        // +----------------------------------------------------------
-        const raw_fav = localStorage.getItem("favourites");
-        if (raw_fav) {
-            try {
-                const parsed = JSON.parse(raw_fav);
-                if (parsed && typeof parsed === "object" && !Array.isArray(parsed)) {
-                    localStorage.setItem("favourites", JSON.stringify(Object.keys(parsed)));
-                }
-            } catch {}
-        }
         init_nickname();
         init_back_navigation();
         init_search_bindings();

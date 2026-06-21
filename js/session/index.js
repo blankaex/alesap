@@ -82,7 +82,7 @@ function store_session_keys(keys) {
     sessionStorage.setItem("skey", keys[1]);
     sessionStorage.setItem("scd", keys[2]);
     sessionStorage.setItem("connected_date", new Date().toLocaleDateString("ja-JP"));
-    fetch("/shop_data.json")
+    return fetch("/shop_data.json")
         .then(r => r.json())
         .then(data => {
             for (const areas of Object.values(data.result))
@@ -99,7 +99,7 @@ async function scan_success(decoded_text, decoded_result) {
         const keys = parse_qr_data(decoded_text);
         await stop_scanning();
         $("#scan-modal").modal("hide");
-        store_session_keys(keys);
+        await store_session_keys(keys);
         update_status(true);
         toast(i18n("toast_connected"), "toast-green");
     } catch (error) {

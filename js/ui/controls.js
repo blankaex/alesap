@@ -20,9 +20,14 @@ function queue_song(song_code) {
                 ecd: song_code
             }),
             contentType: "application/json; charset=utf-8"
-        }).then(function(data) {
+        }).then(function() {
             $("#song-modal").modal("hide");
             toast(i18n("toast_sent_to_queue"), "toast-green");
+            if (!song_cache_get(song_code, "song")) {
+                $.getJSON(API_URL + "/api/v1/command/song", { code: song_code }, function(song) {
+                    song_cache_set(song.code, song);
+                });
+            }
             append_history(song_code);
             update_song_stats(song_code);
         }).fail(function() {

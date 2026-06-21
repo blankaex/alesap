@@ -17,7 +17,7 @@ function toggle_favourite(song_code) {
     is_favourite ? favourites.delete(song_code) : favourites.add(song_code);
     // sort & update localstorage
     const sorted = sort_favourites(favourites);
-    localStorage.setItem("favourites", JSON.stringify());
+    localStorage.setItem("favourites", JSON.stringify(sorted));
     if ($('a[href="#tab2"]').parent().hasClass('active')) {
         fill_favourites($("#favourites-filter-field").val());
     }

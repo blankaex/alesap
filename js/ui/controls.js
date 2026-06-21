@@ -41,25 +41,31 @@ function queue_song(song_code) {
 // queues a random song selected from the song history
 function queue_random(table) {
     if (session_is_active()) {
+        const filter = $(`#${table}-filter-field`).val();
         let songs = [];
 
         if (table === "history") {
             const song_history = JSON.parse(localStorage.getItem("song_history")) || [];
-            songs = song_history.map(song => song.song_code);
+            songs = song_history
+                .map(song => song.song_code)
+                .filter(code => song_filter(code, filter));
         } else if (table === "favourites") {
-            songs = JSON.parse(localStorage.getItem("favourites")) || [];
+            songs = (JSON.parse(localStorage.getItem("favourites")) || [])
+                .filter(code => song_filter(code, filter));
         }
 
         const storage_key = `queued_random_${table}`;
-        let queued = JSON.parse(sessionStorage.getItem(storage_key));
+        let queued = JSON.parse(sessionStorage.getItem(storage_key)) || [];
+        const queue_filtered = queued.filter(song => songs.includes(song));
 
-        // reset if all songs already used
-        if (queued.length >= new Set(songs).size) {
-            queued = [];
+        // all songs in current filter have been queued — clear only those
+        if (queue_filtered.length >= songs.length) {
+            queued = queued.filter(song => !songs.includes(song));
         }
 
         const available = songs.filter(song => !queued.includes(song));
         const selected = available[Math.floor(Math.random() * available.length)];
+        if (!selected) return;
 
         queued.push(selected);
         sessionStorage.setItem(storage_key, JSON.stringify(queued));

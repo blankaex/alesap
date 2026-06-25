@@ -1,0 +1,151 @@
+.container {
+    padding: 0px !important;
+}
+
+/* Make tabs fixed with scrollable content */
+html, body {
+    height: 100%;
+}
+
+#content, #wrapper {
+    height: 100%;
+}
+
+.wrapper-content {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    padding: 20px 10px 20px !important;
+}
+
+.container {
+    flex: 1;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+@media (max-width: 767px) {
+    .container {
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+    }
+}
+
+.tabs-container {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-height: 0;
+}
+
+.tabs-normal {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-height: 0;
+}
+
+.tab-content {
+    flex: 1;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.tabs-container .tab-content > .tab-pane.active {
+    flex: 1;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.tabs-container .tab-content > .tab-pane.active > .panel-body {
+    flex: 1;
+    min-height: 0;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+#search-controls, #history-controls, #favourites-controls {
+    flex-shrink: 0;
+    padding-bottom: 10px;
+}
+
+#search-results, #history-results, #favourites-results {
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+#advanced-content {
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+#created-by {
+    flex-shrink: 0;
+}
+
+#popover-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.4);
+    z-index: 1059;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.2s ease, visibility 0.2s ease;
+}
+
+#popover-backdrop.visible {
+    opacity: 1;
+    visibility: visible;
+}
+
+.popover {
+    position: fixed !important;
+    top: 50% !important;
+    left: 50% !important;
+    transform: translate(-50%, -50%) !important;
+}
+
+#song_search_form {
+    flex-wrap: wrap !important;
+}
+
+#song_search_form .form-group {
+    width: auto !important;
+    flex: 1 1 auto !important;
+    min-width: 0;
+}
+
+#song_search_form .form-group:has(#search-button) {
+    flex: 0 0 auto;
+}
+
+#search-field {
+    min-width: 0;
+}
+
+#song_search_form > :last-child {
+    flex: 0 0 100% !important;
+}
+
+#scan-qr, #popover-button {
+    position: fixed !important;
+    bottom: 20px !important;
+    right: 20px !important;
+    z-index: 1000 !important;
+}
+
+#song-table thead,
+#history-table thead,
+#favourites-table thead {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+}

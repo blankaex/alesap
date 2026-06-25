@@ -1,0 +1,382 @@
+form input, form select {
+    border-radius: 4px !important;
+}
+
+.form-group {
+    width: 100% !important;
+}
+
+.nav-tabs {
+    display: flex !important;
+    border-bottom: 0px !important;
+    padding: 0px !important;
+}
+
+.nav-tabs li {
+    flex: 1 !important;
+    text-align: center !important;
+    overflow: hidden !important;
+}
+
+.nav-tabs > li > a {
+    padding: 10px 0px !important;
+    margin: 0px !important;
+    background-color: rgb(27, 30, 53);
+    border-radius: 4px 4px 0px 0px !important;
+    border-top: 1px solid rgba(136, 142, 168, 0.5) !important;
+    overflow: hidden !important;
+}
+
+.nav-tabs > li:first-child > a {
+    border-left: 1px solid rgba(136, 142, 168, 0.5) !important;
+    /* text-overflow: "🔍" !important; */
+}
+
+.nav-tabs > li:last-child > a {
+    border-right: 1px solid rgba(136, 142, 168, 0.5) !important;
+}
+
+.nav-tabs > li.active > a,
+.nav-tabs > li.active > a:hover,
+.nav-tabs > li.active > a:focus {
+    color: white !important;
+}
+
+.btn {
+    border-radius: 4px !important;
+}
+
+.btn-default {
+    background: #3b3f5c !important;
+    border: 0px !important;
+}
+
+.btn-block {
+    margin: 0px !important;
+}
+
+.btn-warning, .panel-warning > .panel-heading, div.widget.yellow-bg {
+    color: #1e1e1e !important;
+}
+
+.btn-outline {
+    display: block;
+    width: 100% !important;
+}
+
+.panel {
+    margin: 6px 0px !important;
+}
+
+.panel-heading h5 {
+    margin: 0px !important;
+}
+
+.panel-body {
+    border-radius: 0px 0px 4px 4px !important;
+    border-bottom: 1px solid rgba(136, 142, 168, 0.5) !important;
+    border-left: 1px solid rgba(136, 142, 168, 0.5) !important;
+    border-right: 1px solid rgba(136, 142, 168, 0.5) !important;
+}
+
+.panel-group {
+    margin-bottom: 0px !important;
+}
+
+.jumbotron {
+    text-align: center !important;
+    margin: 0px !important;
+    font-family: blobmoji, momiage, sans-serif;
+}
+
+.jumbotron p {
+    font-weight: bold !important;
+}
+
+.modal-content {
+    background-color: #1b1e35 !important;
+    border: 1px solid rgba(136, 142, 168, 0.5) !important;
+}
+
+.modal-body {
+    padding: 20px 30px 20px 30px;
+}
+
+.modal-header {
+    border-bottom: 1px solid rgba(136, 142, 168, 0.5) !important;
+}
+
+.modal-footer {
+    border-top: 1px solid rgba(136, 142, 168, 0.5) !important;
+    display: flex !important;
+    gap: 6px !important;
+}
+
+.modal-footer > .btn {
+    margin: 0px !important;
+}
+
+.close, .close:hover {
+    color: #FFF !important;
+}
+
+.toast-green {
+    background: #18a689 !important;
+}
+
+.toast-red {
+    background: #ed5565 !important;
+}
+
+.toast-yellow {
+    color: #1e1e1e !important;
+    background: #f8ac59 !important;
+}
+
+.popover {
+    outline: none;
+    width: auto;
+    max-width: 90vw;
+    background: #1b1e35;
+    border: 1px solid #3b3f5c;
+    border-radius: 2px;
+}
+
+.popover-content {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.popover-content > div {
+    background: #1b1e35 !important;
+    display: flex !important;
+    flex-wrap: wrap !important;
+    justify-content: center !important;
+    gap: 8px !important;
+    padding-bottom: 10px !important;
+}
+
+.popover-content > div > button {
+    flex: 1 1 calc(50% - 4px) !important;
+    width: 48px !important;
+    height: 48px !important;
+    padding: 0 !important;
+    border-radius: 6px !important;
+}
+
+.popover-content > div > button.pitch-btn {
+    font-size: 16px;
+    font-weight: 800;
+}
+
+.popover-content > button {
+    height: 48px !important;
+    border-radius: 6px !important;
+}
+
+.popover.fade {
+    transition: opacity 0.2s linear;
+}
+
+.popover .arrow {
+    display: none !important;
+}
+
+#song_search_form div:has(.i-checks) {
+    margin: 0px 6px !important;
+    display: flex !important;
+    gap: 14px !important;
+}
+
+.iradio_square-green {
+    transform: scale(0.75) !important;
+    transform-origin: top left !important;
+    margin-right: -5px !important;
+}
+
+label:has(.iradio_square-green) {
+    font-size: 12px !important;
+    font-weight: 500 !important;
+}
+
+#search-field-group, #ecd-field-group {
+    margin-bottom: 0px !important;
+}
+
+#empty-search .jumbotron {
+    margin: 10px 0px 0px 0px !important;
+}
+
+#song-table, #history-table, #favourites-table {
+    margin-top: 0px !important;
+    margin-bottom: 0px !important;
+    table-layout: fixed !important;
+    width: 100% !important;
+}
+
+#song-table th:nth-child(1) { width: 60% !important; }
+#song-table th:nth-child(2) { width: 40% !important; }
+
+#history-table th:nth-child(1) { width: 50% !important; }
+#history-table th:nth-child(2) { width: 30% !important; }
+#history-table th:nth-child(3) { width: 20% !important; }
+
+#favourites-table th:nth-child(1) { width: 60% !important; }
+#favourites-table th:nth-child(2) { width: 40% !important; }
+
+#song-table thead th,
+#history-table thead th,
+#favourites-table thead th {
+    background: #1b1e35;
+    box-shadow: inset 0 1px 0 rgba(136, 142, 168, 0.5), inset 0 -1px 0 rgba(136, 142, 168, 0.5);
+}
+
+#scan-qr, #popover-button {
+    width: 48px !important;
+    height: 48px !important;
+    padding: 0 !important;
+    border-radius: 6px !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3) !important;
+    display: inline-flex;
+    align-items: center !important;
+    justify-content: center !important;
+}
+
+#scan-qr i {
+    font-size: 20px !important;
+    margin-right: 0 !important;
+    vertical-align: middle !important;
+}
+
+#random-history i, #random-favourite i {
+    margin-right: 4px !important;
+}
+
+#reader {
+    border: 1px solid rgba(136, 142, 168, 0.5) !important;
+    border-radius: 4px !important;
+}
+
+#selector-container {
+    margin-top: 10px !important;
+}
+
+#song-modal-title {
+    text-transform: uppercase !important;
+    font-size: 15px !important;
+    font-weight: bold !important;
+    margin: 0px !important;
+}
+
+#song-modal-body h4, #settings h4, #info-modal-body h4 {
+    font-size: 13px !important;
+    font-weight: bold !important;
+    margin: 6px 0px !important;
+}
+
+#song-modal-body p, #settings p, #info-modal-body p, #info-modal-body table {
+    margin: 0px 20px 10px 20px !important;
+}
+
+#song-modal-body pre {
+    margin-top: 10px !important;
+    position: relative;
+}
+
+#debug-div pre {
+    margin: 0;
+    position: relative;
+}
+
+.copy-btn {
+    position: absolute;
+    top: 4px;
+    right: 4px;
+    background: rgba(59, 63, 92, 0.8);
+    border: 1px solid rgba(136, 142, 168, 0.5);
+    border-radius: 4px;
+    color: #fff;
+    padding: 2px 6px;
+    cursor: pointer;
+    font-size: 14px;
+    line-height: 1;
+    opacity: 0.6;
+    transition: opacity 0.15s;
+}
+
+.copy-btn:hover {
+    opacity: 1;
+}
+
+#settings > :not(h4) {
+    margin: 10px 20px 0px 20px !important;
+}
+
+#settings h4:first-of-type {
+    margin-top: 0px !important;
+}
+
+#info {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+
+#info > div {
+    flex: 1 1 calc(50% - 3px);
+}
+
+#nickname_form div, #language_form div {
+    margin-bottom: 6px !important;
+}
+
+/* fix when wform supports ids with - */
+form {
+    display: flex !important;
+    gap: 6px !important;
+}
+
+form button {
+    display: inline-block;
+    height: 34px !important;
+    box-sizing: border-box;
+}
+
+#language_form .control-label {
+    display: none !important;
+}
+
+#confirm_stop_form .i-checks label,
+#developer_mode_form .i-checks label {
+    font-size: 13px !important;
+    font-weight: normal !important;
+    margin-bottom: 0px !important;
+}
+
+#confirm_stop_form label div,
+#developer_mode_form label div {
+    margin-right: 4px !important;
+}
+
+#developer-tools-buttons {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 6px !important;
+}
+
+#most-played .count-cell {
+    text-align: right;
+    width: 1%;
+    white-space: nowrap;
+}
+
+#easter-egg {
+    margin-top: 5% !important;
+    display: flex;
+    justify-content: center !important;
+}
+
+#easter-egg > img {
+    mask-image: radial-gradient(ellipse, black 60%, transparent 85%) !important;
+}

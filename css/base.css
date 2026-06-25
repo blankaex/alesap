@@ -1,0 +1,33 @@
+@font-face {
+    font-family: "momiage";
+    src: url("fonts/MomiageMono-Regular-NerdFont.ttf") format("ttf");
+}
+
+@font-face {
+    font-family: "blobmoji";
+    src: url("fonts/Blobmoji.ttf") format("ttf");
+}
+
+/* WebKit/Blink */
+::-webkit-scrollbar { display: none; }
+/* Firefox */
+* { scrollbar-width: none; }
+/* IE/Edge legacy */
+* { -ms-overflow-style: none; }
+
+body {
+    font-family: momiage, sans-serif;
+}
+
+input::placeholder {
+    opacity: 50% !important;
+}
+
+:focus:not(:focus-visible) {
+    outline: none;
+}
+
+/* hack to fix weaver quirk */
+.pagination {
+    display: none !important;
+}

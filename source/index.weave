@@ -50,7 +50,9 @@ languages.each do |lang|
         request_js "js/ui/settings.js"
         request_js "js/ui/controls.js"
         request_js "js/main.js"
-        request_css "css/overrides.css"
+        request_css "css/base.css"
+        request_css "css/layout.css"
+        request_css "css/components.css"
 
         request_js "js/libs/html5-qrcode.min.js"
         request_js "js/libs/toastify.js"
@@ -373,11 +375,11 @@ languages.each do |lang|
 
         div id: "popover-content", style: "display: none;" do
             div do
-                block_button :"chevron-up", nil, style: "primary" do
-                    script "change_pitch(true);"
-                end
-                block_button :"chevron-down", nil, style: "primary" do
+                block_button nil, "♭", style: "primary", class: "pitch-btn" do
                     script "change_pitch(false);"
+                end
+                block_button nil, "♯", style: "primary", class: "pitch-btn" do
+                    script "change_pitch(true);"
                 end
                 block_button :info, nil, style: "success" do
                     script "$('#popover-button').popover('hide'); show_info();"

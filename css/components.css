@@ -148,6 +148,11 @@ form input, form select {
     gap: 8px;
 }
 
+.popover-content button {
+    height: 48px !important;
+    border-radius: 6px !important;
+}
+
 .popover-content > div {
     background: #1b1e35 !important;
     display: flex !important;
@@ -161,18 +166,12 @@ form input, form select {
     flex: 1 1 calc(50% - 4px) !important;
     width: 48px !important;
     height: 48px !important;
-    padding: 0 !important;
-    border-radius: 6px !important;
 }
 
-.popover-content > div > button.pitch-btn {
-    font-size: 16px;
-    font-weight: 800;
-}
-
-.popover-content > button {
-    height: 48px !important;
-    border-radius: 6px !important;
+.popover-content #flat-btn,
+.popover-content #sharp-btn {
+    font-size: 16px !important;
+    font-weight: 800 !important;
 }
 
 .popover.fade {

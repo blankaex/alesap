@@ -375,10 +375,10 @@ languages.each do |lang|
 
         div id: "popover-content", style: "display: none;" do
             div do
-                block_button nil, "♭", style: "primary", class: "pitch-btn" do
+                block_button nil, "♭", style: "primary", id: "flat-btn" do
                     script "change_pitch(false);"
                 end
-                block_button nil, "♯", style: "primary", class: "pitch-btn" do
+                block_button nil, "♯", style: "primary", id: "sharp-btn" do
                     script "change_pitch(true);"
                 end
                 block_button :info, nil, style: "success" do

@@ -51,6 +51,7 @@ function start_search(page = 0, push = true) {
         data: JSON.stringify({
             str: $("#search-field").val(),
             constraint: $('#song_search_form input:checked').val(),
+            nickname: localStorage.getItem("nickname"),
             page: page
         }),
         contentType: "application/json; charset=utf-8"
